@@ -1,0 +1,34 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" > 
+
+<suite name="Flynas" allow-return-values="true" verbose="2">
+
+	<test name="Android_UAT_Rgression" >
+	
+		 <groups>
+				<run>
+					<include name="Android"/>
+				</run>
+		</groups> 
+			
+		<classes>	 	
+					 	<class name="flynas.android.scripts.uat.reg.TC01_oneWayDomesticEcoSADAD"/>
+						<class name="flynas.android.scripts.uat.reg.TC02_oneWayDomesticBusinessCC"/>
+						<class name="flynas.android.scripts.uat.reg.TC03_oneWayDomesticEcoChangeDate"/>
+						<class name="flynas.android.scripts.uat.reg.TC04_oneWayDomOneAdultCheckin"/>
+						<class name="flynas.android.scripts.uat.reg.TC05_oneWayDomNineAdultCheckin"/>	
+						<class name="flynas.android.scripts.uat.reg.TC06_oneWayInterTwoAdultEco"/>
+						<class name="flynas.android.scripts.uat.reg.TC07_roundTripDomFourAdultBusins"/>
+						<class name="flynas.android.scripts.uat.reg.TC08_RTInt1ad1Ch1InBusExtra"/>
+						<class name="flynas.android.scripts.uat.reg.TC09_RTInt1ad1Ch1InEcoExtras"/>
+						<class name="flynas.android.scripts.uat.reg.TC10_oneAudaltOnechildFlexCodeShare"/>
+						<class name="flynas.android.scripts.uat.reg.TC11_oneAudaltOneChildOneInfantPartCordShare"/>
+						<class name="flynas.android.scripts.uat.reg.TC12_PayWithCreditShell"/>
+						<class name="flynas.android.scripts.uat.reg.TC13_oneWayDomesticEconomyCCUSD"/>
+						<class name="flynas.android.scripts.uat.reg.TC14_oneWayDomesticEconomyCCEuro"/>
+						<class name="flynas.android.scripts.uat.reg.TC15_verifingFareSummaryPrices"/>
+						<class name="flynas.android.scripts.uat.reg.TC16_PaywithNasCredit"/>
+								
+		</classes>
+	</test>
+
+</suite>
