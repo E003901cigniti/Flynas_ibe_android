@@ -107,7 +107,7 @@ public class BookingPageLocators extends ActionEngine{
 	
 	//Baggage
 	
-	public static By baggagetittle = By.xpath("//*[@resource-id='com.flynas.android.app:id/checkinBaggageTitleText']");
+	public static By baggagetittle = By.xpath("//android.widget.TextView[@text='Check-in baggage']");
 	public static By baggageAddPlusButton = By.xpath("//*[@resource-id='com.flynas.android.app:id/showHideBaggageBarIndicator']");
 	public static By baggagePlusButton = By.xpath("//*[@resource-id='com.flynas.android.app:id/baggageSectionExpansionButton']");
 	public static By availablebaggages = By.xpath("//*[@resource-id='com.flynas.android.app:id/availableBaggageItemPlus']");
@@ -308,7 +308,7 @@ public class BookingPageLocators extends ActionEngine{
 	
 	public static By checkInFlight = By.xpath("//*[@resource-id='com.flynas.android.app:id/extraFlightTickBox']");
 	public static By passengers_incheckin = By.xpath("//*[@resource-id='com.flynas.android.app:id/onlineCheckinPassengerLineTickBox']");
-	public static By checkinConformation = By.xpath("//android.widget.TextView[@index=1]");
+	public static By checkinConformation = By.xpath("//android.widget.TextView[@text='Check-in successful']");
 	public static By checkinBarCode = By.xpath("//*[@resource-id='com.flynas.android.app:id/boardingBarCode']");
 	public static By travelDocuments = By.xpath("//*[@text='Travel Documents']");
 	/*public static By passengers_checkterms = By.xpath("//a[text()='Terms and conditions']/preceding-sibling::i/preceding-sibling::input");

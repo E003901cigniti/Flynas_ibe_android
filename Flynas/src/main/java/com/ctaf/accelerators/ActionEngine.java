@@ -2027,8 +2027,8 @@ public class ActionEngine extends TestEngine {
 	 */
 	public static void ImplicitWait() {
 
-		driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
-		 wait = new WebDriverWait(driver,240);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		 wait = new WebDriverWait(driver,20);
 		 wait.until(docReadyState);
 		 try {
 			Thread.sleep(5000);
@@ -2387,7 +2387,7 @@ public class ActionEngine extends TestEngine {
 			throws Throwable {
 		boolean flag = false;
 		try {
-			 WebDriverWait newWait = new WebDriverWait(driver, 60);
+			 WebDriverWait newWait = new WebDriverWait(driver, 10);
 				WebElement element = null;
 				element  = newWait.until(ExpectedConditions.presenceOfElementLocated(loc));
 					flag = element.isDisplayed();
@@ -2991,7 +2991,7 @@ public class ActionEngine extends TestEngine {
 	}
 	public static void waitUtilElementhasAttribute(By element) throws InterruptedException
 	{
-		WebDriverWait wait = new WebDriverWait(driver,60);
+		WebDriverWait wait = new WebDriverWait(driver,20);
 		
 			for(int i=0;i<1;i++)
 			{ 

@@ -91,22 +91,22 @@ public class TC17_memberLoginRTChangeflightCheckIN extends BookingPageFlow {
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("EmployeEmail", "Value"),
+	    			xls.getCellValue("username", "Value"),
 	    			xls.getCellValue("Password", "Value"),
-	    		xls.getCellValue("Booking Class", "Value"),
-	    		xls.getCellValue("Mobile", "Value"),
-	    		xls.getCellValue("Payment Type", "Value"),
-	    		xls.getCellValue("NewDate", "Value"),
-	    		xls.getCellValue("Departure Date", "Value"),
-	    		xls.getCellValue("Return Date", "Value"),
-	    		xls.getCellValue("Origin", "Value"),
-	    		xls.getCellValue("Destination", "Value"),
-	    		xls.getCellValue("Trip Type", "Value"),
-	    		xls.getCellValue("Adults Count", "Value"),
-	    		xls.getCellValue("Child Count", "Value"),
-	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
-	    		"Validate member Login Round Trip Changeflight CheckIN"}};
+		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Mobile", "Value"),
+		    		xls.getCellValue("Payment Type", "Value"),
+		    		xls.getCellValue("NewDate", "Value"),
+		    		xls.getCellValue("Departure Date", "Value"),
+		    		xls.getCellValue("Return Date", "Value"),
+		    		xls.getCellValue("Origin", "Value"),
+		    		xls.getCellValue("Destination", "Value"),
+		    		xls.getCellValue("Trip Type", "Value"),
+		    		xls.getCellValue("Adults Count", "Value"),
+		    		xls.getCellValue("Child Count", "Value"),
+		    		xls.getCellValue("Infant Count", "Value"),
+		    		"Extra Leg Room",
+		    		"Validate member Login Round Trip Changeflight CheckIN"}};
 	}
 
 }

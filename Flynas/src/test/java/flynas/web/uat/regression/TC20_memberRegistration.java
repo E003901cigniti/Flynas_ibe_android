@@ -11,7 +11,13 @@ import com.ctaf.support.HtmlReportSupport;
 import com.ctaf.utilities.Reporter;
 
 import flynas.web.testObjects.BookingPageLocators;
+import flynas.web.workflows.BookingPage;
 import flynas.web.workflows.BookingPageFlow;
+import flynas.web.workflows.LoginPage;
+import flynas.web.workflows.MemberDashboard;
+import flynas.web.workflows.MemberProfilePage;
+import flynas.web.workflows.MemberRegistrationPage;
+import flynas.web.workflows.projectUtilities;
 
 public class TC20_memberRegistration extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_20");
@@ -22,39 +28,26 @@ public class TC20_memberRegistration extends BookingPageFlow{
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			navigateToAgencyLogin();
-			navigateToMemberRegistration();
-			memberRegistration(Password,Nationality,DocumentType,DocNumber,Mobile,EmailAddress);
-			verifingMemberRegistration();
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.myProfile, "myProfile");
-			waitforElement(BookingPageLocators.changpwdbtn);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.changpwdbtn, "Change Password");
-			type(BookingPageLocators.currentpwd, Password, "Current Password");
-			String newpwd= randomString();
-			type(BookingPageLocators.newpwd,newpwd.trim() , "New Password");
-			type(BookingPageLocators.cnfmnewpwd, newpwd.trim(), "Confirm New Password");
-			click(BookingPageLocators.ConfirmPwdBtn, "Confirm");
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.pwdChngeConmtn)==true){
-				Reporter.SuccessReport("Verifing Password Change", "Successfully Changed");
-				click(BookingPageLocators.ok, "OK");
-			}
-			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.naSmile_myProfile));
-			if(driver.findElement(BookingPageLocators.naSmile_myProfile).isEnabled()==false)
-			{
-				Reporter.SuccessReport("Verifing naSmile is readable In myProfile", "Successfully Verified");
-			}
-			/*type(BookingPageLocators.naSmile_myProfile, randomNumericString(), "naSmile");
-			Thread.sleep(3000);
-			click(BookingPageLocators.updateBtn_myProfile,"Update");
-			Thread.sleep(3000);
-			if(isElementPresent(BookingPageLocators.error_myProfile)==true)
-			{
-				Reporter.SuccessReport("Verifing Error Message after editing naSmile In myProfile", "Successfully Verified");
-			}
-			*/	
+			//instantiating page objects
+			projectUtilities util = new projectUtilities();
+			LoginPage LoginPg = new LoginPage();
+			BookingPage Bookingpg = new BookingPage();
+			MemberRegistrationPage memberRegisterPg = new MemberRegistrationPage();
+			MemberProfilePage profilePage = new MemberProfilePage();
+			MemberDashboard memberdb = new MemberDashboard();
+			
+			//navigating to login page
+			util.clickLogin();
+			LoginPg.ClickJoinNow();
+			String username = memberRegisterPg.memberRegistration();
+			memberRegisterPg.verifingMemberRegistration();
+			
+			//Loging out
+			util.logout();
+			util.clickok();
+			
+			//Verifying member registration by loging in.
+			LoginPg.login(username, "Test@1234");		
 						
 			Reporter.SuccessReport("TC20_memberRegistration", "Pass");
 			

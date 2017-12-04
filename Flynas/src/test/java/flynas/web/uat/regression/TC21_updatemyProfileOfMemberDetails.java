@@ -1,7 +1,5 @@
 package flynas.web.uat.regression;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -10,8 +8,11 @@ import com.ctaf.support.ExcelReader;
 import com.ctaf.support.HtmlReportSupport;
 import com.ctaf.utilities.Reporter;
 
-import flynas.web.testObjects.BookingPageLocators;
+import flynas.web.workflows.BookingPage;
 import flynas.web.workflows.BookingPageFlow;
+import flynas.web.workflows.MemberDashboard;
+import flynas.web.workflows.MemberProfilePage;
+import flynas.web.workflows.projectUtilities;
 
 public class TC21_updatemyProfileOfMemberDetails extends BookingPageFlow {
 	
@@ -24,27 +25,39 @@ public class TC21_updatemyProfileOfMemberDetails extends BookingPageFlow {
 			String EmailAddress,
 			String Description) throws Throwable {
 		try {
-			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			click(BookingPageLocators.login_lnk, " Login");
-			login(EmailAddress, Password);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			waitforElement(BookingPageLocators.myProfile);
-			click(BookingPageLocators.myProfile, "My Profile");
 			
-		//	type(BookingPageLocators.pasword_reg_uppage, Password, "Password");
-			//type(BookingPageLocators.cnfmpasword_reg, newPwd, "Conform Password");
-			waitforElement(BookingPageLocators.dd_reg);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.dd_reg, "Date");
-			click(By.xpath(BookingPageLocators.selectdd_reg+randomNumericString()+"]"), "Date");
-			click(BookingPageLocators.mm_reg, "Month");
-			click(By.xpath(BookingPageLocators.selectmm_reg+randomNumericString()+"]"), "Month");
-			click(BookingPageLocators.yy_reg, "year");
-			click(By.xpath(BookingPageLocators.selectyy_reg+randomNumber(12, 19)+"]"), "Year");
-			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.update_Btn));
-			click(BookingPageLocators.update_Btn, "Update");
-			verifingMemberUpdates_Production();
+			//instantiating page objects
+			projectUtilities util = new projectUtilities();
+			MemberProfilePage profilePage = new MemberProfilePage();
+			MemberDashboard memberdb = new MemberDashboard();
+			
+			//navigating to login page
+			util.clickLogin();
+			
+			//Signing in and navigating to my profile page
+			login(EmailAddress, Password);
+			memberdb.navigateToMyProfile();		
+			
+			//Capturing current DOB & Document expire date
+			String firstDOB[] = profilePage.getdate("Date of birth");
+			String firstDocExpDt[] = profilePage.getdate("Document expiry date");
+			
+			//Updating DOB & Document expire date
+			profilePage.ModifyDate("Date of birth");
+			profilePage.ModifyDate("Document expiry date");
+			profilePage.clickUpdatebtn();			
+			//Verifying successful update message
+			verifingProfileUpdatemessage();
+			
+			//Refreshing the page and capturing the DOB again 
+			refreshPage();
+			String[] updateDOB = profilePage.getdate("Date of birth");
+			String[] updateDocExpdt = profilePage.getdate("Date of birth");
+			
+			//Verifying Both the DOBs
+			profilePage.verifyDOBupdate(firstDOB,updateDOB);
+			profilePage.verifyDOBupdate(firstDocExpDt,updateDocExpdt);
 			
 			Reporter.SuccessReport("TC21_updatemyProfileOfMemberDetails", "Pass");
 			

@@ -29,19 +29,26 @@ public class TC06_oneWayInterTwoAdultEco extends BookingPageFlow {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			// Handlepopup();
 			
+			String[] Credentials = pickCredentials("UATcredentials");
+			
+			String username =Credentials[0];
+			String password =Credentials[1];
+		
 			String depDate = pickDate(deptDate);
-			retdate = pickDate(retdate);
+			String rtrndate = pickDate(retdate);
+			
 			Homepage homepage = new Homepage();
-			homepage.select_Bookflights("Anonymous");
+						
+			homepage.select_TittleMenu();
+			homepage.Click_login();
+			homepage.Login(username,password);
+			homepage.select_Bookflights("registered");
 					
- 			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency);
+ 			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, rtrndate,Audalt, Child, infant,promo,Currency);
  			selectClass(strBookingClass, tripType);
-			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Baggage page Available");
-			}
+ 			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
+ 			continueOnExtras();
+ 			selectSeat(SelectSeat, bookingtype,"");
 			payment(paymenttype,"");
 			validate_ticketStatus();
 			Reporter.SuccessReport("TC_06_oneWayInterTwoAdultEco", "Pass");

@@ -63,7 +63,7 @@ public class TC169_roundTripInternationalBusiness_JED_CAI extends BookingPageFlo
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
 
-			/*click(BookingPageLocators.tittleHome, "Home Img");
+			click(BookingPageLocators.tittleHome, "Home Img");
 			handleRatingRequest();
 			homepage.select_OnlineCheckIn("registered");
 			registeredUsrManageFlight(PNRnumber);
@@ -71,7 +71,7 @@ public class TC169_roundTripInternationalBusiness_JED_CAI extends BookingPageFlo
 			cntinueOnTravelDocument();
 			cntinueRandomSeatSelection();
 			confirmRandomSeatSelection();
-			validateCheckin();*/
+			validateCheckin();
 
 			Reporter.SuccessReport("TC169_roundTripInternationalBusiness_JED_CAI", "Pass");
 

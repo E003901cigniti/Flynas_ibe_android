@@ -42,11 +42,11 @@ public class TC22_resetPasswordusingmyProfile extends BookingPageFlow{
 			type(BookingPageLocators.newpwd, newPwd, "New Password");
 			type(BookingPageLocators.cnfmnewPwd, newPwd, "Conform New Password");
 			click(BookingPageLocators.ConfirmPwdBtn, "Confirm");
-			waitforElement(BookingPageLocators.pwdChngeConmtn);
+			waitforElement(BookingPageLocators.pwdChngeComnt);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			click(BookingPageLocators.ok, "OK");
 			click(BookingPageLocators.update_Btn, "Update");
-			verifingMemberUpdates_Production();
+			verifingProfileUpdatemessage();
 			click(BookingPageLocators.ok, "OK");
 			click(BookingPageLocators.logout_lnk, "Logout");
 			click(BookingPageLocators.ok, "OK");

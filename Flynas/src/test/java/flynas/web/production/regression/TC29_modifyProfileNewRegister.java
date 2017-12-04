@@ -45,7 +45,7 @@ public class TC29_modifyProfileNewRegister extends BookingPageFlow{
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.update_Btn));
 			click(BookingPageLocators.update_Btn, "Update");
 			
-			verifingMemberUpdates_Production();
+			verifingProfileUpdatemessage();
 			
 			Reporter.SuccessReport("TC29_modifyProfileNewRegister", "Pass");
 			

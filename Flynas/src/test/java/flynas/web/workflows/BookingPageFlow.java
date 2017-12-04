@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -71,7 +72,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			click(BookingPageLocators.multiCity, "Multi City");
 		}
 		
-		//scrolling to find Origin filed
+		//scrolling to find Origin field
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.origin));			
 		
 		click(BookingPageLocators.origin, "Origin");
@@ -99,6 +100,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			}			
 			
 		}
+		
 		if(tripType.equalsIgnoreCase("Multi City")){
 			//scrolling to find second origin fields
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.secOrigin));			
@@ -1706,7 +1708,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		click(BookingPageLocators.ok, "ok");
 		}
 		//Thread.sleep(5000);
-		verifyConformcharges();
+		verifyConfirmcharges();
 		
 		//return price[1];
 		
@@ -1734,12 +1736,12 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		click(BookingPageLocators.ok, "ok");
 		}
 		//Thread.sleep(5000);
-		verifyConformcharges();
+		verifyConfirmcharges();
 		
 		return price[1];
 		
 	}
-	public void verifyConformcharges() throws Throwable
+	public void verifyConfirmcharges() throws Throwable
 	{
 		waitforElement(BookingPageLocators.cancelled);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
@@ -2054,8 +2056,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			click(By.xpath(BookingPageLocators.ppSelectDD+randomNumericString()+"]"), "Expiry Month");
 			click(BookingPageLocators.expyy, "Expiry year");
 			click(By.xpath(BookingPageLocators.ppSelectDD+randomNumber(10,15)+"]"), "Expiry Year");
-			
-			
+						
 		}
 		else
 		{
@@ -2965,12 +2966,13 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			Reporter.failureReport("Verifing Member Registratin", "Member is not Successfully Registered");
 		}
 	}
-	public void verifingMemberUpdates_Production() throws Throwable
+	public void verifingProfileUpdatemessage() throws Throwable
 	{
 		waitforElement(BookingPageLocators.memberUpdateConf);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		if(isElementPresent(BookingPageLocators.memberUpdateConf)==true)
 		{
+			click(BookingPageLocators.ok, "ok");
 			Reporter.SuccessReport("Verifing Member Update", "Member is Successfully Updated");
 		}
 		else
@@ -3329,8 +3331,8 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			credentials[4] = xls.getCellValue("credentials"+index, "nasmiles");
 			return credentials;
 		}
-	
-	
+		
+		
 	
 }
 //}

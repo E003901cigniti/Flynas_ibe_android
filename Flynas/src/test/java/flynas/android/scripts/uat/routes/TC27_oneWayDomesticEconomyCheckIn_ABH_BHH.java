@@ -69,14 +69,11 @@ public class TC27_oneWayDomesticEconomyCheckIn_ABH_BHH extends BookingPageFlow{
 			homepage.select_OnlineCheckIn("registered");
 			registeredUsrManageFlight(PNRnumber);
 			performCheckin();
-			waitForElementPresent(BookingPageLocators.travelDocuments, "Travel Documents");
-			click(BookingPageLocators.continuebtn, "Continue");
-			if(isElementDisplayedTemp(BookingPageLocators.seatSelecttionTittle)==true){
-				click(BookingPageLocators.continuebtn, "Continue");
-				click(BookingPageLocators.ok, "OK");
-				
-			}
+			cntinueOnTravelDocument();
+			cntinueRandomSeatSelection();
+			confirmRandomSeatSelection();
 			validateCheckin();
+
 			
 			Reporter.SuccessReport("TC27_oneWayDomesticEconomyCheckIn_ABH_BHH", "Pass");
 			

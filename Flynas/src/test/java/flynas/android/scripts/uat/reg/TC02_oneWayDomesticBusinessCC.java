@@ -26,20 +26,23 @@ public class TC02_oneWayDomesticBusinessCC extends BookingPageFlow{
 		try {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			// Handlepopup();
-			String depDate = pickDate(deptDate);
+			String[] Credentials = pickCredentials("UATcredentials");
 			
+			String username =Credentials[0];
+			String password =Credentials[1];
+		
+			String depDate = pickDate(deptDate);
 			Homepage homepage = new Homepage();
-			homepage.select_Bookflights("Anonymous");
+						
+			homepage.select_TittleMenu();
+			homepage.Click_login();
+			homepage.Login(username,password);
+			homepage.select_Bookflights("registered");
 					
  			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency);
  			selectClass(strBookingClass, tripType);
-			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			waitForElementPresent(BookingPageLocators.baggagetittle, "Baggage Tittle");
-			if(isElementPresent(BookingPageLocators.baggagetittle)){
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Baggage is Available");				
-			}
+ 			continueOnPsngrDtls();
+ 			continueOnExtras();
 			selectSeat(SelectSeat, bookingtype,"");
 			payment(paymenttype,"");
 			validate_ticketStatus();

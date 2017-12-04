@@ -4,30 +4,30 @@
 
 	<test name="Routes-UAT-Android" >
 	
-		<groups>
+		<!-- <groups>
 				<run>
 					<include name="Android"/>
 				</run>
-		</groups> 
+		</groups> -->
 		
 		<classes>	 	
 			
-			<!--***************************************Economy*****************************************-->
+				<!--***************************************Economy*****************************************-->
 			
-					<!--  	<class name="flynas.android.scripts.uat.routes.TC01_oneWayDomesticEconomy_RUH_JED"/>  
+						<class name="flynas.android.scripts.uat.routes.TC01_oneWayDomesticEconomy_RUH_JED"/>  
 						<class name="flynas.android.scripts.uat.routes.TC02_oneWayDomesticEconomy_RUH_DMM"/> 
 						<class name="flynas.android.scripts.uat.routes.TC03_oneWayDomesticEconomy_RUH_GIZ"/> 
 						<class name="flynas.android.scripts.uat.routes.TC04_oneWayDomesticEconomy_RUH_MED"/> 
 						<class name="flynas.android.scripts.uat.routes.TC05_oneWayDomesticEconomy_RUH_TIF"/> 
-						<class name="flynas.android.scripts.uat.routes.TC06_oneWayDomesticEconomy_RUH_HAS"/> -->
+						<class name="flynas.android.scripts.uat.routes.TC06_oneWayDomesticEconomy_RUH_HAS"/> 
 						<class name="flynas.android.scripts.uat.routes.TC07_oneWayDomesticEconomy_RUH_TUU"/>  
 						<class name="flynas.android.scripts.uat.routes.TC08_oneWayDomesticEconomy_RUH_URY"/> 
 						<class name="flynas.android.scripts.uat.routes.TC09_oneWayDomesticEconomy_RUH_AJF"/>  
 						<class name="flynas.android.scripts.uat.routes.TC10_oneWayDomesticEconomy_RUH_ABT"/> 
-				<!-- 		<class name="flynas.android.scripts.uat.routes.TC11_roundTripDomesticEconomy_JED_DMM"/> 
+				 		<class name="flynas.android.scripts.uat.routes.TC11_roundTripDomesticEconomy_JED_DMM"/> 
 						<class name="flynas.android.scripts.uat.routes.TC12_roundTripDomesticEconomy_JED_GIZ"/> 
 						<class name="flynas.android.scripts.uat.routes.TC13_roundTripDomesticEconomy_JED_MED"/> 
-						<class name="flynas.android.scripts.uat.routes.TC14_roundTripDomesticEconomy_JED_AHB"/> 
+						<class name="flynas.android.scripts.uat.routes.TC14_roundTripDomesticEconomy_JED_AHB"/>  -->
 						<class name="flynas.android.scripts.uat.routes.TC15_roundTripDomesticEconomy_JED_TUU"/>
 						<class name="flynas.android.scripts.uat.routes.TC16_roundTripDomesticEconomy_JED_ELQ"/>
 						<class name="flynas.android.scripts.uat.routes.TC17_roundTripDomesticEconomy_DMM_TIF"/> 
@@ -38,7 +38,7 @@
 						<class name="flynas.android.scripts.uat.routes.TC22_roundTripDomesticEconomy_DMM_ELQ"/>
 						<class name="flynas.android.scripts.uat.routes.TC23_roundTripDomesticEconomy_DMM_HAS"/>
 						<class name="flynas.android.scripts.uat.routes.TC24_roundTripDomesticEconomy_DMM_TUU"/>
-						<class name="flynas.android.scripts.uat.routes.TC25_roundTripDomesticEconomy_DMM_ABT"/> -->
+						<class name="flynas.android.scripts.uat.routes.TC25_roundTripDomesticEconomy_DMM_ABT"/>
 						<class name="flynas.android.scripts.uat.routes.TC26_oneWayDomesticEconomyChangeDate_AHB_ABT"/>
 						<class name="flynas.android.scripts.uat.routes.TC27_oneWayDomesticEconomyCheckIn_ABH_BHH"/>
 						<class name="flynas.android.scripts.uat.routes.TC28_oneWayDomesticEconomy_AHB_WAE"/>
@@ -57,19 +57,19 @@
 						<class name="flynas.android.scripts.uat.routes.TC41_oneWayInternationalEconomy_JED_HMB"/>
 						<class name="flynas.android.scripts.uat.routes.TC42_oneWayInternationalEconomy_RUH_HMB"/> 
 						<class name="flynas.android.scripts.uat.routes.TC43_oneWayInternationalEconomy_JED_LXR"/>
-				<!-- 		<class name="flynas.android.scripts.uat.routes.TC44_roundTripInternationalEconomy_JED_SSH"/>
+						<class name="flynas.android.scripts.uat.routes.TC44_roundTripInternationalEconomy_JED_SSH"/>
 						<class name="flynas.android.scripts.uat.routes.TC45_roundTripInternationalEconomy_JED_CAI"/>
 						<class name="flynas.android.scripts.uat.routes.TC46_roundTripInternationalEconomy_RUH_CAI"/>
 						<class name="flynas.android.scripts.uat.routes.TC47_roundTripInternationalEconomy_RUH_ATZ"/>
 						<class name="flynas.android.scripts.uat.routes.TC48_roundTripInternationalEconomy_JED_ATZ"/>
 						<class name="flynas.android.scripts.uat.routes.TC49_roundTripInternationalEconomy_JED_AMM"/>
 						<class name="flynas.android.scripts.uat.routes.TC50_roundTripInternationalEconomy_RUH_AMM"/>
-						<class name="flynas.android.scripts.uat.routes.TC62_roundTripDomesticEconomyAddExtra_RUH_AHB"/> -->
+						<class name="flynas.android.scripts.uat.routes.TC62_roundTripDomesticEconomyAddExtra_RUH_AHB"/>
 					
 						  
-			<!--  ***********************************************Flex********************************************* -->
+			<!--  ***********************************************Flex***************************************************** -->
 		
-				 	<class name="flynas.android.scripts.uat.routes.TC63_oneWayDomesticFlex_RUH_JED"/>  
+				 <!-- 		<class name="flynas.android.scripts.uat.routes.TC63_oneWayDomesticFlex_RUH_JED"/>  
 						<class name="flynas.android.scripts.uat.routes.TC64_oneWayDomesticFlex_RUH_DMM"/> 
 						<class name="flynas.android.scripts.uat.routes.TC65_oneWayDomesticFlex_RUH_GIZ"/> 
 						<class name="flynas.android.scripts.uat.routes.TC66_oneWayDomesticFlex_RUH_MED"/> 
@@ -79,7 +79,7 @@
 						<class name="flynas.android.scripts.uat.routes.TC70_oneWayDomesticFlex_RUH_URY"/> 
 						<class name="flynas.android.scripts.uat.routes.TC71_oneWayDomesticFlex_RUH_AJF"/>  
 						<class name="flynas.android.scripts.uat.routes.TC72_oneWayDomesticFlex_RUH_ABT"/>
-					<!--	<class name="flynas.android.scripts.uat.routes.TC73_roundTripDomesticFlex_JED_DMM"/> 
+						<class name="flynas.android.scripts.uat.routes.TC73_roundTripDomesticFlex_JED_DMM"/> 
 						<class name="flynas.android.scripts.uat.routes.TC74_roundTripDomesticFlex_JED_GIZ"/> 
 						<class name="flynas.android.scripts.uat.routes.TC75_roundTripDomesticFlex_JED_MED"/> 
 						<class name="flynas.android.scripts.uat.routes.TC76_roundTripDomesticFlex_JED_AHB"/> 
@@ -93,7 +93,7 @@
 						<class name="flynas.android.scripts.uat.routes.TC84_roundTripDomesticFlex_DMM_ELQ"/>
 						<class name="flynas.android.scripts.uat.routes.TC85_roundTripDomesticFlex_DMM_HAS"/>
 						<class name="flynas.android.scripts.uat.routes.TC86_roundTripDomesticFlex_DMM_TUU"/>
-						<class name="flynas.android.scripts.uat.routes.TC87_roundTripDomesticFlex_DMM_ABT"/> -->
+						<class name="flynas.android.scripts.uat.routes.TC87_roundTripDomesticFlex_DMM_ABT"/>
 						<class name="flynas.android.scripts.uat.routes.TC88_oneWayDomesticFlexChangeDate_AHB_ABT"/>
 						<class name="flynas.android.scripts.uat.routes.TC89_oneWayDomesticFlexCheckIn_ABH_BHH"/>
 						<class name="flynas.android.scripts.uat.routes.TC90_oneWayDomesticFlex_AHB_WAE"/>
@@ -112,19 +112,18 @@
 						<class name="flynas.android.scripts.uat.routes.TC103_oneWayInternationalFlex_JED_HMB"/>
 						<class name="flynas.android.scripts.uat.routes.TC104_oneWayInternationalFlex_RUH_HMB"/>
 						<class name="flynas.android.scripts.uat.routes.TC105_oneWayInternationalFlex_JED_LXR"/>
-					<!-- <class name="flynas.android.scripts.uat.routes.TC106_roundTripInternationalFlex_JED_SSH"/>
+						<class name="flynas.android.scripts.uat.routes.TC106_roundTripInternationalFlex_JED_SSH"/>
 						<class name="flynas.android.scripts.uat.routes.TC107_roundTripInternationalFlex_JED_CAI"/>
 						<class name="flynas.android.scripts.uat.routes.TC108_roundTripInternationalFlex_RUH_CAI"/>
 						<class name="flynas.android.scripts.uat.routes.TC109_roundTripInternationalFlex_RUH_ATZ"/>
 						<class name="flynas.android.scripts.uat.routes.TC110_roundTripInternationalFlex_JED_ATZ"/>
 						<class name="flynas.android.scripts.uat.routes.TC111_roundTripInternationalFlex_JED_AMM"/>
-						<class name="flynas.android.scripts.uat.routes.TC112_roundTripInternationalFlex_RUH_AMM"/> 
-						
+						<class name="flynas.android.scripts.uat.routes.TC112_roundTripInternationalFlex_RUH_AMM"/> 						
 						<class name="flynas.android.scripts.uat.routes.TC124_roundTripDomesticFlexAddExtra_RUH_AHB"/> -->
 						
-						<!-- *************************************************Business********************************************* -->
+			<!-- *************************************************Business********************************************* -->
 		
-					<class name="flynas.android.scripts.uat.routes.TC125_oneWayDomesticBusiness_RUH_JED"/>  
+					<!-- <class name="flynas.android.scripts.uat.routes.TC125_oneWayDomesticBusiness_RUH_JED"/>  
 						<class name="flynas.android.scripts.uat.routes.TC126_oneWayDomesticBusiness_RUH_DMM"/> 
 						<class name="flynas.android.scripts.uat.routes.TC127_oneWayDomesticBusiness_RUH_GIZ"/> 
 						<class name="flynas.android.scripts.uat.routes.TC128_oneWayDomesticBusiness_RUH_MED"/> 
@@ -134,7 +133,7 @@
 						<class name="flynas.android.scripts.uat.routes.TC132_oneWayDomesticBusiness_RUH_URY"/>  
 						<class name="flynas.android.scripts.uat.routes.TC133_oneWayDomesticBusiness_RUH_AJF"/>  
 						<class name="flynas.android.scripts.uat.routes.TC134_oneWayDomesticBusiness_RUH_ABT"/>
-				<!-- 	<class name="flynas.android.scripts.uat.routes.TC135_roundTripDomesticBusiness_JED_DMM"/> 
+					 	<class name="flynas.android.scripts.uat.routes.TC135_roundTripDomesticBusiness_JED_DMM"/> 
 						<class name="flynas.android.scripts.uat.routes.TC136_roundTripDomesticBusiness_JED_GIZ"/> 
 						<class name="flynas.android.scripts.uat.routes.TC137_roundTripDomesticBusiness_JED_MED"/> 
 						<class name="flynas.android.scripts.uat.routes.TC138_roundTripDomesticBusiness_JED_AHB"/> 
@@ -148,7 +147,7 @@
 						<class name="flynas.android.scripts.uat.routes.TC146_roundTripDomesticBusiness_DMM_ELQ"/>
 						<class name="flynas.android.scripts.uat.routes.TC147_roundTripDomesticBusiness_DMM_HAS"/>
 						<class name="flynas.android.scripts.uat.routes.TC148_roundTripDomesticBusiness_DMM_TUU"/>
-						<class name="flynas.android.scripts.uat.routes.TC149_roundTripDomesticBusiness_DMM_ABT"/> -->
+						<class name="flynas.android.scripts.uat.routes.TC149_roundTripDomesticBusiness_DMM_ABT"/> 
 						<class name="flynas.android.scripts.uat.routes.TC150_oneWayDomesticBusinessChangeDate_AHB_ABT"/>
 						<class name="flynas.android.scripts.uat.routes.TC151_oneWayDomesticBusinessCheckIn_ABH_BHH"/> 
 					 	<class name="flynas.android.scripts.uat.routes.TC152_oneWayDomesticBusiness_AHB_WAE"/>
@@ -167,14 +166,13 @@
 						<class name="flynas.android.scripts.uat.routes.TC165_oneWayInternationalBusiness_JED_HMB"/>
 						<class name="flynas.android.scripts.uat.routes.TC166_oneWayInternationalBusiness_RUH_HMB"/>
 						<class name="flynas.android.scripts.uat.routes.TC167_oneWayInternationalBusiness_JED_LXR"/>
-				<!-- 	<class name="flynas.android.scripts.uat.routes.TC168_roundTripInternationalBusiness_JED_SSH"/>
+					 	<class name="flynas.android.scripts.uat.routes.TC168_roundTripInternationalBusiness_JED_SSH"/>
 						<class name="flynas.android.scripts.uat.routes.TC169_roundTripInternationalBusiness_JED_CAI"/>
 						<class name="flynas.android.scripts.uat.routes.TC170_roundTripInternationalBusiness_RUH_CAI"/>
 						<class name="flynas.android.scripts.uat.routes.TC171_roundTripInternationalBusiness_RUH_ATZ"/>
 						<class name="flynas.android.scripts.uat.routes.TC172_roundTripInternationalBusiness_JED_ATZ"/>
 						<class name="flynas.android.scripts.uat.routes.TC173_roundTripInternationalBusiness_JED_AMM"/>
-						<class name="flynas.android.scripts.uat.routes.TC174_roundTripInternationalBusiness_RUH_AMM"/>
-					
+						<class name="flynas.android.scripts.uat.routes.TC174_roundTripInternationalBusiness_RUH_AMM"/>					
 						<class name="flynas.android.scripts.uat.routes.TC186_roundTripDomesticBusinessAddExtra_RUH_AHB"/> -->
 		
 		<!-- ******************************************Multicity test cases**************************************** -->

@@ -32,6 +32,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By corporatelogin_lnk = By.xpath("//a[text()='Corporate Login']");
 	public static By agency_lnk = By.xpath("//a[text()='Agencies Login']");
 	public static By agency_Register = By.xpath("//a[text()='Agencies Register']");
+	public static By corporate_Register = By.xpath("//a[text()='Corporate Agencies Register']");
 	public static By Manage_booking_lnk = By.xpath("//a[text()='Manage Booking']");
 	public static By WebCheckIn_lnk = By.xpath("//a[text()='Web Check-in']");
 	public static By roundTrip = By.xpath("//label[contains(text(),'Round trip')]");
@@ -309,7 +310,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By newpwd = By.xpath("//input[@name='newpassword']");
 	public static By cnfmnewpwd = By.xpath("//input[@name='confnewpassword']");
 	public static By ConfirmPwdBtn = By.xpath("//button[contains(text(),'Confirm')]");
-	public static By pwdChngeConmtn = By.xpath("//div[contains(text(),'The password has been successfully changed.')]");
+	public static By pwdChngeComnt = By.xpath("//div[contains(text(),'The password has been successfully changed.')]");
 	public static By currentPwd =  By.xpath("//label[contains(text(),'Current password')]/following::div[1]/input");
 	public static By newPwd =  By.xpath("//input[@name='newpassword']");
 	public static By cnfmnewPwd =  By.xpath("//input[@name='confnewpassword']");
@@ -320,6 +321,18 @@ public class BookingPageLocators extends ActionEngine{
 	public static By lname_reg = By.xpath("//input[@name='lastname']");
 	public static  By dd_reg = By.xpath("//div[@class='dob_con dob_conday']");
 	public static String selectdd_reg=  "//div[contains(@class,'ui-select-choices-row')][";
+	public static By dd(String value)
+	{	
+		return By.xpath("//label[contains(text(),'"+value+"')]/parent::div/div[1]/div/div/span/span[2]/span");
+	}
+	public static By mm(String value)
+	{
+		return By.xpath("//label[contains(text(),'"+value+"')]/parent::div/div[2]/div/div/span/span[2]/span");
+	}
+	public static By yy(String value)
+	{
+		return By.xpath("//label[contains(text(),'"+value+"')]/parent::div/div[3]/div/div/span/span[2]/span");
+	}
 	public static  By mm_reg = By.xpath("//div[@class='dob_con dob_conmonth']");
 	public static String selectmm_reg=  "//div[contains(@class,'ui-select-choices-row')][";
 	public static  By yy_reg = By.xpath("//div[@class='dob_conyear']");

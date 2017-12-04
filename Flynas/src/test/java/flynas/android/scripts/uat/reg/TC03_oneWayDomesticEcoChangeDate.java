@@ -28,44 +28,35 @@ public class TC03_oneWayDomesticEcoChangeDate extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			// Handlepopup();
 
+			
+			String[] Credentials = pickCredentials("UATcredentials");
+			
+			String username =Credentials[0];
+			String password =Credentials[1];
+			String Lastname =Credentials[3];
+		
 			String depDate = pickDate(deptDate);
-
 			Homepage homepage = new Homepage();
-			homepage.select_Bookflights("Anonymous");
-
+						
+			homepage.select_TittleMenu();
+			homepage.Click_login();
+			homepage.Login(username,password);
+			homepage.select_Bookflights("registered");
+					
 			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency);
 			selectClass(strBookingClass, tripType);
-			String passengerName[]=inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			String lastname = passengerName[1];
-			System.out.println(lastname);
-			waitForElementPresent(BookingPageLocators.baggagetittle, "Baggage Tittle");
-			if(isElementPresent(BookingPageLocators.baggagetittle)){
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Baggage is Available");				
-			}
-			waitForElementPresent(BookingPageLocators.seatSelecttionTittle, "seat Tittle");
-			if(isElementPresent(BookingPageLocators.seatSelecttionTittle)){
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Seat is Available");				
-			}
+			continueOnPsngrDtls();
+			continueOnExtras();
+ 			cntinueRandomSeatSelection();
+ 			confirmRandomSeatSelection();
 			payment(paymenttype,"");
 			validate_ticketStatus();
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
-			click(BookingPageLocators.tittleHome, "Home Img");
-			if(isElementPresent(BookingPageLocators.loveFlynasApp)==true)
-			{
-				click(BookingPageLocators.noThanks, "No Thanks");
-			}
-			else
-			{
-				System.out.println("No Alert");
-			}
-			waitForElementPresent(HomePageLocators.manageBookings, "Manage My Bookings");
-			homepage.select_Managebooking("Anonymous");
-			searchFlightMMB(PNRnumber, lastname);
+			navigatetoHmPg();
+			handleRatingRequest();
+			homepage.select_Managebooking("registered");
+			searchFlightMMB(PNRnumber, Lastname);
 			newDate = pickDate(newDate);
 			String strPNRChangeDate = changeDate(PNRnumber,email, Mobile, "", newDate, SelectSeat, totalpass,strBookingClass,tripType);
 			

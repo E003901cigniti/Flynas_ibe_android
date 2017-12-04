@@ -65,7 +65,7 @@ public class TC45_roundTripInternationalEconomy_JED_CAI extends BookingPageFlow{
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
 			
-//			click(BookingPageLocators.tittleHome, "Home Img");
+click(BookingPageLocators.tittleHome, "Home Img");
 //			if(isElementPresent(BookingPageLocators.loveFlynasApp)==true)
 //			{
 //				click(BookingPageLocators.noThanks, "No Thanks");

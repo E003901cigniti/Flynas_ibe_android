@@ -67,19 +67,15 @@ public class TC115_multiCityInternationalFlex_JED_HTY extends BookingPageFlow{
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
 
-			/*click(BookingPageLocators.tittleHome, "Home Img");
+			click(BookingPageLocators.tittleHome, "Home Img");
 			handleRatingRequest();
 			homepage.select_OnlineCheckIn("registered");
 			registeredUsrManageFlight(PNRnumber);
 			performCheckin();
-			waitForElementPresent(BookingPageLocators.travelDocuments, "Travel Documents");
-			click(BookingPageLocators.continuebtn, "Continue");
-			if(isElementDisplayedTemp(BookingPageLocators.seatSelecttionTittle)==true){
-				click(BookingPageLocators.continuebtn, "Continue");
-				click(BookingPageLocators.ok, "OK");
-
-			}
-			validateCheckin();*/
+			cntinueOnTravelDocument();
+			cntinueRandomSeatSelection();
+			confirmRandomSeatSelection();
+			validateCheckin();
 			
 			Reporter.SuccessReport("TC115_multiCityInternationalFlex_JED_HTY", "Pass");
 			

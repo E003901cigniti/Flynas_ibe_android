@@ -61,7 +61,7 @@ public class TC75_roundTripDomesticFlex_JED_MED extends BookingPageFlow{
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
 			
-			/*click(BookingPageLocators.tittleHome, "Home Img");
+			click(BookingPageLocators.tittleHome, "Home Img");
 			handleRatingRequest();
 			homepage.select_OnlineCheckIn("registered");
 			registeredUsrManageFlight(PNRnumber);
@@ -69,7 +69,7 @@ public class TC75_roundTripDomesticFlex_JED_MED extends BookingPageFlow{
 			cntinueOnTravelDocument();
 			cntinueRandomSeatSelection();
 			confirmRandomSeatSelection();
-			validateCheckin();*/
+			validateCheckin();
 			
 			Reporter.SuccessReport("TC75_roundTripDomesticFlex_JED_MED", "Pass");
 			

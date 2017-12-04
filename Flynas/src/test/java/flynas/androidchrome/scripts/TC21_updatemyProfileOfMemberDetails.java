@@ -41,7 +41,7 @@ public class TC21_updatemyProfileOfMemberDetails extends BookingPageFlow {
 			click(BookingPageLocators.yy_reg, "year");
 			click(By.xpath(BookingPageLocators.selectyy_reg+randomNumber(12, 19)+"]"), "Year");
 			click(BookingPageLocators.update_Btn, "Update");
-			verifingMemberUpdates_Production();
+			verifingProfileUpdatemessage();
 			
 			Reporter.SuccessReport("TC21_updatemyProfileOfMemberDetails", "Pass");
 			

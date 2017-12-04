@@ -43,73 +43,34 @@ public class TC12_PayWithCreditShell extends BookingPageFlow {
 			homepage.select_Bookflights("registered");
 			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency);
  			selectClass(strBookingClass, tripType);
- 			waitforElement(BookingPageLocators.title);
-			scrollToText("Email Address*");
-			if(isElementDisplayedTemp(BookingPageLocators.continuebtn)==false)
-			{
-				scrollToElement(BookingPageLocators.continuebtn);
-			}
-			click(BookingPageLocators.continuebtn, "Continue");
+ 			continueOnPsngrDtls();
 			Baggage(bookingtype, totalpass);
 			click(BookingPageLocators.continuebtn, "Continue");
-			waitforElement(BookingPageLocators.seatSelecttionTittle);
-			if(isElementDisplayedTemp(BookingPageLocators.seatSelecttionTittle)==true){
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Seat is Available");				
-			}
+			continueOnSeatSelection();
 			payment(paymenttype,"");
 			Thread.sleep(10000);
 			String strPNR = getReferenceNumber();
 			System.out.println(strPNR);				
-			
-			click(BookingPageLocators.tittleHome, "Home Img");
-			if(isElementPresent(BookingPageLocators.loveFlynasApp)==true)
-			{
-				click(BookingPageLocators.noThanks, "No Thanks");
-			}
-			else
-			{
-				System.out.println("No Alert");
-			}
+			navigatetoHmPg();
+			handleRatingRequest();
 			homepage.select_Managebooking("Registered");
-			
 			registeredUsrManageFlight(strPNR);
-			
 			registeredUsrcancelFlight();
-			
 			confirmChanges();
 			verifyConfirmchanges();
 			
-			click(BookingPageLocators.tittleHome, "Home Img");
-			if(isElementPresent(BookingPageLocators.loveFlynasApp)==true)
-			{
-				click(BookingPageLocators.noThanks, "No Thanks");
-			}
-			else
-			{
-				System.out.println("No Alert");
-			}
-			
+			navigatetoHmPg();
+			handleRatingRequest();
 			homepage.select_Bookflights("Registered");
 			inputBookingDetails(tripType, origin, departure2, depDate,"", "", rtrndate,Audalt, Child, infant,promo,Currency);
 			Thread.sleep(8000);
 			selectClass(strBookingClass, tripType);
  			waitforElement(BookingPageLocators.title);
 			scrollToText("Email Address*");
-			if(isElementDisplayedTemp(BookingPageLocators.continuebtn)==false)
-			{
-				scrollToElement(BookingPageLocators.continuebtn);
-			}
-			click(BookingPageLocators.continuebtn, "Continue");
+			continueOnPsngrDtls();
 			Baggage(bookingtype, totalpass);
 			click(BookingPageLocators.continuebtn, "Continue");
-			waitforElement(BookingPageLocators.seatSelecttionTittle);
-			if(isElementDisplayedTemp(BookingPageLocators.seatSelecttionTittle)==true){
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Seat is Available");				
-			}
+			continueOnSeatSelection();
 			payment(payment2,strPNR);
 			validate_ticketStatus();
 			

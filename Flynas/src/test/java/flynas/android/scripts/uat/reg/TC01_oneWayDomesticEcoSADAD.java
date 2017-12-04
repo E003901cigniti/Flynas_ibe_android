@@ -37,13 +37,9 @@ public class TC01_oneWayDomesticEcoSADAD extends BookingPageFlow{
 			homepage.select_Bookflights("Anonymous");
 			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency);
  			selectClass(strBookingClass, tripType);
-			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			waitForElementPresent(BookingPageLocators.baggagetittle, "Baggage Tittle");
-			if(isElementDisplayed(BookingPageLocators.baggagetittle)){
-			click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Baggage is Available");				
-			}
+ 			waitforElement(BookingPageLocators.title);
+ 			continueOnPsngrDtls();
+ 			continueOnExtras();
 			selectSeat(SelectSeat, bookingtype,"");
 			payment(paymenttype,"");
 			verifyPNRforSadad();

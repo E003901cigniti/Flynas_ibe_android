@@ -79,14 +79,11 @@ public class TC85_roundTripDomesticFlex_DMM_HAS extends BookingPageFlow{
 			scroll(PNRnumber);
 			click(BookingPageLocators.manage(PNRnumber), "Manage");
 			performCheckin();
-			waitForElementPresent(BookingPageLocators.travelDocuments, "Travel Documents");
-			click(BookingPageLocators.continuebtn, "Continue");
-			if(isElementDisplayedTemp(BookingPageLocators.seatSelecttionTittle)==true){
-				click(BookingPageLocators.continuebtn, "Continue");
-				click(BookingPageLocators.ok, "OK");
-				
-			}
+			cntinueOnTravelDocument();
+			cntinueRandomSeatSelection();
+			confirmRandomSeatSelection();
 			validateCheckin();
+
 				
 				Reporter.SuccessReport("TC85_roundTripDomesticFlex_DMM_HAS", "Pass");
 				

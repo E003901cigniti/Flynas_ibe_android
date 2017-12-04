@@ -257,14 +257,10 @@ public class TestEngine extends HtmlReportSupport {
 				//capabilitiesForAppium.setCapability("appActivity", AppActivity);
 				System.out.println(apk.getCanonicalPath());
 				capabilitiesForAppium.setCapability("app", apk.getCanonicalPath());
-				AndroidDriver2 = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),
-						capabilitiesForAppium);
-				driver = (AndroidDriver2);
-				driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-				
+				AndroidDriver2 = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),capabilitiesForAppium);
+				driver = (AndroidDriver2);				
 			} catch (Exception e) {
-				e.printStackTrace();
-			
+				e.printStackTrace();			
 			}
 
 		}else if (browser.equalsIgnoreCase("AndroidChrome")) {
@@ -290,8 +286,7 @@ public class TestEngine extends HtmlReportSupport {
 				    
 				  //set the time for browser to wait    
 				  capabilities.setCapability("newCommandTimeout","120000");
-				AndroidDriver2 = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),
-				capabilities);
+				AndroidDriver2 = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);
 				driver = (AndroidDriver2);  
 				
 				

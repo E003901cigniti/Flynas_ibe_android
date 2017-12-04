@@ -38,7 +38,7 @@ public class TC20_memberRegistration extends BookingPageFlow{
 			type(BookingPageLocators.cnfmnewpwd, newpwd.trim(), "Confirm New Password");
 			click(BookingPageLocators.ConfirmPwdBtn, "Confirm");
 			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.pwdChngeConmtn)==true){
+			if(isElementDisplayedTemp(BookingPageLocators.pwdChngeComnt)==true){
 				Reporter.SuccessReport("Verifing Password Change", "Successfully Changed");
 				click(BookingPageLocators.ok, "OK");
 			}

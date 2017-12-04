@@ -28,34 +28,40 @@ public class TC04_oneWayDomOneAdultCheckin extends BookingPageFlow {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			// Handlepopup();
 			
+			
+			String[] Credentials = pickCredentials("UATcredentials");
+			
+			String username =Credentials[0];
+			String password =Credentials[1];
+			String LastName =Credentials[3];
+		
 			String depDate = pickDate(deptDate);
 			String rtrndate = pickDate(retdate);
 			
 			Homepage homepage = new Homepage();
-			homepage.select_Bookflights("Anonymous");
+						
+			homepage.select_TittleMenu();
+			homepage.Click_login();
+			homepage.Login(username,password);
+			homepage.select_Bookflights("registered");
 					
 			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, rtrndate,Audalt, Child, infant,promo,Currency);
 			selectClass(strBookingClass, tripType);
-			String Name[]=inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			String LastName = Name[1];
-			System.out.println(LastName);
-			waitForElementPresent(BookingPageLocators.baggagetittle, "Baggage Tittle");
-			Baggage(bookingtype,totalpass);
-			click(BookingPageLocators.continuebtn, "continue");
-			waitForElementPresent(BookingPageLocators.seatSelecttionTittle, "seat Tittle");
+			continueOnPsngrDtls();
+			continueOnExtras();
 			selectSeat(SelectSeat, bookingtype,totalpass);
 			payment(paymenttype,"");
 			validate_ticketStatus();
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
-			click(BookingPageLocators.tittleHome, "Home Img");
+			navigatetoHmPg();
 			handleRatingRequest();
-			waitForElementPresent(HomePageLocators.onlineCheckin, "Online CheckIn");
-			homepage.select_OnlineCheckIn("Anonymous");
+			homepage.select_OnlineCheckIn("registered");
 			searchFlightCheckin(PNRnumber,LastName);
 			performCheckin();
-			waitForElementPresent(BookingPageLocators.travelDocuments, "Travel Documents");
-			click(BookingPageLocators.continuebtn, "Continue");
+			cntinueOnTravelDocument();
+			cntinueRandomSeatSelection();
+			confirmRandomSeatSelection();
 			validateCheckin();
 			
 			Reporter.SuccessReport("TC04_oneWayDomOneAdultCheckin", "Pass");

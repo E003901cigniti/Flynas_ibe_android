@@ -28,27 +28,27 @@ public class TC07_roundTripDomFourAdultBusins extends BookingPageFlow{
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			// Handlepopup();
+			
+			String[] Credentials = pickCredentials("UATcredentials");
+			
+			String username =Credentials[0];
+			String password =Credentials[1];
+		
 			String depDate = pickDate(deptDate);
 			String rtrndate = pickDate(retdate);
 			
 			Homepage homepage = new Homepage();
-			homepage.select_Bookflights("Anonymous");
+						
+			homepage.select_TittleMenu();
+			homepage.Click_login();
+			homepage.Login(username,password);
+			homepage.select_Bookflights("registered");
 					
  			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, rtrndate,Audalt, Child, infant,promo,Currency);
  			selectClass(strBookingClass, tripType);
-			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			waitForElementPresent(BookingPageLocators.baggagetittle, "Baggage Tittle");
-			if(isElementPresent(BookingPageLocators.baggagetittle)){
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Baggage is Available");				
-			}
-			waitForElementPresent(BookingPageLocators.seatSelecttionTittle, "seat Tittle");
-			if(isElementPresent(BookingPageLocators.seatSelecttionTittle)){
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Seat is Available");				
-			}
+ 			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
+ 			continueOnExtras();
+ 			selectSeat(SelectSeat, bookingtype,"");
 			payment(paymenttype,"");
 			validate_ticketStatus();
 			Reporter.SuccessReport("TC07_roundTripDomFourAdultBusins", "Pass");

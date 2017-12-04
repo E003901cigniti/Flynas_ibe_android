@@ -25,26 +25,26 @@ public class TC11_oneAudaltOneChildOneInfantPartCordShare  extends BookingPageFl
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			// Handlepopup();
+			String[] Credentials = pickCredentials("UATcredentials");
+			
+			String username =Credentials[0];
+			String password =Credentials[1];
+		
 			String depDate = pickDate(deptDate);
 			String rtrndate = pickDate(retdate);
 			
 			Homepage homepage = new Homepage();
-			homepage.select_Bookflights("Anonymous");
+						
+			homepage.select_TittleMenu();
+			homepage.Click_login();
+			homepage.Login(username,password);
+			homepage.select_Bookflights("registered");
+			
 			inputBookingDetails(tripType, origin, dest, depDate,origin2, departure2,rtrndate,Audalt, Child, infant,promo,Currency);
 			selctClasswithCodeshare(Bookingtype,bookingclass,tripType);
 			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			if(isElementDisplayed(BookingPageLocators.baggagetittle)==true)
-			{
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No Baggage Available");
-			}
-			if(isElementDisplayed(BookingPageLocators.seatSelecttionTittle)==true)
-			{
-				click(BookingPageLocators.continuebtn, "Continue");
-			}else{
-				System.out.println("No seats Available");
-			}
+			continueOnExtras();
+			continueOnSeatSelection();
 			payment(paymenttype,"");
 			validate_ticketStatus();
 			Reporter.SuccessReport("TC11_oneAudaltOneChildOneInfantPartCordShare", "Pass");
@@ -61,14 +61,30 @@ public class TC11_oneAudaltOneChildOneInfantPartCordShare  extends BookingPageFl
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{xls.getCellValue("Trip Type", "Value"),
-	    		xls.getCellValue("Origin", "Value"),xls.getCellValue("Destination", "Value"),xls.getCellValue("Departure Date", "Value"),
-	    		xls.getCellValue("Origin2", "Value"),xls.getCellValue("Destination2", "Value"),xls.getCellValue("Return Date", "Value"),
-	    		xls.getCellValue("Adults Count", "Value"),xls.getCellValue("Child Count", "Value"),xls.getCellValue("Infant Count", "Value"),
-	    		xls.getCellValue("Promo", "Value"),	xls.getCellValue("Flight Type", "Value"),xls.getCellValue("total pass", "Value"),
-	    		xls.getCellValue("Nationality", "Value"),xls.getCellValue("Document Type", "Value"),xls.getCellValue("Doc Number", "Value"),
-	    		xls.getCellValue("na Smiles", "Value"),xls.getCellValue("Mobile", "Value"),xls.getCellValue("Email Address", "Value"),
-	    		xls.getCellValue("Select Seat", "Value"),xls.getCellValue("Payment Type", "Value"),	xls.getCellValue("Booking type", "Value"),
-	    		xls.getCellValue("Booking Class", "Value"),"","Validate Multi City Domestic with one Adualt one Child and one Infant with Flex PartCodeShare" }
+	    		xls.getCellValue("Origin", "Value2"),
+	    		xls.getCellValue("Destination", "Value2"),
+	    		xls.getCellValue("Departure Date", "Value"),
+	    		"",
+	    		"",
+	    		xls.getCellValue("Return Date", "Value"),
+	    		xls.getCellValue("Adults Count", "Value"),
+	    		xls.getCellValue("Child Count", "Value"),
+	    		xls.getCellValue("Infant Count", "Value"),
+	    		xls.getCellValue("Promo", "Value"),
+	    		xls.getCellValue("Flight Type", "Value"),
+	    		xls.getCellValue("total pass", "Value"),
+	    		xls.getCellValue("Nationality", "Value"),
+	    		xls.getCellValue("Document Type", "Value"),
+	    		xls.getCellValue("Doc Number", "Value"),
+	    		xls.getCellValue("na Smiles", "Value"),
+	    		xls.getCellValue("Mobile", "Value"),
+	    		xls.getCellValue("Email Address", "Value"),
+	    		xls.getCellValue("Select Seat", "Value"),
+	    		xls.getCellValue("Payment Type", "Value"),	
+	    		xls.getCellValue("Booking type", "Value"),
+	    		xls.getCellValue("Booking Class", "Value"),
+	    		"",
+	    		"Validate Multi City Domestic with one Adualt one Child and one Infant with Flex PartCodeShare" }
 	    				
 	    
 	    };

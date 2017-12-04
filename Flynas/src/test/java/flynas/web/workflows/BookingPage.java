@@ -9,18 +9,20 @@ import com.ctaf.utilities.Reporter;
 
 import flynas.web.testObjects.BookingPageLocators;
 
-public class BookingPage<RenderedWebElement> extends BookingPageLocators {
+public class BookingPage extends BookingPageLocators {
 	
 	public void waitforpageload() throws InterruptedException{
 		
-		waitforElement(BookingPageLocators.oneWay);
-		WebDriverWait wait = new WebDriverWait(driver, 30);
-		wait.until(ExpectedConditions.invisibilityOfAllElements(driver.findElements(By.xpath("//div[@class='loading sk-wave']"))));
-		
+		waitUtilElementhasAttribute(BookingPageLocators.body);	
+	}
+	
+	public void clickLogin() throws Throwable{
+		waitforpageload();
+		click(BookingPageLocators.login_lnk, "Login");
 	}
 	
 	public void changeCurrencyto(String Currency) throws Throwable{
-		
+		waitforpageload();
 		if(Currency!="")
 		{
 			click(BookingPageLocators.Currency_link, "Currency");
@@ -31,7 +33,8 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 	}
 	
 	public void selectTripType(String TripType) throws Throwable{
-		
+		waitforpageload();
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.roundTrip));
 		if(TripType.equalsIgnoreCase("Round Trip")){
 			click(BookingPageLocators.roundTrip, "Round Trip");
 		} else if(TripType.equalsIgnoreCase("One Way")){
@@ -42,7 +45,8 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 	}
 	
 	public void enterOwTripdetails(String origin, String destination, String deptDate) throws Throwable{
-		
+		//scrolling to find Origin field
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.origin));			
 		click(BookingPageLocators.origin, "Origin");
 		selectCity(BookingPageLocators.selectOrigin, "Origin", origin);
 		click(BookingPageLocators.dest, "Destination");
@@ -53,7 +57,8 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 	}
 	
 	public void enterTwTripdetails(String origin, String destination, String deptDate, String rtrnDate ) throws Throwable{
-		
+		//scrolling to find Origin field
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.origin));			
 		click(BookingPageLocators.origin, "Origin");
 		selectCity(BookingPageLocators.selectOrigin, "Origin", origin);
 		click(BookingPageLocators.dest, "Destination");
@@ -73,7 +78,8 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 	}
 	
 	public void enterMwTripdetails(String origin1, String destination1, String origin2, String destination2,String deptDate1, String deptDate2 ) throws Throwable{
-		
+		//scrolling to find Origin field
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.origin));			
 		click(BookingPageLocators.origin, "Origin");
 		selectCity(BookingPageLocators.selectOrigin, "Origin", origin1);
 		//click(BookingPageLocators.dest, "Destination");
@@ -134,5 +140,56 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 	}
 	
 	
+	public void selectPaywithSmilePoints() throws Throwable{
+		//scrolling to find smiles paints payment option
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.payWithnaSmile));			
+		click(BookingPageLocators.payWithnaSmile, "payWithnaSmile");
+	}
+	
+	public void enterPromocode(String promo) throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.payWithnaSmile));			
+		type(BookingPageLocators.promo, promo, "Promo");
+	}
+	
+	
+	public void clickSearchFlights() throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.findFlights));			
+		click(BookingPageLocators.findFlights,"Find Flights");
+		explicityWait(BookingPageLocators.selectflightsection, "Select your Departing Flight");
+	}
+	
+	public void clickEmployeeLogin() throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
+		click(BookingPageLocators.emplogin_lnk, "Employee Login");
+	}
+	
+	public void clickAgenciesLogin() throws Throwable{		
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
+		click(BookingPageLocators.agency_lnk, "Agency Login");
+	}
+	
+	public void clickCorporateLogin() throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
+	click(BookingPageLocators.corporatelogin_lnk, "Corporate Login");
+	}
+	
+	public void clickAgenciesRegister() throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
+		click(BookingPageLocators.agency_Register, "Agency Registration");
+	}
+	
+	public void clickCorporateAgenciesRegister() throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
+		click(BookingPageLocators.corporate_Register, "Corporate Registration");
+	}
+	public void clickManageBooking() throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
+		click(BookingPageLocators.Manage_booking_lnk, "Manage Booking");		
+	}
+	
+	public void clickWebCheckIn() throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
+		click(BookingPageLocators.WebCheckIn_lnk, "Web Check In");
+	}
 	
 }

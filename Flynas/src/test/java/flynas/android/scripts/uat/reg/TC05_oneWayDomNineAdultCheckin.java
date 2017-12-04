@@ -27,17 +27,26 @@ public class TC05_oneWayDomNineAdultCheckin extends BookingPageFlow {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			// Handlepopup();
-			deptDate = pickDate(deptDate);
-			retdate = pickDate(retdate);
+			
+			String[] Credentials = pickCredentials("UATcredentials");
+			
+			String username =Credentials[0];
+			String password =Credentials[1];
+			String LastName =Credentials[3];
+		
+			String depDate = pickDate(deptDate);
+			String rtrndate = pickDate(retdate);
 			
 			Homepage homepage = new Homepage();
-			homepage.select_Bookflights("Anonymous");
-					
-			inputBookingDetails(tripType, origin, dest, deptDate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency);
+						
+			homepage.select_TittleMenu();
+			homepage.Click_login();
+			homepage.Login(username,password);
+			homepage.select_Bookflights("registered");
+			
+			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2,rtrndate,Audalt, Child, infant,promo,Currency);
 			selectClass(strBookingClass, tripType);
-			String Name[]=inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			String LastName = Name[1];
-			System.out.println(LastName);
+			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
 			waitForElementPresent(BookingPageLocators.baggagetittle, "Baggage Tittle");
 			Baggage(bookingtype,totalpass);
 			click(BookingPageLocators.continuebtn, "continue");
@@ -48,14 +57,14 @@ public class TC05_oneWayDomNineAdultCheckin extends BookingPageFlow {
 			validate_ticketStatus();
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
-			click(BookingPageLocators.tittleHome, "Home Img");
+			navigatetoHmPg();
 			handleRatingRequest();
-			waitForElementPresent(HomePageLocators.onlineCheckin, "Online CheckIn");
-			homepage.select_OnlineCheckIn("Anonymous");
+			homepage.select_OnlineCheckIn("registered");
 			searchFlightCheckin(PNRnumber, LastName);
 			performCheckin();
-			waitForElementPresent(BookingPageLocators.travelDocuments, "Travel Documents");
-			click(BookingPageLocators.continuebtn, "Continue");
+			cntinueOnTravelDocument();
+			cntinueRandomSeatSelection();
+			confirmRandomSeatSelection();
 			validateCheckin();
 			
 			Reporter.SuccessReport("TC05_oneWayDomNineAdultCheckin", "Pass");			

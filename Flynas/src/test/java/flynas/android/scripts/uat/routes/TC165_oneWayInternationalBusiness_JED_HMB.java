@@ -61,7 +61,7 @@ public class TC165_oneWayInternationalBusiness_JED_HMB extends BookingPageFlow{
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
 
-			/*click(BookingPageLocators.tittleHome, "Home Img");
+			click(BookingPageLocators.tittleHome, "Home Img");
 			handleRatingRequest();
 			homepage.select_OnlineCheckIn("registered");
 			registeredUsrManageFlight(PNRnumber);
@@ -69,7 +69,7 @@ public class TC165_oneWayInternationalBusiness_JED_HMB extends BookingPageFlow{
 			cntinueOnTravelDocument();
 			cntinueRandomSeatSelection();
 			confirmRandomSeatSelection();
-			validateCheckin();*/
+			validateCheckin();
 
 			Reporter.SuccessReport("TC165_oneWayInternationalBusiness_JED_HMB", "Pass");
 

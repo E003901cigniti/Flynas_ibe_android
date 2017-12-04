@@ -9,6 +9,7 @@ import com.ctaf.support.HtmlReportSupport;
 import com.ctaf.utilities.Reporter;
 
 
+
 import flynas.android.workflows.BookingPageFlow;
 import flynas.android.workflows.Homepage;
 
@@ -26,18 +27,27 @@ public class TC09_RTInt1ad1Ch1InEcoExtras extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			// Handlepopup();
 			
+			String[] Credentials = pickCredentials("UATcredentials");
+			
+			String username =Credentials[0];
+			String password =Credentials[1];
+		
 			String depDate = pickDate(deptDate);
 			String rtrndate = pickDate(retdate);
 			
 			Homepage homepage = new Homepage();
-			homepage.select_Bookflights("Anonymous");
-				
+						
+			homepage.select_TittleMenu();
+			homepage.Click_login();
+			homepage.Login(username,password);
+			homepage.select_Bookflights("registered");
+			
  		    inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, rtrndate,Audalt, Child, infant,promo,Currency);
  			selectClass(strBookingClass, tripType);
 			inputPassengerDetails(FlightType,totalpass,namtionality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
 			Baggage(bookingtype, totalpass);
 			Select_A_Meal();
-			selectallSeats(SelectSeat, totalpass, tripType);
+			selectSeat(SelectSeat, bookingtype, tripType);
 			payment(paymenttype,"");
 			validate_ticketStatus();
 			Reporter.SuccessReport("TC09_RTInt1ad1Ch1InEcoExtras", "Pass");

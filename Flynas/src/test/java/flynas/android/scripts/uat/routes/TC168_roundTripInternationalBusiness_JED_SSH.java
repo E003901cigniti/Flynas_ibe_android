@@ -62,7 +62,7 @@ public class TC168_roundTripInternationalBusiness_JED_SSH extends BookingPageFlo
 			String PNRnumber = getReferenceNumber();
 			System.out.println(PNRnumber);
 
-			/*click(BookingPageLocators.tittleHome, "Home Img");
+			click(BookingPageLocators.tittleHome, "Home Img");
 			handleRatingRequest();
 			homepage.select_OnlineCheckIn("registered");
 			registeredUsrManageFlight(PNRnumber);
@@ -70,7 +70,7 @@ public class TC168_roundTripInternationalBusiness_JED_SSH extends BookingPageFlo
 			cntinueOnTravelDocument();
 			cntinueRandomSeatSelection();
 			confirmRandomSeatSelection();
-			validateCheckin();*/
+			validateCheckin();
 
 			Reporter.SuccessReport("TC168_roundTripInternationalBusiness_JED_SSH", "Pass");
 

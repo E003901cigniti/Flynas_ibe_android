@@ -860,14 +860,14 @@ public class BookingPageFlow extends BookingPageLocators{
 				waitForElementPresent(BookingPageLocators.seatplusbutton, "Seat Adding Button");
 				click(BookingPageLocators.seatplusbutton, "Seat Adding Button");
 				driver.manage().timeouts().implicitlyWait(4000, TimeUnit.MILLISECONDS);
-				boolean selectseat = (isElementDisplayed(BookingPageLocators.elmWithText("ExtraLeg")) || isElementDisplayed(BookingPageLocators.elmWithText("Business")));
+				boolean selectseat = (isElementDisplayed(BookingPageLocators.elmWithText("Spacious")) || isElementDisplayed(BookingPageLocators.elmWithText("Business")));
 				while(selectseat==true){
 					scrollToElement(BookingPageLocators.elmWithText(seatSelect));
 					List<WebElement> Seats = driver.findElements(BookingPageLocators.seatsofType(seatSelect));
 					int seatno = (int) (Math.random() * (Seats.size()-1));
 					Seats.get(seatno).click();
 					driver.manage().timeouts().implicitlyWait(4000, TimeUnit.MILLISECONDS);
-					selectseat = (isElementDisplayed(BookingPageLocators.elmWithText("ExtraLeg")) || isElementDisplayed(BookingPageLocators.elmWithText("Business")));
+					selectseat = (isElementDisplayed(BookingPageLocators.elmWithText("Spacious")) || isElementDisplayed(BookingPageLocators.elmWithText("Business")));
 					}
 			}
 			click(BookingPageLocators.continuebtn, "Continue");
@@ -984,9 +984,8 @@ public class BookingPageFlow extends BookingPageLocators{
 	public void validateCheckin() throws Throwable
 	{	
 		waitforElement(BookingPageLocators.checkinConformation);
-		WebElement Confirmation = driver.findElement(BookingPageLocators.checkinConformation);
-		//if(isElementPresent(BookingPageLocators.checkinConformation,"Check-in Conformation"))
-		if(Confirmation.getText().equalsIgnoreCase("Check-in successful")){
+		if(isElementPresent(BookingPageLocators.checkinConformation,"Check-in Conformation"))
+			{
 			Reporter.SuccessReport("Validating check in", "Checkin is Done");
 			//waitforElement(BookingPageLocators.continuebtn);
 			}
@@ -1057,67 +1056,58 @@ public class BookingPageFlow extends BookingPageLocators{
 	
 	public void selctClasswithCodeshare(String bookingtype,String bookingClass,String tripType) throws Throwable
 	{
-		boolean flag=false;
 		int count=0;
 		if(!tripType.equalsIgnoreCase("One Way"))
+			
 		{
-			for(int j=0;j<2;j++)
-			{
-				List<WebElement> ClassArrow = driver.findElements(BookingPageLocators.selectFlightUpDownArrow);
-				if(ClassArrow.size()!=0)
+			List<WebElement> RightArrow = driver.findElements(BookingPageLocators.rightarrow);
+			List<WebElement> ClassArrow = driver.findElements(BookingPageLocators.selectFlightUpDownArrow);
+			int j=0;
+			while(ClassArrow.size()==0 && j<7){
+				System.out.println("No Flights");
+				RightArrow.get(0).click();
+				ClassArrow = driver.findElements(BookingPageLocators.selectFlightUpDownArrow);
+				j++;
+			}
+			
+			for(int i=0;i<=ClassArrow.size();i++)
 				{
-					for(int i=0;i<=ClassArrow.size();i++)
+					count=0;
+					if(isElementPresent(BookingPageLocators.flexOW)==true)
 					{
-						count=0;
-						ClassArrow.get(i).click();
-						if(isElementPresent(BookingPageLocators.flexOW)==true)
+						String FlightNum = getText(BookingPageLocators.flightNumber, "Flight");
+						System.out.println(FlightNum);
+						for(int k=0;k<FlightNum.length();k++)
 						{
-							String FlightNum = getText(BookingPageLocators.flightNumber, "Flight");
-							System.out.println(FlightNum);
-							for(int k=0;k<FlightNum.length();k++)
-							{
-								char result = FlightNum.charAt(k);
-							 	if(Character.isDigit(result))
-							 	{
-							 		count++;
-							 	}
+							char result = FlightNum.charAt(k);
+						 	if(Character.isDigit(result)){
+					 		count++;}
 						}
-						if(count==8 && bookingtype.equalsIgnoreCase("CodeShare"))
-						{
-							click(BookingPageLocators.flexOW, "Flex");
-							Thread.sleep(2000);
-							break;
 						
-						}
-						else
-						
-							if(count==7 && bookingtype.equalsIgnoreCase("PartcodeShare"))
+						if((count==4||count==8) && bookingtype.equalsIgnoreCase("CodeShare"))
 							{
 								click(BookingPageLocators.flexOW, "Flex");
 								Thread.sleep(2000);
 								break;
-							
 							}
 							else
 							{
+								if((4 < count && count < 8)  && bookingtype.equalsIgnoreCase("PartcodeShare"))
+								{
+								click(BookingPageLocators.flexOW, "Flex");
+								Thread.sleep(2000);
+								break;							
+								}else{
 								ClassArrow.get(i).click();
+								}
 							}
-		
-						
-						
-					}
+						}
 						else
 						{
 							System.out.println("No Flex");
-							ClassArrow.get(i).click();
+							ClassArrow.get(i+1).click();
 						}
-				}
-			}
-				else
-				{
-					System.out.println("No Flights");
-				}
-		}
+					}							
 		}
 			
 	}
@@ -1353,7 +1343,7 @@ public class BookingPageFlow extends BookingPageLocators{
 		
 	}
 	
-	
+
 	public void searchFlightCheckin(String referenceNum, String Lastname) throws Throwable{
 		waitForElementPresent(BookingPageLocators.checkInReference, "Booking Reference");
 		type(BookingPageLocators.checkInReference, referenceNum, "Reference Number");
@@ -1414,6 +1404,39 @@ public class BookingPageFlow extends BookingPageLocators{
 	}
 	
 	//*************************************************************************************
+	public void navigatetoHmPg() throws Throwable{
+		driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);
+		click(BookingPageLocators.tittleHome, "Home Img");
+		}	
+	
+	public void continueOnPsngrDtls() throws Throwable{
+		waitforElement(BookingPageLocators.title);
+		if(isElementDisplayedTemp(BookingPageLocators.continuebtn)==false)
+		{
+			scrollToElement(BookingPageLocators.continuebtn);
+		}
+		click(BookingPageLocators.continuebtn, "Continue");
+	}
+	
+	public void continueOnExtras() throws Throwable{
+		waitForElementPresent(BookingPageLocators.baggagetittle, "Baggage Tittle");
+		if(isElementDisplayed(BookingPageLocators.baggagetittle)){
+		click(BookingPageLocators.continuebtn, "Continue");
+		}else{
+			System.out.println("No Baggage is Available");				
+		}
+	}
+	
+	public void continueOnSeatSelection() throws Throwable{
+		if(isElementDisplayed(BookingPageLocators.seatSelecttionTittle)==true)
+		{
+			click(BookingPageLocators.continuebtn, "Continue");
+		}
+		else
+		{
+			System.out.println("No Seat Page");
+		}
+	}
 	
 	public void cntinueOnTravelDocument() throws Throwable
 		{

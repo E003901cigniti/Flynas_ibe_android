@@ -57,7 +57,7 @@ public class TC16_PaywithNasCredit extends BookingPageFlow{
 			String strPNR = getReferenceNumber();
 			System.out.println(strPNR);				
 			validate_ticketStatus();
-			click(BookingPageLocators.tittleHome, "Home Img");
+			navigatetoHmPg();
 			if(isElementPresent(BookingPageLocators.loveFlynasApp)==true)
 			{
 				click(BookingPageLocators.noThanks, "No Thanks");
@@ -71,7 +71,7 @@ public class TC16_PaywithNasCredit extends BookingPageFlow{
 			registeredUsrcancelFlight();
 			confirmChanges();
 			waitforElement(BookingPageLocators.tittleHome);
-			click(BookingPageLocators.tittleHome, "Home Img");
+			navigatetoHmPg();
 			if(isElementPresent(BookingPageLocators.loveFlynasApp)==true)
 			{
 				click(BookingPageLocators.noThanks, "No Thanks");
