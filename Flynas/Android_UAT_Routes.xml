@@ -15,7 +15,7 @@
 				<!--***************************************Economy*****************************************-->
 			
 						<class name="flynas.android.scripts.uat.routes.TC01_oneWayDomesticEconomy_RUH_JED"/>  
-						<class name="flynas.android.scripts.uat.routes.TC02_oneWayDomesticEconomy_RUH_DMM"/> 
+					<!-- 	<class name="flynas.android.scripts.uat.routes.TC02_oneWayDomesticEconomy_RUH_DMM"/> 
 						<class name="flynas.android.scripts.uat.routes.TC03_oneWayDomesticEconomy_RUH_GIZ"/> 
 						<class name="flynas.android.scripts.uat.routes.TC04_oneWayDomesticEconomy_RUH_MED"/> 
 						<class name="flynas.android.scripts.uat.routes.TC05_oneWayDomesticEconomy_RUH_TIF"/> 
@@ -27,7 +27,7 @@
 				 		<class name="flynas.android.scripts.uat.routes.TC11_roundTripDomesticEconomy_JED_DMM"/> 
 						<class name="flynas.android.scripts.uat.routes.TC12_roundTripDomesticEconomy_JED_GIZ"/> 
 						<class name="flynas.android.scripts.uat.routes.TC13_roundTripDomesticEconomy_JED_MED"/> 
-						<class name="flynas.android.scripts.uat.routes.TC14_roundTripDomesticEconomy_JED_AHB"/>  -->
+						<class name="flynas.android.scripts.uat.routes.TC14_roundTripDomesticEconomy_JED_AHB"/> 
 						<class name="flynas.android.scripts.uat.routes.TC15_roundTripDomesticEconomy_JED_TUU"/>
 						<class name="flynas.android.scripts.uat.routes.TC16_roundTripDomesticEconomy_JED_ELQ"/>
 						<class name="flynas.android.scripts.uat.routes.TC17_roundTripDomesticEconomy_DMM_TIF"/> 
@@ -64,7 +64,7 @@
 						<class name="flynas.android.scripts.uat.routes.TC48_roundTripInternationalEconomy_JED_ATZ"/>
 						<class name="flynas.android.scripts.uat.routes.TC49_roundTripInternationalEconomy_JED_AMM"/>
 						<class name="flynas.android.scripts.uat.routes.TC50_roundTripInternationalEconomy_RUH_AMM"/>
-						<class name="flynas.android.scripts.uat.routes.TC62_roundTripDomesticEconomyAddExtra_RUH_AHB"/>
+						<class name="flynas.android.scripts.uat.routes.TC62_roundTripDomesticEconomyAddExtra_RUH_AHB"/> -->
 					
 						  
 			<!--  ***********************************************Flex***************************************************** -->
