@@ -1,10 +1,9 @@
-package flynas.web.uat.reg;
+package flynas.web.uat.regression;
 
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -16,28 +15,30 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
+public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_19");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_18");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_39_agencyLoginRondTripModifyExtras( String username,String password,String bookingClass,String mobilenum,
-			String paymentType,String newDate,String pickDate,String rtnDate,String origin,String dest,String triptype,String adult,
-			String child,String infant,String totalPass,String smiles,String nationality,String doctype,String docNum,String emailId,
-			String domOrInt,String seatSelect,String Description) throws Throwable {
+	public  void TC_38_corporateLoginRoundTripModifyExtras( String username,String password,String bookingClass,
+			String mobilenum,String paymentType,String newDate,String strDeptDate,String rtnDate,String origin,
+			String dest,String triptype,String adult,String child,String infant,String seatSelect,String domOrInt,
+			String totalPass,String nationality,String docNum,String docType,String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			
-			String	deptdate = pickDate(pickDate);
-			String	rtrnDate = pickDate(rtnDate);
+		
+			String 	deptdate = pickDate(strDeptDate);
+			String 	rtrndate = pickDate(rtnDate);
 			
-			click(BookingPageLocators.agency_lnk, "Agency Login");
+						
+			click(BookingPageLocators.corporatelogin_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
-			inputBookingDetails(triptype,origin, dest, deptdate, "", "", rtrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, "");
-			inputPassengerDetails(domOrInt, totalPass, nationality, doctype, docNum, smiles, mobilenum, emailId, "", "", "");
+			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
+			selectClass(bookingClass, "Economy");
+			inputPassengerDetails(domOrInt, totalPass, nationality,docType,docNum, "",mobilenum, username+"@gmail.com", "", "", "");;
 			waitforElement(BookingPageLocators.baggagetittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
@@ -46,19 +47,18 @@ public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
 					System.out.println("No Baggage Page");
 				}
 			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-			clickContinueBtn();
-			if(isElementDisplayedTemp(BookingPageLocators.ok)){
-				click(BookingPageLocators.ok, "OK");
-			}
-				
+			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
+				clickContinueBtn();
+				if(isElementDisplayedTemp(BookingPageLocators.ok))
+				{
+					click(BookingPageLocators.ok, "OK");
+				}
 			}else{
-					System.out.println("No Seat Page");
+				System.out.println("No Seat Page");
 			}
 			payment(paymentType, "");
-			String strPNR = getReferenceNumber().trim();
-			searchFlight(strPNR, username+"@gmail.com", "", "");
+			String strpnr = getReferenceNumber().trim();
+			searchFlight(strpnr, username+"@gmail.com", "", "");
 			modifyExtras();
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
@@ -79,15 +79,16 @@ public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			click(BookingPageLocators.paynow, "Pay Now");
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber().trim();
-			validate_ticketStatus(strpnr);
-			Reporter.SuccessReport("TC39_agencyLoginRondTripModifyExtras", "Pass");
+			String strPNR = getReferenceNumber().trim();
+			validate_ticketStatus(strPNR);
+									
+			Reporter.SuccessReport("TC38_corporateLoginRoundTripModifyExtras", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC39_agencyLoginRondTripModifyExtras", "Failed");
+			Reporter.failureReport("TC38_corporateLoginRoundTripModifyExtras", "Failed");
 		}
 	}
 	
@@ -95,8 +96,8 @@ public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("EmployeEmail", "Value"),
-	    		xls.getCellValue("Password", "Value"),
+	    			xls.getCellValue("EmployeEmail", "Value"),
+	    			xls.getCellValue("Password", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
@@ -109,14 +110,13 @@ public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		xls.getCellValue("Total Passenger", "Value"),
-	    		xls.getCellValue("na Smiles", "Value"),
-	    		xls.getCellValue("Nationality", "Value"),
-	    		xls.getCellValue("Document Type", "Value"),
-	    		xls.getCellValue("Doc Number", "Value"),
-	    		xls.getCellValue("Email Address", "Value"),
+	    		"Extra Leg Room",
 	    		xls.getCellValue("Flight Type", "Value"),
-	    		xls.getCellValue("Select Seat", "Value"),
-	    		"Validate Agency Login RondTrip ModifyExtras"}};
+	    		xls.getCellValue("Total Passenger", "Value"),
+	    		xls.getCellValue("Nationality", "Value"),
+	    		xls.getCellValue("Doc Number", "Value"),
+	    		xls.getCellValue("Document Type", "Value"),
+	    		"Validate Corporate Login RoundTrip ModifyExtras"}};
 	}
+
 }

@@ -1,4 +1,5 @@
-package flynas.web.uat.reg;
+package flynas.web.uat.regression;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.DataProvider;
@@ -12,18 +13,24 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
+public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_16");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_37_EmpLoginStaffConfmedModifyExtras(String username,String password,String bookingClass,String mobilenum,
-			String paymentType,String newDate,String pickDate,String rtndate,String origin,String dest,String triptype,
-			String adult,String child,String infant,String selectseat,String Description) throws Throwable {
+	public  void TC_16_EmpLoginStaffConfmedChangeDateCheckIn( String username,String password,String bookingClass,
+			String mobilenum,
+			String paymentType,
+			String newDate,
+			String departurDate,String rtndate,
+			String origin,
+			String dest,String triptype,String adult,String child,String infant,String selectseat,
+			String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String 	deptdate = pickDate(pickDate);
+			String 	deptdate = pickDate(departurDate);
 			String 	rtrndate = pickDate(rtndate);
+			
 			click(emplogin_lnk, "Employe Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -57,39 +64,30 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 				System.out.println("No Seat Page");
 			}
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber().trim();
-			searchFlight(strpnr, username, "", "");
-			modifyExtras();
-			Baggage_Extra(triptype);
-			addSportsEqpmnt(triptype);
-			Select_A_Meal();
-			Selecting_loung();
-			inputExtras("12");
-			waitforElement(BookingPageLocators.manageMyBookingTittle);
+			String strpnr = getReferenceNumber();
+			String strPNR = strpnr.trim();
+			System.out.println(strPNR);
+			
+			String newdate = pickDate(newDate);
+			String strPNRChangeDate = changeDate(strPNR, username, mobilenum, "", newdate, selectseat,"",bookingClass,1);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.modifySeat, "Seat Selection");
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				selectallSeats(selectseat, "1", triptype);
+			System.out.println(strPNRChangeDate);
+			if(strPNRChangeDate.trim().equalsIgnoreCase(strPNR)){
+				Reporter.SuccessReport("Change Flight Date", "Flight Date has changed successfully");
 			}else{
-				System.out.println("No seat Select Page");
+				Reporter.SuccessReport("Change Flight Date", "Flight Date has NOT changed successfully");
 			}
-			waitforElement(BookingPageLocators.paynow);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.paynow, "Pay Now");
-			payment(paymentType, "");
-			String strPNR = getReferenceNumber().trim();
-			validate_ticketStatus(strPNR);
+			searchFlightCheckin(strPNR, username, "", "");
+			performCheckin("","","");
+			validateCheckin();
 			
-			
-			Reporter.SuccessReport("TC37_EmpLoginStaffConfmedModifyExtras", "Pass");
+			Reporter.SuccessReport("TC16_EmpLoginStaffConfmedChangeDateCheckIn", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC37_EmpLoginStaffConfmedModifyExtras", "Failed");
+			Reporter.failureReport("TC16_EmpLoginStaffConfmedChangeDateCheckIn", "Failed");
 		}
 	}
 	
@@ -105,14 +103,14 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
-	    		xls.getCellValue("Origin", "Value1"),
-	    		xls.getCellValue("Destination", "Value1"),
+	    		xls.getCellValue("Origin", "Value"),
+	    		xls.getCellValue("Destination", "Value"),
 	    		xls.getCellValue("Trip Type", "Value"),
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		xls.getCellValue("Select Seat", "Value"),
-	    		"Validate Employe Login Round Trip One Adult StaffConformed Modify Extras"}};
+	    		"Validate Employe Login Round Trip One Adult StaffConformed ChangFlight CheckIN"}};
 	}
 
 }

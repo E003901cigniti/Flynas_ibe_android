@@ -1,4 +1,4 @@
-package flynas.web.uat.reg;
+package flynas.web.uat.regression;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;

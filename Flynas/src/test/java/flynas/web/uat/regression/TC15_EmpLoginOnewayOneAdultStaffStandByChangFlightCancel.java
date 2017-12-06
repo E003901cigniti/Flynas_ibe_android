@@ -1,4 +1,4 @@
-package flynas.web.uat.reg;
+package flynas.web.uat.regression;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

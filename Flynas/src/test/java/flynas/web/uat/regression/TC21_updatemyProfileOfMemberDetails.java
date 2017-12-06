@@ -1,4 +1,4 @@
-package flynas.web.uat.reg;
+package flynas.web.uat.regression;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
