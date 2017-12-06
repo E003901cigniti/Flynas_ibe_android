@@ -23,7 +23,7 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_06_oneWay2InternationalEco");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public void TC_06_oneWay2InternationalEco(String Username, String Password,
+	public void TC_06_oneWay2InternationalEco(
 			String strTripType, String strOrigin,String strDestination, 
 			String strDepatureDate,	String strFlightType, String strTotalPessenger,
 			String strNationality,String strDocumentType,String strDocumentNum,String strNaSmile,
@@ -40,9 +40,12 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 		
 			
 			//User Login
+			String[] Credentials = pickCredentials("UATcredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
-			login(Username,Password);
+			login(username,password);
 			
 			//Entering Booking Details
 			inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,"", "",
@@ -78,8 +81,7 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 	@DataProvider(name="testData")
 	public Object[][] createdata1() {
 		return (Object[][]) new Object[][] {{
-			xls.getCellValue("username", "Value"),	
-			xls.getCellValue("password", "Value"),
+			
 			xls.getCellValue("Trip Type", "Value"),
 			xls.getCellValue("Origin", "Value"),
 			xls.getCellValue("Destination", "Value"),

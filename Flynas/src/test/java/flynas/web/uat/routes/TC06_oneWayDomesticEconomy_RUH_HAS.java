@@ -16,7 +16,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC06_oneWayDomesticEconomy_RUH_HAS extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_01_oneWayDomesticEcoSADAD");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
 	public  void TC_06_oneWayDomesticEconomy_RUH_HAS( String bookingClass,String mobilenum,

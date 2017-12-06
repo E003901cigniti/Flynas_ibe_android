@@ -44,8 +44,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow {
 			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency);
  			selectClass(strBookingClass, tripType);
  			continueOnPsngrDtls();
-			Baggage(bookingtype, totalpass);
-			click(BookingPageLocators.continuebtn, "Continue");
+ 			continueOnExtras();
 			continueOnSeatSelection();
 			payment(paymenttype,"");
 			Thread.sleep(10000);

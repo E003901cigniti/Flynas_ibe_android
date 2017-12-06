@@ -17,7 +17,7 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC190_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_18");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"FL_WEB_18");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_190_corporateLoginRToneAdultCancelFlight( String bookingClass,
@@ -54,7 +54,7 @@ public class TC190_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			searchFlight(strPNR, username+"@gmail.com", mobilenum, "");
-			cancelFlight();
+			cancelFlight("All");
 				
 			
 			

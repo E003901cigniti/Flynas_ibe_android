@@ -16,7 +16,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC119_multicityInternationalFlex_RUH_KRT extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_01_oneWayDomesticEcoSADAD");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Flex"})
 	public  void TC_119_multicityInternationalFlex_RUH_KRT( String bookingClass,

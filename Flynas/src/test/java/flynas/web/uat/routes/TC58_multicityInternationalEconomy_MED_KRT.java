@@ -13,7 +13,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC58_multicityInternationalEconomy_MED_KRT extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_01_oneWayDomesticEcoSADAD");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
 	public  void TC_58_multicityInternationalEconomy_MED_KRT( String bookingClass,

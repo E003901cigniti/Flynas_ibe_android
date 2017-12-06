@@ -19,7 +19,7 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC187_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends BookingPageFlow{
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_15");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"FL_WEB_15");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_187_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel( String bookingClass,
@@ -83,7 +83,7 @@ public class TC187_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends B
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath("//span[contains(text(),'"+strPNR+"')]")));
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			click(BookingPageLocators.manageMyBookings(strPNR), "ManageMyBookings");
-			cancelFlight();
+			cancelFlight("All");
 			
 			Reporter.SuccessReport("TC187_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel", "Pass");
 			

@@ -18,7 +18,7 @@ public class LoginPage<RenderedWebElement> extends BookingPageLocators {
 	{			
 		type(BookingPageLocators.email, username, "Email");
 		type(BookingPageLocators.password, password, "Password");
-		click(BookingPageLocators.login_btn, "Login");	
+		click(BookingPageLocators.login_btn, "Login");		
 		WaittillPageLoad();
 		if(isElementDisplayed(BookingPageLocators.logout_lnk)==true){
 			Reporter.SuccessReport("Verifing login: ", "User Log-in successful");

@@ -1222,7 +1222,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		click(BookingPageLocators.continueBtn, "Continue");
 	}
-	public void selectCodeshareConectflight(String bookingClass,String bookingtype) throws InterruptedException{
+	public void selectCodeshareConectflight(String bookingClass,String bookingtype) throws Throwable{
 		waitforElement(BookingPageLocators.selectflightsection);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		boolean flag=false;

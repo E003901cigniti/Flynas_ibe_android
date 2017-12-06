@@ -19,18 +19,19 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_01_oneWayDomesticEcoSADAD");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_34_BaggageValidation( String username,String password,String bookingClass,String mobilenum,String paymentType,
-			String newDate,String pickDate,String rtnDate,String origin,String dest,String triptype,String adult,String child,
+	public  void TC_34_BaggageValidation( String bookingClass,String mobilenum,String paymentType,
+			String newDate,String departureDate,String rtnDate,String origin,String dest,String triptype,String adult,String child,
 			String infant,String seatSelect,String Description) throws Throwable {
 		try {
 			
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMMM yyyy");
-			Date date = new Date();
-			String deptdate = dateFormat.format(date);
+			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
+			
+			String deptdate = pickDate(departureDate);
 			String 	depdate = newDateForCheckIN(deptdate);
 			
-			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-										
+			String[] Credentials = pickCredentials("UATcredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];							
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, depdate , "", "", rtnDate,adult, child, infant,"","","");
@@ -54,8 +55,6 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("username", "Value"),
-		    	xls.getCellValue("password", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),

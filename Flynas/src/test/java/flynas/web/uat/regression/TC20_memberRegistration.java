@@ -1,7 +1,5 @@
 package flynas.web.uat.regression;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -15,8 +13,8 @@ import flynas.web.workflows.BookingPage;
 import flynas.web.workflows.BookingPageFlow;
 import flynas.web.workflows.LoginPage;
 import flynas.web.workflows.MemberDashboard;
-import flynas.web.workflows.MemberProfilePage;
 import flynas.web.workflows.MemberRegistrationPage;
+import flynas.web.workflows.MyProfilePage;
 import flynas.web.workflows.projectUtilities;
 
 public class TC20_memberRegistration extends BookingPageFlow{
@@ -33,7 +31,7 @@ public class TC20_memberRegistration extends BookingPageFlow{
 			LoginPage LoginPg = new LoginPage();
 			BookingPage Bookingpg = new BookingPage();
 			MemberRegistrationPage memberRegisterPg = new MemberRegistrationPage();
-			MemberProfilePage profilePage = new MemberProfilePage();
+			MyProfilePage profilePage = new MyProfilePage();
 			MemberDashboard memberdb = new MemberDashboard();
 			
 			//navigating to login page

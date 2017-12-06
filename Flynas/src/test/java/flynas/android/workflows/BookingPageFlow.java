@@ -1070,7 +1070,7 @@ public class BookingPageFlow extends BookingPageLocators{
 				j++;
 			}
 			
-			for(int i=0;i<=ClassArrow.size();i++)
+			for(int i=0;i<ClassArrow.size();i++)
 				{
 					count=0;
 					if(isElementPresent(BookingPageLocators.flexOW)==true)
@@ -1419,6 +1419,7 @@ public class BookingPageFlow extends BookingPageLocators{
 	}
 	
 	public void continueOnExtras() throws Throwable{
+		
 		waitForElementPresent(BookingPageLocators.baggagetittle, "Baggage Tittle");
 		if(isElementDisplayed(BookingPageLocators.baggagetittle)){
 		click(BookingPageLocators.continuebtn, "Continue");

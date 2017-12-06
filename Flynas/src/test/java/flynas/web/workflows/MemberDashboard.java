@@ -2,7 +2,7 @@ package flynas.web.workflows;
 
 import flynas.web.testObjects.BookingPageLocators;
 
-public class MemberDashboard extends BookingPageLocators {
+public class MemberDashboard<RenderedWebElement> extends BookingPageLocators {
 	
 	public void waitforpageload() throws InterruptedException{	
 		waitUtilElementhasAttribute(BookingPageLocators.body);

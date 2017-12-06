@@ -14,7 +14,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC189_EmpLoginStaffConfmedCancelFlight extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_16");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"FL_WEB_16");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_189_EmpLoginStaffConfmedCancelFlight( String bookingClass,
@@ -56,7 +56,7 @@ public class TC189_EmpLoginStaffConfmedCancelFlight extends BookingPageFlow{
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			searchFlight(strPNR, username, mobilenum, "");
-			cancelFlight();
+			cancelFlight("All");
 			
 			Reporter.SuccessReport("TC189_EmpLoginStaffConfmedCancelFlight", "Pass");
 			

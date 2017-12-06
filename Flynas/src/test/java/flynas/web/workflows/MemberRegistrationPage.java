@@ -8,7 +8,7 @@ import com.ctaf.utilities.Reporter;
 
 import flynas.web.testObjects.BookingPageLocators;
 
-public class MemberRegistrationPage extends BookingPageLocators{
+public class MemberRegistrationPage<RenderedWebElement> extends BookingPageLocators{
 	
 	public void waitforpageload() throws InterruptedException{	
 		waitUtilElementhasAttribute(BookingPageLocators.body);

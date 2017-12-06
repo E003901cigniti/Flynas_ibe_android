@@ -6,7 +6,7 @@ import com.ctaf.utilities.Reporter;
 
 import flynas.web.testObjects.BookingPageLocators;
 
-public class projectUtilities extends BookingPageLocators {
+public class projectUtilities<RenderedWebElement> extends BookingPageLocators {
 	
 	public void waitforpageload() throws InterruptedException{
 		waitUtilElementhasAttribute(BookingPageLocators.body);	
@@ -58,7 +58,6 @@ public class projectUtilities extends BookingPageLocators {
 		boolean flag = false;
 		try{
 			 if (String1.equalsIgnoreCase(String2)){
-		           
 		            flag = true;
 		            System.out.println(String1+"and"+String2+" are equal");
 			 	}else{
@@ -74,10 +73,11 @@ public class projectUtilities extends BookingPageLocators {
 	
 	public void verifytextupdate(String lable, String text1, String text2) throws Throwable{
 		waitforpageload();
+		System.out.println("comparing string :" +text1+","+text2);
 		if(compareStrings(text1,text2)==false){
 			Reporter.SuccessReport("Verifing if text is Updated :", lable+" Updated Successfully ");
 		}else{
-			Reporter.failureReport("Verifing if text is Updated :", lable+" Updated UnSuccessfull ");
+			Reporter.failureReport("Verifing if text is Updated :", lable+" Update UnSuccessfull ");
 		}
 	}
 

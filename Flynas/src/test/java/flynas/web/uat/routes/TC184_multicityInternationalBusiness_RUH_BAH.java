@@ -16,7 +16,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC184_multicityInternationalBusiness_RUH_BAH extends BookingPageFlow {
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_01_oneWayDomesticEcoSADAD");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Business"})
 	public  void TC_184_multicityInternationalBusiness_RUH_BAH( String bookingClass,
@@ -51,7 +51,7 @@ public class TC184_multicityInternationalBusiness_RUH_BAH extends BookingPageFlo
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);
 			searchFlight(strPNR, username, "", "");
-			cancelFlight();
+			cancelFlight("All");
 		
 			Reporter.SuccessReport("TC184_multicityInternationalBusiness_RUH_BAH", "Pass");
 			

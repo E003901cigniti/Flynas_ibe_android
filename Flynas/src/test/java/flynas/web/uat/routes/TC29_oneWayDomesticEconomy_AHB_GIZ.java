@@ -16,7 +16,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC29_oneWayDomesticEconomy_AHB_GIZ extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_01_oneWayDomesticEcoSADAD");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
 	public  void TC_29_oneWayDomesticEconomy_AHB_GIZ( String bookingClass,
@@ -53,7 +53,7 @@ public class TC29_oneWayDomesticEconomy_AHB_GIZ extends BookingPageFlow{
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);
 			searchFlight(strPNR, username, "", "");
-			cancelFlight();
+			cancelFlight("All");
 				
 		
 			Reporter.SuccessReport("TC29_oneWayDomesticEconomy_AHB_GIZ", "Pass");

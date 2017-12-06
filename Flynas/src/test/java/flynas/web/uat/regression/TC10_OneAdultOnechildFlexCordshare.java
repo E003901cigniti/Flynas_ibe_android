@@ -16,7 +16,7 @@ public class TC10_OneAdultOnechildFlexCordshare extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_10");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_10_OneAdultOnechildFlexCordshare (String Username, String Password, String tripType, String origin, String dest, String strDepatureDate,
+	public  void TC_10_OneAdultOnechildFlexCordshare (String tripType, String origin, String dest, String strDepatureDate,
 			String origin2,String departure2,String strReturnDate,String Adult,String Child,String infant, 
 			String promo,String FlightType,String totalpass,String nationality,String Doctypr,
 			String docNumber ,String naSmiles,String Mobile,String email ,String SelectSeat,
@@ -30,9 +30,12 @@ public class TC10_OneAdultOnechildFlexCordshare extends BookingPageFlow{
 			String	retrndate = pickDate(strReturnDate);
 			
 			//User Login
+			String[] Credentials = pickCredentials("UATcredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
-			login(Username,Password);
+			login(username,password);
 			
 			//Entering Booking Details
 			inputBookingDetails(tripType, origin, dest, deptdate,origin2, departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
@@ -78,8 +81,6 @@ public class TC10_OneAdultOnechildFlexCordshare extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("username", "Value"),	
-					xls.getCellValue("password", "Value"),
 					xls.getCellValue("Trip Type", "Value"),
 		    		xls.getCellValue("Origin", "Value"),
 		    		xls.getCellValue("Destination", "Value"),

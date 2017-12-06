@@ -68,7 +68,7 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 			JavascriptExecutor executor = (JavascriptExecutor)driver;
 			executor.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath("//td[contains(text(),'"+strPNR+"')]")));
 			click(BookingPageLocators.manageBookings_agentportal(strPNR), "manageMyBookings");
-			String priceBeforChange =agentcancelFlight();
+			String priceBeforChange =agentcancelFlight("All");
 			waitforElement(BookingPageLocators.Home);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
  			click(BookingPageLocators.Home, "Home");

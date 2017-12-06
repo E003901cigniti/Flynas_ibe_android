@@ -79,7 +79,7 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(By.xpath("//span[contains(text(),'"+strPNR+"')]")));
 			click(BookingPageLocators.manageMyBookings(strPNR), "ManageMyBookings");
-			cancelFlight();
+			cancelFlight("All");
 			
 			Reporter.SuccessReport("TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel", "Pass");
 			

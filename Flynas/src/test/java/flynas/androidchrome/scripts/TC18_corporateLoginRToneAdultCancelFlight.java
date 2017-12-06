@@ -57,7 +57,7 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			searchFlight(strPNR, username+"@Gmail.com", "", "");
-			cancelFlight();
+			cancelFlight("All");
 									
 			Reporter.SuccessReport("TC18_corporateLoginRToneAdultCancelFlight", "Pass");
 			

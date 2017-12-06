@@ -14,7 +14,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC188_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_16");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"FL_WEB_16");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_188_EmpLoginStaffConfmedChangeDateCheckIn( String bookingClass,

@@ -18,16 +18,24 @@ public class TC28_redemptionBookingWithSilverMember extends BookingPageFlow{
 	public  void TC_28_redemptionBookingWithSilverMember(String tripType, String origin, String dest, 
 			String deptDate, String origin2,String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
-			String naSmiles,String Mobile,String email ,String SelectSeat,String paymenttype,String bookingtype, 
+			String naSmiles,String Mobile,String SelectSeat,String paymenttype,String bookingtype, 
 			String charity,String Currency, String silver,String Description
 			) throws Throwable {
 		try {
 			//System.out.println(paymenttype);
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String deptdate = pickDate(deptDate);
+			
+			String[] Credentials = pickCredentials("SilverCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			click(BookingPageLocators.login_lnk, "Login");
+			switchtoChildWindow();
+			login(username,password);
+			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retdate,Adult, Child, infant,promo,Currency,paymenttype);
 			selectClass(strBookingClass, tripType);
-			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, "",Mobile,email,"silver","member",paymenttype);
+			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, "",Mobile,username,"silver","member",paymenttype);
 			waitforElement(BookingPageLocators.baggagetittle);
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
 			clickContinueBtn();
@@ -54,33 +62,33 @@ public class TC28_redemptionBookingWithSilverMember extends BookingPageFlow{
 	@DataProvider(name="testData")
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
-	    		{xls.getCellValue("Trip Type", "Value"),
-	    		xls.getCellValue("Origin", "Value"),
-	    		xls.getCellValue("Destination", "Value"),
-	    		xls.getCellValue("Departure Date", "Value"),
-	    		"",
-	    		"",
-	    		xls.getCellValue("Return Date", "Value"),
-	    		xls.getCellValue("Adults Count", "Value"),
-	    		xls.getCellValue("Child Count", "Value"),
-	    		xls.getCellValue("Infant Count", "Value"),
-	    		xls.getCellValue("Promo", "Value"),
-	    		xls.getCellValue("Booking Class", "Value"),
-	    		xls.getCellValue("Flight Type", "Value"),
-	    		xls.getCellValue("Total Passenger", "Value"),
-	    		xls.getCellValue("Nationality", "Value"),
-	    		xls.getCellValue("Document Type", "Value"),
-	    		xls.getCellValue("Doc Number", "Value"),
-	    		xls.getCellValue("naSmile", "Value"),
-	    		xls.getCellValue("Mobile", "Value"),
-	    		xls.getCellValue("Email Address", "Value"),
-	    		xls.getCellValue("Select Seat", "Value"),
-	    		xls.getCellValue("Payment Type", "Value"),
-	    		"",
-    			xls.getCellValue("Charity Donation", "Value"),
-    			xls.getCellValue("Currency", "Value"),
-    			xls.getCellValue("silver", "Value"),
-	    		"Validate Redemption Booking with Silver Member"}};
+	    		{
+	    			xls.getCellValue("Trip Type", "Value"),
+		    		xls.getCellValue("Origin", "Value"),
+		    		xls.getCellValue("Destination", "Value"),
+		    		xls.getCellValue("Departure Date", "Value"),
+		    		"",
+		    		"",
+		    		xls.getCellValue("Return Date", "Value"),
+		    		xls.getCellValue("Adults Count", "Value"),
+		    		xls.getCellValue("Child Count", "Value"),
+		    		xls.getCellValue("Infant Count", "Value"),
+		    		xls.getCellValue("Promo", "Value"),
+		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Flight Type", "Value"),
+		    		xls.getCellValue("Total Passenger", "Value"),
+		    		xls.getCellValue("Nationality", "Value"),
+		    		xls.getCellValue("Document Type", "Value"),
+		    		xls.getCellValue("Doc Number", "Value"),
+		    		xls.getCellValue("naSmile", "Value"),
+		    		xls.getCellValue("Mobile", "Value"),
+		    		xls.getCellValue("Select Seat", "Value"),
+		    		xls.getCellValue("Payment Type", "Value"),
+		    		"",
+	    			xls.getCellValue("Charity Donation", "Value"),
+	    			xls.getCellValue("Currency", "Value"),
+	    			xls.getCellValue("silver", "Value"),
+		    		"Validate Redemption Booking with Silver Member"}};
 	}
 
 

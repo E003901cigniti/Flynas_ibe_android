@@ -58,7 +58,8 @@ public class TC23_oneWayDomesticOneAdultCheckInAR extends BookingPageFlow{
 	@DataProvider(name="testData")
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
-	    	{xls.getCellValue("Trip Type", "Value"),
+	    	{	
+	    		xls.getCellValue("Trip Type", "Value"),
 	    		xls.getCellValue("Origin", "Value"),
 	    		xls.getCellValue("Destination", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),

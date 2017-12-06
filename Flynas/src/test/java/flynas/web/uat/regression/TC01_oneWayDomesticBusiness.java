@@ -16,7 +16,7 @@ public class TC01_oneWayDomesticBusiness extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_02_oneWayDomesticBusiness");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_01_oneWayDomesticBusiness(String Username, String Password, String tripType, String origin, String dest,String deptDate,String origin2,
+	public  void TC_01_oneWayDomesticBusiness(String tripType, String origin, String dest,String deptDate,String origin2,
 			String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,String naSmiles,
 			String Mobile,String email ,String SelectSeat,String paymenttype,String bookingtype,String charity,
@@ -29,9 +29,12 @@ public class TC01_oneWayDomesticBusiness extends BookingPageFlow{
 			String	deptdate = pickDate(deptDate);
 			String	retrndate = pickDate(retdate);
 			
+			String[] Credentials = pickCredentials("UATcredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
-			login(Username,Password);
+			login(username,password);
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2,departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
 			selectClass(strBookingClass, tripType);
@@ -64,8 +67,7 @@ public class TC01_oneWayDomesticBusiness extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("username", "Value"),	
-	    			xls.getCellValue("password", "Value"),	    			
+	    				    			
 	    			xls.getCellValue("Trip Type", "Value"),
 	    			xls.getCellValue("Origin", "Value"),
 		    		xls.getCellValue("Destination", "Value"),
@@ -83,11 +85,11 @@ public class TC01_oneWayDomesticBusiness extends BookingPageFlow{
 		    		xls.getCellValue("Nationality", "Value"),
 		    		xls.getCellValue("Document Type", "Value"),
 		    		xls.getCellValue("Doc Number", "Value"),
-		    		"1234567890",
+		    		xls.getCellValue("na Smiles", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
 		    		xls.getCellValue("Email Address", "Value"),
 		    		xls.getCellValue("Select Seat", "Value"),
-		    		"Credit Card",
+		    		xls.getCellValue("Payment Type", "Value"),
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),

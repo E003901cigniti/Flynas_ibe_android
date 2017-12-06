@@ -50,7 +50,7 @@ public class TC02_ConformBookingCancelPNR extends BookingPageFlow{
 			String strpnr = getReferenceNumber().trim();
 			System.out.println(strpnr);				
 			searchFlight(strpnr, email, "", "");
-			cancelFlight();
+			cancelFlight("All");
 			searchFlightCheckin(strpnr, email, "", "");
 			if(isElementDisplayedTemp(BookingPageLocators.ErrorMsg1)){
 				String ErrorMsg=getText(BookingPageLocators.ErrorMsg1, "Error Message");

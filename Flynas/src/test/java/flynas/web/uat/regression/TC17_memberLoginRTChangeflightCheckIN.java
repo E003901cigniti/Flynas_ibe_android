@@ -21,7 +21,7 @@ public class TC17_memberLoginRTChangeflightCheckIN extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_17");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_17_memberLoginRTChangeflightCheckIN( String username,String password,String bookingClass,
+	public  void TC_17_memberLoginRTChangeflightCheckIN( String bookingClass,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -36,6 +36,9 @@ public class TC17_memberLoginRTChangeflightCheckIN extends BookingPageFlow {
 			String 	deptdate = pickDate(departurDate);
 			String 	rtrndate = pickDate(rtnDate);
 			
+			String[] Credentials = pickCredentials("UATcredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
 		
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
@@ -91,9 +94,7 @@ public class TC17_memberLoginRTChangeflightCheckIN extends BookingPageFlow {
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("username", "Value"),
-	    			xls.getCellValue("Password", "Value"),
-		    		xls.getCellValue("Booking Class", "Value"),
+	    			xls.getCellValue("Booking Class", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		xls.getCellValue("NewDate", "Value"),

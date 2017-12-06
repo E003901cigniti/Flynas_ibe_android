@@ -102,7 +102,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By stafCnformed = By.xpath("//button[@class='btn selectflightbtn col3']");
 	public static By flighttable = By.xpath("//table[@class='table flight_table']");
 	public static By priceBeforeChange = By.xpath("//b[contains(text(),'Price before change')]/following::span[1]");
-	
+	public static By Totalprice = By.xpath("//span[@class='pull-right total']");
 	//Input Passenger Details
 	public static By passengerDetailsTittle = By.xpath("//h1[contains(text(), 'Passenger and Document Details') or ./text()='معلومات المسافر']");
 	public static String passType = "//div[@class='pass_tab']/div[#]/h3";

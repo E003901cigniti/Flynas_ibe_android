@@ -6,6 +6,7 @@ package com.ctaf.accelerators;
 
 
 import org.openqa.selenium.Dimension;
+
 import java.awt.Rectangle;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -101,11 +102,11 @@ public class ActionEngine extends TestEngine {
 			e.printStackTrace();
 		} finally {
 			if (!flag) {
-				Reporter.failureReport("Click", "Unable to click on "
+				Reporter.failureReport("Click", "Unable to clicked on "
 						+ locatorName);
 				return flag;
 			} else if (b && flag) {
-				Reporter.SuccessReport("Click", "Successfully click on "
+				Reporter.SuccessReport("Click", "Successfully clicked on "
 						+ locatorName);
 			}
 		}
@@ -639,15 +640,12 @@ public class ActionEngine extends TestEngine {
 		boolean bValue = false;
 
 		try {
-			for (int i = 0; i < 200; i++) {
-				if (driver.findElements(locator).size() > 0) {
-					flag = true;
-					bValue = true;
-					break;
-				} else {
-					driver.wait(50);
-				}
-			}
+			wait = new WebDriverWait(driver,20);
+			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+			if(isElementPresent(locator)==true){
+			flag = true;
+			bValue = true;	
+			}		
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -673,17 +671,17 @@ public class ActionEngine extends TestEngine {
 	 */
 	public static boolean waitForElementPresent(By by, String locator)
 			throws Throwable {
+		Thread.sleep(3000);
 		boolean flag = false;
 		try {
-				wait = new WebDriverWait(driver,60);
+				wait = new WebDriverWait(driver,20);
 				WebElement  element =  null;
 					element = wait.until(ExpectedConditions.presenceOfElementLocated(by));
+					Thread.sleep(3000);
 				    boolean enabled = element.getSize().getHeight()>0;
 				    if(enabled){ 
 				    	flag = true;
-				    }else {
-				    	driver.wait(50);
-					}
+				    }
 		} catch (Exception e) {
 			
 			Assert.assertTrue(flag,"waitForElementPresent : Falied to locate element "+locator);
@@ -2845,7 +2843,13 @@ public class ActionEngine extends TestEngine {
 	public static String randomString() {
 		return RandomStringUtils.randomAlphabetic(8);
 	}
+	public static String randomString(int length) {
+		return RandomStringUtils.randomAlphabetic(length);
+	}
 	
+	public static String randomNumericString(int length) {
+	return RandomStringUtils.randomNumeric(length);
+	}
 	public static String randomNumericString() {
 		String rn = (RandomStringUtils.randomNumeric(1));
 		if (rn.equals("0")){
@@ -2972,19 +2976,19 @@ public class ActionEngine extends TestEngine {
 	        
 		
 	}
-	public static void waitforElement(By locator) throws InterruptedException 
+	public static void waitforElement(By locator) throws Throwable 
 	{
-		try{
+		try{WebDriverWait wait = new WebDriverWait(driver,20);
 			Thread.sleep(3000);
-		
 			try{
-				driver.findElement(locator).isDisplayed();
+				wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+				if(isElementPresent(locator)==true)
+				//driver.findElement(locator).isDisplayed();
 				System.out.println("Element is available :"+locator);		
+				else System.out.println("Could not find the element by loctor "+locator);
 				}catch (RuntimeException localRuntimeException) { 
-					Thread.sleep(1000);
-					System.out.println("Waiting for........"+locator);
-				} 
-			
+					System.out.println("Exception while trying to locate lement by locator : "+locator);
+				} 			
 			}catch (RuntimeException localRuntimeException) {
 			System.out.println("Error in performing Wait:" + localRuntimeException.getMessage() + "Fail");
 			}
@@ -2992,22 +2996,15 @@ public class ActionEngine extends TestEngine {
 	public static void waitUtilElementhasAttribute(By element) throws InterruptedException
 	{
 		WebDriverWait wait = new WebDriverWait(driver,20);
-		
-			for(int i=0;i<1;i++)
-			{ 
-				Thread.sleep(5000);
+			Thread.sleep(5000);
 				try{
 				System.out.println(driver.findElement(By.xpath("//body[@block-ui='main']")).getAttribute("aria-busy"));
 				wait.until(ExpectedConditions.attributeToBe(element, "aria-busy", "false"));
 				System.out.println("Atrribute is available "+ driver.findElement(By.xpath("//body[@block-ui='main']")).getAttribute("aria-busy"));
-				Thread.sleep(5000);
 				}catch(RuntimeException localRuntimeException){
 					System.out.println("Waiting for........");
 			}
 			
-		
-		}
-		
 	/*	wait.until(new ExpectedCondition<Boolean>() {
 		            public Boolean apply(WebDriver driver) {
 		                         WebElement element = driver.findElement(By.xpath("//body[@block-ui='main']"));

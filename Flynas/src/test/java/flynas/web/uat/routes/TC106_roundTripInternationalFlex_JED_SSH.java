@@ -16,7 +16,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC106_roundTripInternationalFlex_JED_SSH extends  BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_01_oneWayDomesticEcoSADAD");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Flex"})
 	public  void TC_106_roundTripInternationalFlex_JED_SSH( String bookingClass,
@@ -51,7 +51,7 @@ public class TC106_roundTripInternationalFlex_JED_SSH extends  BookingPageFlow{
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);
 			searchFlight(strPNR, username, "", "");
-			cancelFlight();
+			cancelFlight("both");
 		
 			Reporter.SuccessReport("TC106_roundTripInternationalFlex_JED_SSH", "Pass");
 			

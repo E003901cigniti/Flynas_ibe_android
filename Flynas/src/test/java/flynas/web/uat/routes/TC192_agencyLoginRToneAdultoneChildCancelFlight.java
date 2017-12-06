@@ -21,7 +21,7 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC192_agencyLoginRToneAdultoneChildCancelFlight extends BookingPageFlow {
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_19");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"FL_WEB_19");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_192_agencyLoginRToneAdultoneChildCancelFlight( String bookingClass,
@@ -86,7 +86,7 @@ public class TC192_agencyLoginRToneAdultoneChildCancelFlight extends BookingPage
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			
 			click(BookingPageLocators.manageBookings_agentportal(strPNR), "manageMyBookings");
-			String priceBeforChange = agentcancelFlight();
+			String priceBeforChange = agentcancelFlight("All");
 			waitforElement(BookingPageLocators.Home);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
  			click(BookingPageLocators.Home, "Home");

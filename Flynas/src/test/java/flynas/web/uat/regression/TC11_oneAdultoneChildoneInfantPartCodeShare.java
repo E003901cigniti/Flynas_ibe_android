@@ -17,7 +17,7 @@ public class TC11_oneAdultoneChildoneInfantPartCodeShare extends BookingPageFlow
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_11");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_11oneAdultoneChildoneInfantPartCodeShare (String Username, String Password,
+	public  void TC_11oneAdultoneChildoneInfantPartCodeShare (
 			String tripType, String origin, String dest, String departureDate, String origin2,
 			String departure2,String retdate,String Adult,String Child,String infant, String promo,
 			String FlightType,String totalpass,String nationality,String Doctypr, String docNumber, 
@@ -30,9 +30,12 @@ public class TC11_oneAdultoneChildoneInfantPartCodeShare extends BookingPageFlow
 			String	retrndate = pickDate(retdate);
 			
 			//User Login
+			String[] Credentials = pickCredentials("UATcredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
-			login(Username,Password);
+			login(username,password);
 			
 			//Entering Booking Details
 			inputBookingDetails(tripType, origin, dest, deptdate,origin2, departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
@@ -82,8 +85,7 @@ public class TC11_oneAdultoneChildoneInfantPartCodeShare extends BookingPageFlow
 	@DataProvider(name="testData")
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
-	    	{	xls.getCellValue("username", "Value"),	
-				xls.getCellValue("password", "Value"),
+	    	{
 	    		xls.getCellValue("Trip Type", "Value"),
 	    		xls.getCellValue("Origin", "Value"),
 	    		xls.getCellValue("Destination", "Value"),

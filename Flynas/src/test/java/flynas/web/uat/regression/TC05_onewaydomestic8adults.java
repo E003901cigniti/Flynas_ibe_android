@@ -24,7 +24,7 @@ public class TC05_onewaydomestic8adults extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC05_oneWayDom8AdultCheckin");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public void TC_05_onewaydom8Business(String Username, String Password, String lastname, String strTripType, 
+	public void TC_05_onewaydom8Business(String lastname, String strTripType, 
 			String strFlightType, String strOrigin,String strDestination, String strDepatureDate,
 			String strAdultCount, String strChildCount, String strInfantCount, String strPromo,  String strTotalPessenger,
 			String strNationality,String strDocumentType,String strDocumentNum,String strNaSmile,String strMobile,
@@ -38,11 +38,14 @@ public class TC05_onewaydomestic8adults extends BookingPageFlow {
 					//Initializing departure date and return date
 					strDepatureDate = pickDate(strDepatureDate);
 				
+					String[] Credentials = pickCredentials("UATcredentials");
+					String username =Credentials[0];
+					String password =Credentials[1];
 					
 					//User Login
 					click(BookingPageLocators.login_lnk, "Login");
 					switchtoChildWindow();
-					login(Username,Password);
+					login(username,password);
 					
 					//Entering Booking Details
 					inputBookingDetails(strTripType, strOrigin, strDestination, strDepatureDate, "","","",
@@ -79,8 +82,7 @@ public class TC05_onewaydomestic8adults extends BookingPageFlow {
 		@DataProvider(name="testData")
 		public Object[][] createdata1() {
 		    return (Object[][]) new Object[][] {{
-		    	xls.getCellValue("username", "Value"),	
-    			xls.getCellValue("password", "Value"),
+		    	
     			xls.getCellValue("Last Name", "Value"),
 		    	xls.getCellValue("Trip Type", "Value"),
 		    	xls.getCellValue("Flight Type", "Value"),

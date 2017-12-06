@@ -17,7 +17,7 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC191_corporateLoginRToneAdultCheckIN extends BookingPageFlow{
 
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_18");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"FL_WEB_18");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_191_corporateLoginRToneAdultCheckIN( String bookingClass,

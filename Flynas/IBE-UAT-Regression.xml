@@ -14,7 +14,7 @@
 			<classes>	 	
 					<!-- ********************************Chrome*************************************************** -->
 						
-						 <class name="flynas.web.uat.regression.TC01_oneWayDomesticBusiness"/>  
+						<class name="flynas.web.uat.regression.TC01_oneWayDomesticBusiness"/> 
 						<class name="flynas.web.uat.regression.TC02_oneWayDomesticEcoSADAD"/>
 						<class name="flynas.web.uat.regression.TC03_oneWayDomesticChangeDate"/> 
 						<class name="flynas.web.uat.regression.TC04_oneWayDomOneAdultCheckin"/> 
@@ -26,7 +26,7 @@
 						<class name="flynas.web.uat.regression.TC10_OneAdultOnechildFlexCordshare"/> 
 				 		<class name="flynas.web.uat.regression.TC11_oneAdultoneChildoneInfantPartCodeShare"/>
 						<class name="flynas.web.uat.regression.TC12_PayWithCreditShell"/> 
-						 <class name="flynas.web.uat.regression.TC13_oneWayDomesticwithEuro"/>
+						<class name="flynas.web.uat.regression.TC13_oneWayDomesticwithEuro"/>
 						<class name="flynas.web.uat.regression.TC14_onewayDomesticwithUSdollars"/> 
 						<class name="flynas.web.uat.regression.TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel"/> 
 						<class name="flynas.web.uat.regression.TC16_EmpLoginStaffConfmedChangeDateCheckIn"/>
