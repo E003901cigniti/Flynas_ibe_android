@@ -19,7 +19,7 @@ public class TC04_a_oneWayDomOneAdultCheckin extends BookingPageFlow{
 	public  void TC_04a_oneWayDomOneAdultCheckin ( String tripType, 
 			String origin, String dest, String deptDate,String origin2,String departure2, String retdate,
 			String Adult,String Child,String infant, String promo, String strBookingClass, String FlightType,String totalpass,String nationality,String Doctypr,
-			String docNumber, String naSmiles,String Mobile,String email ,String SelectSeat,
+			String docNumber, String naSmiles,String Mobile,String SelectSeat,
 			String paymenttype, String bookingtype,String Charity, 
 			String Currency,String Description) throws Throwable {
 		try {
@@ -58,7 +58,7 @@ public class TC04_a_oneWayDomOneAdultCheckin extends BookingPageFlow{
 			String PNR = strpnr.trim();
 			System.out.println("PNR**********"+PNR);
 			validate_ticketStatus(PNR);
-			searchFlightCheckin(PNR, email, "", "");
+			searchFlightCheckin(PNR, username, "", "");
 			performCheckin(SelectSeat,paymenttype,totalpass);
 			validateCheckin();
 			
@@ -96,7 +96,6 @@ public class TC04_a_oneWayDomOneAdultCheckin extends BookingPageFlow{
 		    		xls.getCellValue("Doc Number", "Value"),
 		    		xls.getCellValue("na Smiles", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
-		    		xls.getCellValue("Email Address", "Value"),
 		    		xls.getCellValue("Select Seat", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		"",

@@ -1,4 +1,6 @@
 package flynas.web.uat.regression;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.DataProvider;
@@ -16,7 +18,7 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_16");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_37_EmpLoginStaffConfmedModifyExtras(String username,String password,String bookingClass,String mobilenum,
+	public  void TC_37_EmpLoginStaffConfmedModifyExtras(String bookingClass,String mobilenum,
 			String paymentType,String newDate,String pickDate,String rtndate,String origin,String dest,String triptype,
 			String adult,String child,String infant,String selectseat,String Description) throws Throwable {
 		try {
@@ -24,6 +26,10 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String 	deptdate = pickDate(pickDate);
 			String 	rtrndate = pickDate(rtndate);
+			String[] Credentials = pickCredentials("EmployeeCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			click(emplogin_lnk, "Employe Login");
 			switchtoChildWindow();
 			login(username,password);

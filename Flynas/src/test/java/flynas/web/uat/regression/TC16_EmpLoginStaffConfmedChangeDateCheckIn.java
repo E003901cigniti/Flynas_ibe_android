@@ -17,7 +17,7 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_16");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_16_EmpLoginStaffConfmedChangeDateCheckIn( String username,String password,String bookingClass,
+	public  void TC_16_EmpLoginStaffConfmedChangeDateCheckIn(String bookingClass,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -30,6 +30,12 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String 	deptdate = pickDate(departurDate);
 			String 	rtrndate = pickDate(rtndate);
+			
+			
+			String[] Credentials = pickCredentials("EmployeeCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			
 			
 			click(emplogin_lnk, "Employe Login");
 			switchtoChildWindow();
@@ -95,8 +101,6 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("EmployeEmail", "Value"),
-	    		xls.getCellValue("Password", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),

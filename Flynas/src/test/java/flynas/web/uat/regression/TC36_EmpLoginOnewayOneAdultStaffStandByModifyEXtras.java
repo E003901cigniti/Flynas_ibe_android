@@ -25,15 +25,18 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_15");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras(String username,String password,String bookingClass,String mobilenum,
+	public  void TC_36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras(String bookingClass,String mobilenum,
 			String paymentType,String newDate,String pickDate,String origin,String dest,String triptype,String adult,String child,
 			String infant,String strSelectSeat,String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			
+		
 			String depdat = pickDate(pickDate);
 			
+			String[] Credentials = pickCredentials("EmployeeCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			click(emplogin_lnk, "Employe Login");
 			switchtoChildWindow();
@@ -98,8 +101,7 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("EmployeEmail", "Value"),
-	    		xls.getCellValue("Password", "Value"),
+	    		
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),

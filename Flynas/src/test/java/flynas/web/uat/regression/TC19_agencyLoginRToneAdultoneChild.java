@@ -20,7 +20,7 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_19");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_19_agencyLoginRToneAdultoneChild( String username,String password,String bookingClass,String mobilenum,String paymentType,
+	public  void TC_19_agencyLoginRToneAdultoneChild(String bookingClass,String mobilenum,String paymentType,
 			String newDate,String departurDate,String rtnDate,String origin,String dest,String triptype,String adult,String child,String infant,
 			String totalPass,String smiles,String nationality,String doctype,String docNum,String emailId,String domOrInt,String Description) throws Throwable {
 		try {
@@ -29,6 +29,10 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 			
 			String	deptdate = pickDate(departurDate);
 			String 	rtrndate = pickDate(rtnDate);
+			
+			String[] Credentials = pickCredentials("AgentCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
 			
 			click(BookingPageLocators.agency_lnk, "Agency Login");
 			switchtoChildWindow();
@@ -108,8 +112,7 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("username", "Value"),
-	    		xls.getCellValue("Password", "Value"),
+	    	
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),

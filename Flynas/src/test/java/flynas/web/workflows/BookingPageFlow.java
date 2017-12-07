@@ -55,9 +55,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		
 		if(Currency!="")
 		{
+			
 			click(BookingPageLocators.Currency_link, "Currency");
 			Thread.sleep(2000);
 			//driver.findElement(By.xpath("//div[contains(text(),'"+Currency+"')]")).click();
+			System.out.println(BookingPageLocators.currencytyp(Currency));
 			click(BookingPageLocators.currencytyp(Currency), Currency);
 		}
 		
@@ -3353,7 +3355,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		public String[] pickCredentials(String Sheetname){
 			ExcelReader xls = new ExcelReader(configProps.getProperty("Credentialsdata"),Sheetname);
 			int count = xls.getRowCount(Sheetname);
-			int index = ((int)(Math.random() * count-1)) + 1;;
+			System.out.println(count);
+			int index = ((int)(Math.random() * count-1)) + 1;
+			System.out.println(index);
 			String[] credentials =new String[5];
 			credentials[0] = xls.getCellValue("credentials"+index, "userid");
 			credentials[1] = xls.getCellValue("credentials"+index, "password");

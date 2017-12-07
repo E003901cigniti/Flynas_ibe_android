@@ -3,6 +3,7 @@ package flynas.web.uat.regression;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -20,7 +21,7 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_18");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_38_corporateLoginRoundTripModifyExtras( String username,String password,String bookingClass,
+	public  void TC_38_corporateLoginRoundTripModifyExtras( String bookingClass,
 			String mobilenum,String paymentType,String newDate,String strDeptDate,String rtnDate,String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,String domOrInt,
 			String totalPass,String nationality,String docNum,String docType,String Description) throws Throwable {
@@ -31,8 +32,10 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 		
 			String 	deptdate = pickDate(strDeptDate);
 			String 	rtrndate = pickDate(rtnDate);
-			
-						
+			String[] Credentials = pickCredentials("CorporateCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			click(BookingPageLocators.corporatelogin_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -96,8 +99,7 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("EmployeEmail", "Value"),
-	    			xls.getCellValue("Password", "Value"),
+	    		
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),

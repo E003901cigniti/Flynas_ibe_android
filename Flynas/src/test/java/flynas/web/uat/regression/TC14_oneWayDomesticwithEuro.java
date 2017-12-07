@@ -12,7 +12,7 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC14_oneWayDomesticwithEuro extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_13");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_14");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_14_oneWayDomesticwithEuro(String tripType, String origin, String dest, 

@@ -50,7 +50,6 @@ public class TC22_resetPasswordusingmyProfile extends BookingPageFlow{
 			click(BookingPageLocators.ok, "OK");
 			click(BookingPageLocators.update_Btn, "Update");
 			verifingProfileUpdatemessage();
-			click(BookingPageLocators.ok, "OK");
 			click(BookingPageLocators.logout_lnk, "Logout");
 			click(BookingPageLocators.ok, "OK");
 			login(email, xls.getCellValue("newPassword", "Value"));

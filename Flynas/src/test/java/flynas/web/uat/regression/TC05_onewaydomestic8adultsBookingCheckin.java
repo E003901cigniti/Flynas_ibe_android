@@ -15,7 +15,7 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC05_onewaydomestic8adults extends BookingPageFlow {
+public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 	
 //	public static Logger logger = Logger.getLogger(TC05_onewaydom8Business.class.getName());
 	
@@ -24,11 +24,11 @@ public class TC05_onewaydomestic8adults extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC05_oneWayDom8AdultCheckin");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public void TC_05_onewaydom8Business(String lastname, String strTripType, 
+	public void TC_05_onewaydomestic8adultsBookingCheckin(String lastname, String strTripType, 
 			String strFlightType, String strOrigin,String strDestination, String strDepatureDate,
 			String strAdultCount, String strChildCount, String strInfantCount, String strPromo,  String strTotalPessenger,
 			String strNationality,String strDocumentType,String strDocumentNum,String strNaSmile,String strMobile,
-			String strEmail,String strBookingClass, String strSelectSeat, String strPaymentType,
+			String strBookingClass, String strSelectSeat, String strPaymentType,
 			String Currency)throws Throwable{
 				
 		try{
@@ -55,7 +55,7 @@ public class TC05_onewaydomestic8adults extends BookingPageFlow {
 					selectClass(strBookingClass, strTripType);
 					
 					//Entering passenger details
-					inputPassengerDetails(strFlightType,strTotalPessenger,strNationality,strDocumentType,strDocumentNum, strNaSmile,strMobile,strEmail,"","","");
+					inputPassengerDetails(strFlightType,strTotalPessenger,strNationality,strDocumentType,strDocumentNum, strNaSmile,strMobile,username,"","","");
 					
 					Baggage_Extra(strTripType);
 					addSportsEqpmnt(strTripType);
@@ -65,16 +65,16 @@ public class TC05_onewaydomestic8adults extends BookingPageFlow {
 					String strpnr = getReferenceNumber();
 					String strPNR = strpnr.trim();
 					validate_ticketStatus(strPNR);
-					searchFlightCheckin(strPNR, "", "",lastname);
+					searchFlightCheckin(strPNR, username, "","");
 					performCheckin(strSelectSeat, strPaymentType,strTotalPessenger);
 					validateCheckin();
 					
-					Reporter.SuccessReport("TC_05_onewaydom8Business", "Pass");
+					Reporter.SuccessReport("TC05_onewaydomestic8adultsBookingCheckin", "Pass");
 					
 								
 					}catch(Exception e){
 						e.printStackTrace();
-						Reporter.failureReport("TC_05_onewaydom8Business", "Fail");
+						Reporter.failureReport("TC05_onewaydomestic8adultsBookingCheckin", "Fail");
 						
 					}
 	}

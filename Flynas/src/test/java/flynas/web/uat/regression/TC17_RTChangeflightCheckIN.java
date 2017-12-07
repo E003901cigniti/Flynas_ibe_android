@@ -17,11 +17,11 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC17_memberLoginRTChangeflightCheckIN extends BookingPageFlow {
+public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_17");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_17_memberLoginRTChangeflightCheckIN( String bookingClass,
+	public  void TC_17_RTChangeflightCheckIN( String bookingClass,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -80,13 +80,13 @@ public class TC17_memberLoginRTChangeflightCheckIN extends BookingPageFlow {
 			validateCheckin();
 			
 			
-			Reporter.SuccessReport("TC17_memberLoginRTChangeflightCheckIN", "Pass");
+			Reporter.SuccessReport("TC17_RTChangeflightCheckIN", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC17_memberLoginRTChangeflightCheckIN", "Failed");
+			Reporter.failureReport("TC17_RTChangeflightCheckIN", "Failed");
 		}
 	}
 	
@@ -107,7 +107,7 @@ public class TC17_memberLoginRTChangeflightCheckIN extends BookingPageFlow {
 		    		xls.getCellValue("Child Count", "Value"),
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		"Extra Leg Room",
-		    		"Validate member Login Round Trip Changeflight CheckIN"}};
+		    		"Validate member Round Trip Changeflight CheckIN"}};
 	}
 
 }

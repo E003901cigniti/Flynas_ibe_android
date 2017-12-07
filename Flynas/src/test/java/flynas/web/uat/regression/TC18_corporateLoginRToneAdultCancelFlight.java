@@ -20,7 +20,7 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_18");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_18_corporateLoginRToneAdultCancelFlight( String username,String password,String bookingClass,
+	public  void TC_18_corporateLoginRToneAdultCancelFlight(String bookingClass,
 			String mobilenum,String paymentType,String newDate,String departurDate,String rtnDate,String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,String domOrInt,
 			String totalPass,String nationality,String docNum,String docType,String Description) throws Throwable {
@@ -30,6 +30,10 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 			
 			String 	deptdate = pickDate(departurDate);
 			String 	rtrndate = pickDate(rtnDate);
+			
+			String[] Credentials = pickCredentials("CorporateCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
 			
 			click(BookingPageLocators.corporatelogin_lnk, "Login");
 			switchtoChildWindow();
@@ -66,8 +70,7 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("EmployeEmail", "Value"),
-	    			xls.getCellValue("Password", "Value"),
+	    			
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),

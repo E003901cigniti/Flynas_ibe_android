@@ -24,14 +24,17 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_15");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel(String username,String password,String bookingClass,String mobilenum,
-			String paymentType,String newDate,String pickDate,String origin,String dest,String triptype,String adult,String child,
+	public  void TC_15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel(String bookingClass,String mobilenum,
+			String paymentType,String newDate,String departureDate,String origin,String dest,String triptype,String adult,String child,
 			String infant,String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			
-			String depdat = pickDate(pickDate);
+			String depdat = pickDate(departureDate);
+			String[] Credentials = pickCredentials("EmployeeCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
 			
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			click(emplogin_lnk, "Employe Login");
@@ -94,8 +97,6 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("EmployeEmail", "Value"),
-	    		xls.getCellValue("Password", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),

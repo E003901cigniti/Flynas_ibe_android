@@ -1,4 +1,5 @@
 package flynas.web.uat.regression;
+
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -10,20 +11,22 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC29_redemptionBookingWithGoldMember extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_29");
+public class TC30_redemptionBookingwithPlatinumMember extends BookingPageFlow{
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_27");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_29_redemptionBookingWithGoldMember(String tripType, String origin, String dest,String deptDate, String origin2,
-			String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
-			String naSmiles,String Mobile,String SelectSeat,String paymenttype,String bookingtype,String charity,String Currency, String gold,String Description
+	public  void TC_30_redemptionBookingwithPlatinumMember(String tripType, String origin, String dest, 
+			String deptDate, String origin2,String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
+			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
+			String naSmiles,String Mobile,String SelectSeat,String paymenttype,String bookingtype, 
+			String charity,String Currency, String accType,String Description
 			) throws Throwable {
 		try {
 			//System.out.println(paymenttype);
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String deptdate = pickDate(deptDate);
-		
-			String[] Credentials = pickCredentials("GoldCreds");
+			
+			String[] Credentials = pickCredentials("PlatinumCreds");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
@@ -31,30 +34,31 @@ public class TC29_redemptionBookingWithGoldMember extends BookingPageFlow{
 			login(username,password);
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retdate,Adult, Child, infant,promo,Currency,paymenttype);
-			
 			selectClass(strBookingClass, tripType);
-			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,username,"gold","member",paymenttype);
+			waitforElement(BookingPageLocators.passengerDetailsTittle);
+			waitUtilElementhasAttribute(BookingPageLocators.body);
+			clickContinueBtn();
 			waitforElement(BookingPageLocators.baggagetittle);
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
 			clickContinueBtn();
 			}
 			waitforElement(BookingPageLocators.selectseattittle);
 			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok)){
-					click(BookingPageLocators.ok, "OK");
-			}
-			}
-			payment(paymenttype,gold);
+			clickContinueBtn();
+			if(isElementDisplayedTemp(BookingPageLocators.ok)){
+				click(BookingPageLocators.ok, "OK");
+			}}
+			nasmilespayment(username,password);
+			
 			String PNR=getReferenceNumber();
 			validate_ticketStatus(PNR);
 			
-			Reporter.SuccessReport("TC29_redemptionBookingWithGoldMember", "Pass");
+			Reporter.SuccessReport("TC30_redemptionBookingwithPlatinumMember", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC29_redemptionBookingWithGoldMember", "Failed");
+			Reporter.SuccessReport("TC30_redemptionBookingwithPlatinumMember", "Failed");
 		}
 	}
 	
@@ -63,8 +67,8 @@ public class TC29_redemptionBookingWithGoldMember extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    			xls.getCellValue("Trip Type", "Value"),
-		    		xls.getCellValue("Origin", "Value"),
-		    		xls.getCellValue("Destination", "Value"),
+		    		xls.getCellValue("Origin", "Value2"),
+		    		xls.getCellValue("Destination", "Value2"),
 		    		xls.getCellValue("Departure Date", "Value"),
 		    		"",
 		    		"",
@@ -74,7 +78,7 @@ public class TC29_redemptionBookingWithGoldMember extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
-		    		xls.getCellValue("Flight Type", "Value"),
+		    		xls.getCellValue("Flight Type", "Value2"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),
 		    		xls.getCellValue("Document Type", "Value"),
@@ -86,8 +90,8 @@ public class TC29_redemptionBookingWithGoldMember extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-	    			xls.getCellValue("gold", "Value"),
-		    		"Validate Redemption Booking with Gold  Member"}};
+	    			xls.getCellValue("AccountType", "Value"),
+		    		"Validate Redemption Booking with Platinum Member"}};
 	}
 
 }

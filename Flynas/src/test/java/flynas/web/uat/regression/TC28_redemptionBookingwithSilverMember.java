@@ -11,15 +11,15 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC28_redemptionBookingWithSilverMember extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_28");
+public class TC28_redemptionBookingwithSilverMember extends BookingPageFlow{
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_27");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_28_redemptionBookingWithSilverMember(String tripType, String origin, String dest, 
+	public  void TC_28_redemptionBookingwithSilverMember(String tripType, String origin, String dest, 
 			String deptDate, String origin2,String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
 			String naSmiles,String Mobile,String SelectSeat,String paymenttype,String bookingtype, 
-			String charity,String Currency, String silver,String Description
+			String charity,String Currency, String accType,String Description
 			) throws Throwable {
 		try {
 			//System.out.println(paymenttype);
@@ -35,7 +35,9 @@ public class TC28_redemptionBookingWithSilverMember extends BookingPageFlow{
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retdate,Adult, Child, infant,promo,Currency,paymenttype);
 			selectClass(strBookingClass, tripType);
-			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, "",Mobile,username,"silver","member",paymenttype);
+			waitforElement(BookingPageLocators.passengerDetailsTittle);
+			waitUtilElementhasAttribute(BookingPageLocators.body);
+			clickContinueBtn();
 			waitforElement(BookingPageLocators.baggagetittle);
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
 			clickContinueBtn();
@@ -46,16 +48,17 @@ public class TC28_redemptionBookingWithSilverMember extends BookingPageFlow{
 			if(isElementDisplayedTemp(BookingPageLocators.ok)){
 				click(BookingPageLocators.ok, "OK");
 			}}
-			payment(paymenttype,silver);
+			nasmilespayment(username,password);
+			
 			String PNR=getReferenceNumber();
 			validate_ticketStatus(PNR);
 			
-			Reporter.SuccessReport("TC28_redemptionBookingWithSilverMember", "Pass");
+			Reporter.SuccessReport("TC28_redemptionBookingwithSilverMember", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC28_redemptionBookingWithSilverMember", "Failed");
+			Reporter.SuccessReport("TC28_redemptionBookingwithSilverMember", "Failed");
 		}
 	}
 	
@@ -64,8 +67,8 @@ public class TC28_redemptionBookingWithSilverMember extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    			xls.getCellValue("Trip Type", "Value"),
-		    		xls.getCellValue("Origin", "Value"),
-		    		xls.getCellValue("Destination", "Value"),
+		    		xls.getCellValue("Origin", "Value2"),
+		    		xls.getCellValue("Destination", "Value2"),
 		    		xls.getCellValue("Departure Date", "Value"),
 		    		"",
 		    		"",
@@ -75,7 +78,7 @@ public class TC28_redemptionBookingWithSilverMember extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
-		    		xls.getCellValue("Flight Type", "Value"),
+		    		xls.getCellValue("Flight Type", "Value2"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),
 		    		xls.getCellValue("Document Type", "Value"),
@@ -87,9 +90,8 @@ public class TC28_redemptionBookingWithSilverMember extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-	    			xls.getCellValue("silver", "Value"),
+	    			xls.getCellValue("AccountType", "Value"),
 		    		"Validate Redemption Booking with Silver Member"}};
 	}
-
 
 }
