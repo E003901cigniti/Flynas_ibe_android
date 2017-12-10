@@ -11,18 +11,18 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC45_oneWayDomCancelMMB extends BookingPageFlow{
+public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 	
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_45");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_45_oneWayDomCancelMMB(String tripType, 
+	public  void TC_53_oneWayDomMMBChangeDateCheckIn(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
 			String strBookingClass,String FlightType,String totalpass, String nationality,
 			String Doctypr,String docNumber,String naSmiles,String Mobile,
 			String email ,String SelectSeat,String paymenttype,String bookingtype, 
-			String charity,String Currency, String Description
+			String charity,String Currency, String newDate,String Description
 			) throws Throwable {
 		try {
 			//System.out.println(paymenttype);
@@ -56,17 +56,29 @@ public class TC45_oneWayDomCancelMMB extends BookingPageFlow{
 			String strPNR = getReferenceNumber();
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);
-			searchFlight(strPNR, username, "", "");
-			cancelFlight("All");
-			searchFlight(strPNR, username, "", "");
-			validateFailuremessage();
 			
-			Reporter.SuccessReport("TC_45_oneWayDomCancelMMB", "Pass");
+			
+			//Verifying PNR numbers
+			String	newdate = pickDate(newDate);
+			String strPNRChangeDate = changeDate(strPNR, username, "", "", newdate, SelectSeat,totalpass,strBookingClass,0);
+			
+			//Reporting the test case status
+			if(strPNRChangeDate.trim().equalsIgnoreCase(strPNR)){
+				Reporter.SuccessReport("Change Flight Date", "Flight Date has changed successfully");
+			}else{
+				Reporter.failureReport("Change Flight Date", "Flight Date has NOT changed successfully");
+			}
+			
+			searchFlightCheckin(strPNR, username, "", "");
+			performCheckin(SelectSeat,paymenttype,totalpass);
+			validateCheckin();
+			
+			Reporter.SuccessReport("TC53_oneWayDomMMBChangeDateCheckIn", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC_45_oneWayDomCancelMMB", "Failed");
+			Reporter.failureReport("TC53_oneWayDomMMBChangeDateCheckIn", "Failed");
 		}
 	}
 	
@@ -86,7 +98,7 @@ public class TC45_oneWayDomCancelMMB extends BookingPageFlow{
 		    		xls.getCellValue("Child Count", "Value"),
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
-		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Booking Class", "Value3"),
 		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),
@@ -100,7 +112,8 @@ public class TC45_oneWayDomCancelMMB extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-		    		"One way Domestic booking, cancellation and MMB verification"
+	    			xls.getCellValue("NewDate", "Value"),
+		    		"Verify One way business class Domestic  booking, change date and cancellation"
     			}
 	    	};
 	}

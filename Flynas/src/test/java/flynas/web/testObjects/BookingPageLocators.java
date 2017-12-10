@@ -14,6 +14,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By body = By.xpath("//body[@block-ui='main']");
 	public static By closepopup = By.xpath("//button[@type='submit']");
 	public static By closetoast = By.xpath("//span[@id='close']");
+	public static By alertText = By.xpath("//div[@class='modal-body']/div");
 	
 	//login page
 	public static By email = By.xpath("//input[@name='iptid']");

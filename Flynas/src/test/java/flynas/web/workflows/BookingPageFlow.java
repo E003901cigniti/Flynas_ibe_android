@@ -1149,18 +1149,6 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		return getReferenceNumber();
 	}	
 	
-/*	public void searchFlightinCheckin(String referenceNum, String email, String mobile, String lastName) throws Throwable{
-		// add validation
-		driver.get(configProps.getProperty("URL_Checkin"));
-		Thread.sleep(5000);
-		type(BookingPageLocators.sfpbookingReference, referenceNum, "Reference Number");
-		//type(BookingPageLocators.sfpEmail, email, "Email");
-		//type(BookingPageLocators.sfpMoblie, mobile, "Mobile");
-		type(BookingPageLocators.sfpLastName, lastName, "Last Name");
-		
-		click(BookingPageLocators.sfpChekin, "Check in");
-	}*/
-	
 	
 	public void performCheckin(String SelectSeat,String paymenttype, String strPassenger) throws Throwable
 	{
@@ -1275,7 +1263,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		}
 	}
 	
-	public void validateFailuremessage() throws Throwable
+	public void verifyAlertPopup() throws Throwable
 	{
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		if(isElementDisplayedTemp(BookingPageLocators.Error)==true){
@@ -1286,7 +1274,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			Reporter.failureReport("Validating if failure message", "Failure message is not displayed");					
 		}
 	}
-	
+
 	public void validate_ticketStatus(String pnr) throws Throwable
 	{
 		waitforElement(BookingPageLocators.summaryStatus);
@@ -1532,7 +1520,18 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 						if((count==8 ||count==4) && bookingtype.equalsIgnoreCase("CodeShare"))
 						{
 							((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",Flights_row.get(j));
-							if(bookingClass.equalsIgnoreCase("Flex")){
+							if(bookingClass.equalsIgnoreCase("Simple")){
+								if((Flights_td.get(4).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
+									System.out.println("Sold out");
+								}else{
+									Flights_td.get(4).findElement(By.tagName("button")).click();
+									Thread.sleep(2000);
+									flag=true;
+									break;
+									
+								}
+							}
+							if(bookingClass.equalsIgnoreCase("Extra")){
 								if((Flights_td.get(5).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
 									System.out.println("Sold out");
 								}else{
@@ -1543,11 +1542,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 									
 								}
 							}
-							if(bookingClass.equalsIgnoreCase("Economy")){
-								if((Flights_td.get(4).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
+							if(bookingClass.equalsIgnoreCase("Business")){
+								if((Flights_td.get(6).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
 									System.out.println("Sold out");
 								}else{
-									Flights_td.get(4).findElement(By.tagName("button")).click();
+									Flights_td.get(6).findElement(By.tagName("button")).click();
 									Thread.sleep(2000);
 									flag=true;
 									break;
@@ -1559,7 +1558,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					
 					if(flag!=true)
 					{
-						Reporter.failureReport("Selecting class in a part code share flight", "Codeshare flight");
+						Reporter.failureReport("Selecting class in a part code share flight", "Could not select flight");
 					}
 			}
 			

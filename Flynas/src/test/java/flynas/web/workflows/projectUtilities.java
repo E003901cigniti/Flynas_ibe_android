@@ -80,5 +80,31 @@ public class projectUtilities<RenderedWebElement> extends BookingPageLocators {
 			Reporter.failureReport("Verifing if text is Updated :", lable+" Update UnSuccessfull ");
 		}
 	}
+	
+	public void verifyAlertPopup() throws Throwable
+	{
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		if(isElementDisplayedTemp(BookingPageLocators.Error)==true){
+			click(BookingPageLocators.ok, "OK");
+			Reporter.SuccessReport("Validating if failure message", "Failure message displayed");		
+		}
+		else{
+			Reporter.failureReport("Validating if failure message", "Failure message is not displayed");					
+		}
+	}
+	
+	public void VerifyAlertmessage(String Text) throws Throwable
+	{
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		if(isElementDisplayedTemp(BookingPageLocators.Error)==true){
+			if(getText(BookingPageLocators.alertText, "Alert message").contains(Text));
+			
+			Reporter.SuccessReport("Validating if failure message", Text+" message displayed");		
+		}
+		else{
+			Reporter.failureReport("Validating if failure message", Text+ "message is not displayed");					
+		}
+	}
+
 
 }

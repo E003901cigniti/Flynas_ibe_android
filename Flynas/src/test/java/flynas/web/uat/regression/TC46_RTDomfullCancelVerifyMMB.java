@@ -11,37 +11,34 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
+public class TC46_RTDomfullCancelVerifyMMB extends BookingPageFlow{
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC04_oneWayDomAdultCheckin");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_45");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC04b_RtIntlOneAdultCheckinFail ( String tripType, 
-			String origin, String dest, String deptDate,String origin2,String departure2, String retdate,
-			String Adult,String Child,String infant, String promo, String strBookingClass, String FlightType,String totalpass,String nationality,String Doctypr,
-			String docNumber, String naSmiles,String Mobile,String email ,String SelectSeat,
-			String paymenttype, String bookingtype,String Charity, 
-			String Currency,String Description) throws Throwable {
+	public  void TC_46_RTDomfullCancelVerifyMMB(String tripType, 
+			String origin, String dest,String deptDate, String origin2,String departure2,
+			String retdate,String Adult,String Child,String infant, String promo, 
+			String strBookingClass,String FlightType,String totalpass, String nationality,
+			String Doctypr,String docNumber,String naSmiles,String Mobile,
+			String email ,String SelectSeat,String paymenttype,String bookingtype, 
+			String charity,String Currency, String Description
+			) throws Throwable {
 		try {
-			
+			//System.out.println(paymenttype);
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
+			String	deptdate = pickDate(deptDate);
+			String	retrndate = pickDate(retdate);
 			
-			//Initializing departure date and return date
-			String depDate = pickDate(deptDate);
-			String retrndate = pickDate(retdate);
-			
-			//User Login
+
 			String[] Credentials = pickCredentials("UATcredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
-			
-			//Entering Booking Details
-			inputBookingDetails(tripType, origin, dest, depDate, origin2,departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
-			
-			//Selecting flight and traveling class
+					
+			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
 			selectClass(strBookingClass, tripType);
 			
 			//Clicking continue button on Passenger details page
@@ -49,25 +46,27 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
 			
-			Baggage_Extra(tripType);
+			//Clicking continue button on Baggage details page
+			waitforElement(BookingPageLocators.baggagetittle);
+			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
+			
 			selectSeat(SelectSeat, bookingtype);
-			//selectSeat(SelectSeat,bookingtype);
 			payment(paymenttype,"");
-			String strpnr = getReferenceNumber();
-			String PNR = strpnr.trim();
-			System.out.println("PNR**********"+PNR);
-			validate_ticketStatus(PNR);
-			searchFlightCheckin(PNR, email, "", "");
+			String strPNR = getReferenceNumber();
+			System.out.println(strPNR);
+			validate_ticketStatus(strPNR);
+			searchFlight(strPNR, username, "", "");
+			cancelFlight("All");
+			searchFlight(strPNR, username, "", "");
 			verifyAlertPopup();
 			
-			Reporter.SuccessReport("TC04_b_RtIntlOneAdultCheckinFail", "Passed");
-			
+			Reporter.SuccessReport("TC46_RTDomfullCancelVerifyMMB", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC04_b_RtIntlOneAdultCheckinFail", "Failed");
+			Reporter.failureReport("TC46_RTDomfullCancelVerifyMMB", "Failed");
 		}
 	}
 	
@@ -76,19 +75,19 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    			
-	    			xls.getCellValue("Trip Type", "Value2"),
-		    		xls.getCellValue("Origin", "Value2"),
-		    		xls.getCellValue("Destination", "Value2"),
-		    		xls.getCellValue("Departure Date", "Value2"),
+		    		xls.getCellValue("Trip Type", "Value2"),
+		    		xls.getCellValue("Origin", "Value"),
+		    		xls.getCellValue("Destination", "Value"),
+		    		xls.getCellValue("Departure Date", "Value"),
 		    		"",
 		    		"",
-		    		xls.getCellValue("Return Date", "Value2"),
+		    		xls.getCellValue("Return Date", "Value"),
 		    		xls.getCellValue("Adults Count", "Value"),
 		    		xls.getCellValue("Child Count", "Value"),
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
-		    		xls.getCellValue("Flight Type", "Value2"),
+		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),
 		    		xls.getCellValue("Document Type", "Value"),
@@ -100,8 +99,10 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
-	    			"",
-		    		"Validate check-in failure for booking more than 48 hrs, RT international simple booking "}};
+	    			xls.getCellValue("Currency", "Value"),
+		    		"Round trip Domestic booking, full cancellation and mmb verification"
+    			}
+	    	};
 	}
 
 }

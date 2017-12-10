@@ -63,16 +63,19 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
+			
 			String	newdate  = pickDate(newDate);
 			String strPNRChangeDate = changeDate(strPNR, username, mobilenum, "", newdate, "","",bookingClass,0);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			System.out.println(strPNRChangeDate);
+			
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			if(strPNRChangeDate.trim().equalsIgnoreCase(strPNR)){
 				Reporter.SuccessReport("Change Flight Date", "Flight Date has changed successfully");
 			}else{
 				Reporter.SuccessReport("Change Flight Date", "Flight Date has NOT changed successfully");
 			}
+			
 			waitforElement(BookingPageLocators.Home);
 			click(BookingPageLocators.Home, "Home");
 			waitUtilElementhasAttribute(BookingPageLocators.body);

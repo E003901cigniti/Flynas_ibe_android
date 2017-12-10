@@ -11,15 +11,15 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC10_OneAdultOnechildFlexCordshare extends BookingPageFlow{
+public class TC10_OwMultiSimpleIntlCordshareBookingMMB extends BookingPageFlow{
 
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_10");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_10_OneAdultOnechildFlexCordshare (String tripType, String origin, String dest, String strDepatureDate,
+	public  void TC_10_OwMultiSimpleIntlCordshareBookingMMB (String tripType, String origin, String dest, String strDepatureDate,
 			String origin2,String departure2,String strReturnDate,String Adult,String Child,String infant, 
 			String promo,String FlightType,String totalpass,String nationality,String Doctypr,
-			String docNumber ,String naSmiles,String Mobile,String email ,String SelectSeat,
+			String docNumber ,String naSmiles,String Mobile,String SelectSeat,
 			String paymenttype,String Bookingtype,String bookingclass,String Currency,String Description) throws Throwable {
 		try {
 			
@@ -44,7 +44,7 @@ public class TC10_OneAdultOnechildFlexCordshare extends BookingPageFlow{
 			selectCodeshareConectflight(bookingclass,Bookingtype);
 			
 			//entering passenger details
-			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
+			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,username,"","","");
 			
 			//Click continue on Baggage page
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
@@ -59,21 +59,28 @@ public class TC10_OneAdultOnechildFlexCordshare extends BookingPageFlow{
 			}else{
 				System.out.println("No Seat Page");
 			}
-			
-			
+						
 			payment(paymenttype,"");
 			String strpnr = getReferenceNumber();
 			String PNR = strpnr.trim();
 			System.out.println("PNR**********"+PNR);
 			validate_ticketStatus(PNR);
 			
-			Reporter.SuccessReport("TC_10_OneAdultOnechildFlexCordshare", "Passed");
+						
+			//Verifying Error message in MMB
+			searchFlight(PNR, username, "", "");
+			verifyAlertPopup();
+			
+			
+			
+			
+			Reporter.SuccessReport("TC10_OwMultiSimpleIntlCordshareBookingMMB", "Passed");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC_10_OneAdultOnechildFlexCordshare", "Failed");
+			Reporter.failureReport("TC10_OwMultiSimpleIntlCordshareBookingMMB", "Failed");
 		}
 	}
 	
@@ -99,13 +106,12 @@ public class TC10_OneAdultOnechildFlexCordshare extends BookingPageFlow{
 		    		xls.getCellValue("Doc Number", "Value"),
 		    		xls.getCellValue("na Smiles", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
-		    		xls.getCellValue("Email Address", "Value"),
 		    		xls.getCellValue("Select Seat", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		xls.getCellValue("Booking type", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
 		    		"",
-		    		"Validate One Adult One child FlexCordshare" }
+		    		"Validate One-way Multi pax, simple class, Code Share booking and MMB " }
 	    				
 	    
 	    };

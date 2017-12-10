@@ -11,12 +11,12 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC51_RTIntlfullCancelMMB extends BookingPageFlow{
+public class TC45_oneWayDomCancelverifyMMB extends BookingPageFlow{
 	
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_45");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_51_RTIntlfullCancelMMB(String tripType, 
+	public  void TC_45_oneWayDomCancelverifyMMB(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
 			String strBookingClass,String FlightType,String totalpass, String nationality,
@@ -59,14 +59,14 @@ public class TC51_RTIntlfullCancelMMB extends BookingPageFlow{
 			searchFlight(strPNR, username, "", "");
 			cancelFlight("All");
 			searchFlight(strPNR, username, "", "");
-			validateFailuremessage();
+			verifyAlertPopup();
 			
-			Reporter.SuccessReport("TC51_RTIntlfullCancelMMB", "Pass");
+			Reporter.SuccessReport("TC45_oneWayDomCancelverifyMMB", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC51_RTIntlfullCancelMMB", "Failed");
+			Reporter.failureReport("TC45_oneWayDomCancelverifyMMB", "Failed");
 		}
 	}
 	
@@ -75,10 +75,10 @@ public class TC51_RTIntlfullCancelMMB extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    			
-		    		xls.getCellValue("Trip Type", "Value2"),
-		    		xls.getCellValue("Origin", "Value2"),
-		    		xls.getCellValue("Destination", "Value2"),
-		    		xls.getCellValue("Departure Date", "Value2"),
+		    		xls.getCellValue("Trip Type", "Value"),
+		    		xls.getCellValue("Origin", "Value"),
+		    		xls.getCellValue("Destination", "Value"),
+		    		xls.getCellValue("Departure Date", "Value"),
 		    		"",
 		    		"",
 		    		xls.getCellValue("Return Date", "Value"),
@@ -87,7 +87,7 @@ public class TC51_RTIntlfullCancelMMB extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
-		    		xls.getCellValue("Flight Type", "Value2"),
+		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),
 		    		xls.getCellValue("Document Type", "Value"),
@@ -100,7 +100,7 @@ public class TC51_RTIntlfullCancelMMB extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-		    		"Round trip International booking, full cancellation and mmb verification"
+		    		"One way Domestic booking, cancellation and MMB verification"
     			}
 	    	};
 	}

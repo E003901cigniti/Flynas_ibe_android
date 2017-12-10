@@ -29,7 +29,7 @@
 				<!--  	<class name="flynas.web.uat.regression.TC06_oneWay2InternationalEco"/> 
 						<class name="flynas.web.uat.regression.TC07_RTDom4adultBusinessCC"/>  -->
 						<class name="flynas.web.uat.regression.TC08_RTInt1adult1Child1infantBus"/> 
-						<class name="flynas.web.uat.regression.TC10_OneAdultOnechildFlexCordshare"/> 
+						<class name="flynas.web.uat.regression.TC10_OwMultiSimpleIntlCordshareBookingMMB"/> 
 				 		<class name="flynas.web.uat.regression.TC11_oneAdultoneChildoneInfantPartCodeShare"/>
 						<class name="flynas.web.uat.regression.TC12_PayWithCreditShell"/> 
 						<class name="flynas.web.uat.regression.TC13_onewayDomesticwithUSdollars"/>
@@ -42,12 +42,13 @@
 						<class name="flynas.web.uat.regression.TC20_memberRegistration"/> 
 						<class name="flynas.web.uat.regression.TC21_updatemyProfileOfMemberDetails"/> -->
 						<class name="flynas.web.uat.regression.TC22_resetPasswordusingmyProfile"/> 
+						<class name="flynas.web.uat.regression.TC22_b_VerifyAccLockOn10IncorrectPswdEntries"/> 
 						<class name="flynas.web.uat.regression.TC23_oneWayDomesticOneAdultCheckInAR"/> 
 				<!-- 	<class name="flynas.web.uat.regression.TC24_anonymousRtDomestic4AdultBusinessAR"/> -->
 						<class name="flynas.web.uat.regression.TC25_anonymousOneWayDomesticOneAdultCheckInTR"/> 
 					<!--  -->	<class name="flynas.web.uat.regression.TC26_anonymousRtDomestic4AdultBusinessTR"/>
 					 	<class name="flynas.web.uat.regression.TC27_a_redemptionBookingwithBronzeMember"/> 
-					 	<class name="flynas.web.uat.regression.TC27_b_BookingwithinsufficientBronzepoints"/> -->
+					 	<class name="flynas.web.uat.regression.TC27_b_BookingwithInsufficientBronzepoints"/> -->
 						<class name="flynas.web.uat.regression.TC28_redemptionBookingWithSilverMember"/> 
 						<class name="flynas.web.uat.regression.TC29_redemptionBookingWithGoldMember"/> 
 				<!-- 	<class name="flynas.web.uat.regression.TC30_redempitonBookingWithPlatinumMember"/> 
@@ -60,13 +61,15 @@
 						<class name="flynas.web.uat.regression.TC37_EmpLoginStaffConfmedModifyExtras"/>
 						<class name="flynas.web.uat.regression.TC38_corporateLoginRoundTripModifyExtras"/>
 						<class name="flynas.web.uat.regression.TC39_agencyLoginRondTripModifyExtras"/>
-						<class name="flynas.web.uat.regression.TC45_oneWayDomCancelMMB"/>
-						<class name="flynas.web.uat.regression.TC46_RTDomfullCancelMMB"/>
+						<class name="flynas.web.uat.regression.TC45_oneWayDomCancelverifyMMB"/>
+						<class name="flynas.web.uat.regression.TC46_RTDomfullCancelVerifyMMB"/>
 						<class name="flynas.web.uat.regression.TC47_RTDomCancelDepartingleg"/>
 						<class name="flynas.web.uat.regression.TC48_RTDomCancelReturningleg"/>
 						<class name="flynas.web.uat.regression.TC49_RTIntlCancelDepartingleg"/>
 						<class name="flynas.web.uat.regression.TC50_RTIntlCancelReturningleg"/>
-						<class name="flynas.web.uat.regression.TC51_RTIntlfullCancelMMB"/> -->
+						<class name="flynas.web.uat.regression.TC51_RTIntlfullCancelVerifyMMB"/> -->
+						<class name="flynas.web.uat.regression.TC52_oneWayDomMMBChangeDateCancel"/>
+						<class name="flynas.web.uat.regression.TC53_oneWayDomMMBChangeDateCheckIn"/>
 		 
 		</classes>
 	</test>

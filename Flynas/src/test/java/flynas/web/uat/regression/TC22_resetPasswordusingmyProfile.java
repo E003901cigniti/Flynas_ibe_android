@@ -12,6 +12,7 @@ import com.ctaf.utilities.Reporter;
 
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
+import flynas.web.workflows.MemberRegistrationPage;
 
 public class TC22_resetPasswordusingmyProfile extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_22");
@@ -23,6 +24,8 @@ public class TC22_resetPasswordusingmyProfile extends BookingPageFlow{
 			String EmailAddress,
 			String Description) throws Throwable {
 		try {
+			
+			MemberRegistrationPage memberRegisterPg = new MemberRegistrationPage();
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			
