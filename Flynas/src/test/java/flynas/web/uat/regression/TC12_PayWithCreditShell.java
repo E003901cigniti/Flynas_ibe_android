@@ -49,18 +49,10 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			//System.out.println(Passengername[1]);
 			
 			//Clicking continue button on Passenger details page
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			
 			//Click continue on Baggage page
-			waitforElement(BookingPageLocators.baggagetittle);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				Thread.sleep(1000);
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page");
-			}		
+			coninueOnBaggage();
 			
 			selectSeat(SelectSeat, bookingtype);
 			payment(paymenttype,"");
@@ -87,9 +79,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			//inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,Passengername[0],Passengername[1],payment2);
 			
 			//Clicking continue button on Passenger details page
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			
 			//Clicking continue on baggage page			
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){

@@ -33,25 +33,8 @@ public class TC24_anonymousRtDomestic4AdultBusinessAR extends BookingPageFlow{
 			inputBookingDetails_Arabic(tripType,origin, dest, deptDate , origin2, departure2, rtrndate,Adult, Child, infant,"","","");
 			selectClass(strBookingClass,tripType);
 			inputPassengerDetails_Arabic(FlightType, totalpass, nationality, Doctypr,docNumber,"", Mobile, email, "", "", "");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true)
-			{
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true)
-			{
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok)==true){
-					click(BookingPageLocators.ok, "Ok");
-				}
-			}else{
-				System.out.println("No Seat Page");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymenttype, "");
 			waitforElement(BookingPageLocators.summaryRefNumber_AR_uat);
 			waitUtilElementhasAttribute(BookingPageLocators.body);

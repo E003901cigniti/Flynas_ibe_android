@@ -42,23 +42,8 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
 			selectClass(bookingClass, "Economy");
 			inputPassengerDetails(domOrInt, totalPass, nationality,docType,docNum, "",mobilenum, username+"@gmail.com", "", "", "");;
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
-			clickContinueBtn();
-				}else{
-					System.out.println("No Baggage Page");
-				}
-			waitforElement(BookingPageLocators.selectseattittle);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok))
-				{
-					click(BookingPageLocators.ok, "OK");
-				}
-			}else{
-				System.out.println("No Seat Page");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber().trim();
 			searchFlight(strpnr, username+"@gmail.com", "", "");

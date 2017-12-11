@@ -40,24 +40,8 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 			inputBookingDetails(triptype,origin, dest, deptdate, "", "", rtrndate,adult, child, infant,"","","");
 			selectClass(bookingClass, "");
 			inputPassengerDetails(domOrInt, totalPass, nationality, doctype, docNum, smiles, mobilenum, emailId, "", "", "");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
-			clickContinueBtn();
-				}else{
-					System.out.println("No Baggage Page");
-				}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-			clickContinueBtn();
-			if(isElementDisplayedTemp(BookingPageLocators.ok)){
-				click(BookingPageLocators.ok, "OK");
-			}
-				
-			}else{
-					System.out.println("No Seat Page");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strPNR = getReferenceNumber().trim();
 			System.out.println(strPNR);

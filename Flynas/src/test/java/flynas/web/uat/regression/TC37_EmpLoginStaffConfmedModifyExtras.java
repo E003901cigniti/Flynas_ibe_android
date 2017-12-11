@@ -46,22 +46,8 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 			{
 				clickContinueBtn();
 			}
-			waitforElement(BookingPageLocators.baggagetittle);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok))
-				{
-					click(BookingPageLocators.ok, "OK");
-				}
-			}else{
-				System.out.println("No Seat Page");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber().trim();
 			searchFlight(strpnr, username, "", "");

@@ -45,28 +45,11 @@ public class TC11_oneAdultoneChildoneInfantPartCodeShare extends BookingPageFlow
 			
 			//entering passenger details
 			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			//Click continue on Baggage page
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page");
-			}
+			coninueOnBaggage();
 			
 			//Click continue on Seat selection page
-			waitforElement(BookingPageLocators.selectseattittle);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true)
-				{
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok)==true)
-					{
-					click(BookingPageLocators.ok, "OK");					
-					}
-				}
-			else{
-				System.out.println("No Seat Page");
-				}
-			
+			continueOnSeatSelection();
+						
 			payment(paymenttype,"");
 			String strpnr = getReferenceNumber();
 			String PNR = strpnr.trim();

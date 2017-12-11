@@ -36,9 +36,7 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, depdate , "", "", rtnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			validating_BaggageWeights();
 				
 			Reporter.SuccessReport("TC34_BaggageValidation", "Pass");

@@ -45,9 +45,7 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 			selectClass(strBookingClass, tripType);
 			
 			//Clicking continue button on Passenger details page
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			
 			Baggage_Extra(tripType);
 			clickContinueBtn();

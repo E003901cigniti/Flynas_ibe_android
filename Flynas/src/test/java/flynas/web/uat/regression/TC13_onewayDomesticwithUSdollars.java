@@ -30,21 +30,9 @@ public class TC13_onewayDomesticwithUSdollars extends BookingPageFlow{
 			selectClass(strBookingClass, tripType);
 			String lastname[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
 			System.out.println(lastname);
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				selectallSeatstoremove(SelectSeat, totalpass, tripType);
-			}
-			
+			coninueOnBaggage();
+			selectSeat(SelectSeat, bookingtype);			
 			payment(paymenttype,"");
-			String PNR=getReferenceNumber();
 			String strPNR = getReferenceNumber();
 			
 			System.out.println(strPNR);

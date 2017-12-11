@@ -64,6 +64,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By selectDest = By.xpath("//div[contains(@class,'ui-select-choices-row')]");
 //	public static By dpDate = By.xpath("//div[@class='main_con']/div[2]//descendant::form/div[2]/div[3]/div");
 	public static By dpDate = By.xpath("//label[contains(text(),'Departure ')]/following::div[2]");
+	public static By datePicker = By.xpath("//div[@class='input-group datepicker']/ul/li/div/table");
 	public static String selectDate = "//div[@class='input-group datepicker']/ul/li/div/table";
 	public static By rtDate = By.xpath("//label[contains(text(),'Return ')]/following::div[2]");
 //	public static By rtDate = By.xpath("//div[@class='main_con']/div[2]//descendant::form/div[2]/div[5]/div");

@@ -60,9 +60,7 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 			
 			
 			//Clicking continue button on Baggage details page
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			coninueOnBaggage();
 			
 			selectallSeats(strSelectSeat,strTotalPessenger,strTripType);
 			payment(strPaymentType,"");

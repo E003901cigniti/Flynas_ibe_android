@@ -35,19 +35,9 @@ public class TC29_redemptionBookingwithGoldMember extends BookingPageFlow{
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retdate,Adult, Child, infant,promo,Currency,paymenttype);
 			selectClass(strBookingClass, tripType);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
-			waitforElement(BookingPageLocators.baggagetittle);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-			clickContinueBtn();
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-			clickContinueBtn();
-			if(isElementDisplayedTemp(BookingPageLocators.ok)){
-				click(BookingPageLocators.ok, "OK");
-			}}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			nasmilespayment(username,password);
 			
 			String PNR=getReferenceNumber();

@@ -30,29 +30,11 @@ public class TC14_oneWayDomesticwithEuro extends BookingPageFlow{
 			selectClass(strBookingClass, tripType);
 			String lastname[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
 			System.out.println(lastname);
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok)){
-					click(BookingPageLocators.ok, "OK");
-				}
-			}else{
-				System.out.println("No Seat Page");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymenttype,"");
-			String PNR=getReferenceNumber();
 			String strPNR = getReferenceNumber();
-			
 			System.out.println(strPNR);
-			
 			validate_ticketStatus(strPNR);
 			
 			Reporter.SuccessReport("TC14_oneWayDomesticwithEuro", "Passed");

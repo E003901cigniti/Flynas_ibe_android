@@ -31,18 +31,8 @@ public class TC26_anonymousRtDomestic4AdultBusinessTR extends BookingPageFlow{
 			inputBookingDetails_Tarkish(tripType,origin, dest, deptdate , origin2, departure2, rtrndate,Adult, Child, infant,"","");
 			selectClass(strBookingClass,tripType);
 			inputPassengerDetails_Tarkish(FlightType, totalpass, nationality, Doctypr,docNumber,"", Mobile, email, "", "", "");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-			clickContinueBtn();
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-			clickContinueBtn();
-			if(isElementDisplayedTemp(BookingPageLocators.ok)){
-				click(BookingPageLocators.ok, "OK");
-			}}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymenttype, "");
 			String strpnr = getText(BookingPageLocators.summaryRefNumber_TR_uat,"PNR");
 			String strPNR = strpnr.trim();

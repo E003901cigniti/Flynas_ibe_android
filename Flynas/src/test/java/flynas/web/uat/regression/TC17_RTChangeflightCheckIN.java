@@ -44,20 +44,8 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
 			selectClass(bookingClass, "");
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.passengerDetailsTittle)){
-			clickContinueBtn();
-			}else{
-				System.out.println("No Passenger Page");
-			}
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
-				clickContinueBtn();
-				}else{
-					System.out.println("No Baggage Page");
-				}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
 			selectSeat(seatSelect, "");	
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();

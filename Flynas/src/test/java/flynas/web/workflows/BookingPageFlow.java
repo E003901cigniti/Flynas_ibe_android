@@ -97,7 +97,8 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			}
 			else
 			{
-				//click(BookingPageLocators.rtDate,"Return Date");
+				if(isElementPresent(BookingPageLocators.datePicker)==false){
+				click(BookingPageLocators.rtDate,"Return Date");}
 				selectDate(BookingPageLocators.selectDate,"Return Date",retDate);
 			}			
 			
@@ -1149,7 +1150,6 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		return getReferenceNumber();
 	}	
 	
-	
 	public void performCheckin(String SelectSeat,String paymenttype, String strPassenger) throws Throwable
 	{
 		waitforElement(BookingPageLocators.checkinTitle);
@@ -1662,10 +1662,8 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	}
 	public void Selecting_loung() throws Throwable
 	{
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.Loung));
 		if(isElementPresent(BookingPageLocators.Loung)==true)
-		{
-			
+		{((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.Loung));
 			List<WebElement> allPassengers=driver.findElements(BookingPageLocators.allPassengers_Loung);
 			for(int i=0;i<allPassengers.size();i++)
 			{
@@ -3378,8 +3376,37 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			return credentials;
 		}
 		
+		public void continueOnPassengerDetails() throws Throwable{
+			waitforElement(BookingPageLocators.passengerDetailsTittle);
+			waitUtilElementhasAttribute(BookingPageLocators.body);
+			clickContinueBtn();
+		}
+		
+		public void coninueOnBaggage() throws Throwable{
+			waitforElement(BookingPageLocators.baggagetittle);
+			waitUtilElementhasAttribute(BookingPageLocators.body);
+			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
+				clickContinueBtn();
+			}else{
+				System.out.println("No Baggage page Available");
+			}
+		}
+		
+		public void continueOnSeatSelection() throws Throwable{
+			waitforElement(BookingPageLocators.selectseattittle);
+			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
+				clickContinueBtn();
+				if(isElementDisplayedTemp(BookingPageLocators.ok)){
+				click(BookingPageLocators.ok, "OK");
+				}
+			}else{
+				System.out.println("No Seat Page");
+			}
+		}
+	}
+		
 		
 	
-}
+
 //}
 

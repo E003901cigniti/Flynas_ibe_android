@@ -56,9 +56,7 @@ public class TC07_RTDom4adultBusinessCC extends BookingPageFlow {
 					inputPassengerDetails(strFlightType,strTotalPessenger,strNationality,strDocumentType,strDocumentNum, strNaSmile,strMobile,strEmail,"","","");
 					
 					//Clicking continue button on Baggage details page
-					waitforElement(BookingPageLocators.baggagetittle);
-					waitUtilElementhasAttribute(BookingPageLocators.body);
-					clickContinueBtn();
+					coninueOnBaggage();
 					
 					selectallSeats(strSelectSeat, strTotalPessenger, strTripType);
 					payment(strPaymentType,"");

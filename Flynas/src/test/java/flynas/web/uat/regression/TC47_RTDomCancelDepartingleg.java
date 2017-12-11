@@ -42,14 +42,10 @@ public class TC47_RTDomCancelDepartingleg extends BookingPageFlow{
 			selectClass(strBookingClass, tripType);
 			
 			//Clicking continue button on Passenger details page
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			
 			//Clicking continue button on Baggage details page
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			coninueOnBaggage();
 			
 			selectSeat(SelectSeat, bookingtype);
 			payment(paymenttype,"");

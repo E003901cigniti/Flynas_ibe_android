@@ -37,20 +37,23 @@ public class TC01_oneWayDomesticBusiness extends BookingPageFlow{
 			login(username,password);
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2,departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
+			
+			//Selecting a fare class
 			selectClass(strBookingClass, tripType);
 			
 			//Clicking continue button on Passenger details page
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
-			
+			continueOnPassengerDetails();
+					
 			//Clicking continue button on Baggage details page
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			coninueOnBaggage();
 			
+			//Selecting seat 
 			selectSeat(SelectSeat, bookingtype);
+			
+			//Payment
 			payment(paymenttype,"");
+			
+			//Validating booking status 
 			String PNR=getReferenceNumber();
 			validate_ticketStatus(PNR);
 			

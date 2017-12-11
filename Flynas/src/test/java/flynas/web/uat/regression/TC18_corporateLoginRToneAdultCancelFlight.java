@@ -40,14 +40,8 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
 			selectClass(bookingClass, "Economy");
-			inputPassengerDetails(domOrInt, totalPass, nationality,docType,docNum, "",mobilenum, username+"@gmail.com", "", "", "");;
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
-			clickContinueBtn();
-				}else{
-					System.out.println("No Baggage Page");
-				}
+			inputPassengerDetails(domOrInt, totalPass, nationality,docType,docNum, "",mobilenum, username, "", "", "");;
+			coninueOnBaggage();
 			selectSeat(seatSelect, "");	
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();

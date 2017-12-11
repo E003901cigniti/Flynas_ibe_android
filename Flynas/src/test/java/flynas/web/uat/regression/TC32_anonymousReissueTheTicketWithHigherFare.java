@@ -38,13 +38,7 @@ public static ConfiguratorSupport configProps=new ConfiguratorSupport("config.pr
 					selectClass(bookingClass[0], strTripType);
 					String strLastName[] = inputPassengerDetails(strFlightType, strTotalPessenger, strNationality, strDocumentType, 
 							strDocumentNum, strNaSmile, strMobile, strEmail,"","","");
-					waitforElement(BookingPageLocators.baggagetittle);
-					waitUtilElementhasAttribute(BookingPageLocators.body);
-					if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-						clickContinueBtn();
-					}else{
-						System.out.println("No Baggage Page");
-					}
+					coninueOnBaggage();
 					selectSeat(seatselect[0], bookingtype);
 					payment(strPaymentType,"");
 					String strpnr = getReferenceNumber();

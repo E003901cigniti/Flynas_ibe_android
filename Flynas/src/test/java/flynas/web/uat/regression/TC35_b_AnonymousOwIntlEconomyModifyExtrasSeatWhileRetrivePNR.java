@@ -15,17 +15,17 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR extends BookingPageFlow{
+public class TC35_b_AnonymousOwIntlEconomyModifyExtrasSeatWhileRetrivePNR extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_35");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public void TC_35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR(String strTripType,String strFlightType,String strOrigin,String strDestination,
+	public void TC35b_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR(String strTripType,String strFlightType,String strOrigin,String strDestination,
 			String strDepatureDate,String origin2,String departure2,String strReturnDate,String strTotalPessenger,String strAdultCount,
 			String strChildCount,String strInfantCount,String strPromo,String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,
 			String strNaSmile,  String strMobile, String strEmail, String strSelectSeat, String strPaymentType,String bookingtype,
 			String strNewDate, String charity,String Currency)throws Throwable{
 				try{
-					String description = "Validate OneWay Domestic Economy MMB- change date, modify extras, select business lounge";
+					String description = "Validate OneWay International Economy MMB- change date, modify extras, select business lounge";
 					
 					TestEngine.testDescription.put(HtmlReportSupport.tc_name, description);
 					String	deptdate = pickDate(strDepatureDate);
@@ -58,11 +58,11 @@ public class TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR 
 					payment(strPaymentType, "");
 					String strPNR = getReferenceNumber().trim();
 					validate_ticketStatus(strPNR);
-					Reporter.SuccessReport("TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR", "Pass");
+					Reporter.SuccessReport("TC35_b_AnonymousOwIntlEconomyModifyExtrasSeatWhileRetrivePNR", "Pass");
 					
 					}catch(Exception e){
 						e.printStackTrace();
-						Reporter.failureReport("TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR", "Fail");
+						Reporter.failureReport("TC35_b_AnonymousOwIntlEconomyModifyExtrasSeatWhileRetrivePNR", "Fail");
 						
 					}
 	}
@@ -71,9 +71,9 @@ public class TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR 
 		public Object[][] createdata1() {
 		    return (Object[][]) new Object[][] {{
 		    	xls.getCellValue("Trip Type", "Value"),
-		    	xls.getCellValue("Flight Type", "Value"),
-		    	xls.getCellValue("Origin", "Value"),
-		    	xls.getCellValue("Destination", "Value"),
+		    	xls.getCellValue("Flight Type", "Value2"),
+		    	xls.getCellValue("Origin", "Value2"),
+		    	xls.getCellValue("Destination", "Value2"),
 		    	xls.getCellValue("Departure Date", "Value"),
 		    	"",
 		    	"",
