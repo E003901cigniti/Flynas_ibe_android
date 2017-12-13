@@ -21,8 +21,7 @@ public class TC16_PaywithNasCredit extends BookingPageFlow{
 	public  TC16_PaywithNasCredit(String tripType,String origin,String dest,String deptDate,String origin2,String departure2,
 			String retdate,String Audalt,String Child,String infant,String promo,String strBookingClass,String FlightType,String totalpass,
 			String namtionality,String Doctypr,String docNumber,String naSmiles,String Mobile,String email ,String SelectSeat,
-			String paymenttype,String bookingtype,String charity,String Currency,String payment2,String username,String password,
-			String Description)throws Throwable {
+			String paymenttype,String bookingtype,String charity,String Currency,String payment2,String Description)throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -31,6 +30,11 @@ public class TC16_PaywithNasCredit extends BookingPageFlow{
 
 			String depDate = pickDate(deptDate);
 			String rtrndate = pickDate(retdate);
+			
+			String[] Credentials = pickCredentials("NasCreditCredentials");
+			
+			String username =Credentials[0];
+			String password =Credentials[1];
 
 			Homepage homepage = new Homepage();
 
@@ -119,8 +123,7 @@ public class TC16_PaywithNasCredit extends BookingPageFlow{
 				xls.getCellValue("Nationality", "Value"),xls.getCellValue("Document Type", "Value"),xls.getCellValue("Doc Number", "Value"),
 				"",xls.getCellValue("Mobile", "Value"),xls.getCellValue("Email Address", "Value"),xls.getCellValue("Select Seat", "Value"),
 				xls.getCellValue("Payment Type", "Value"),"",xls.getCellValue("Charity Donation", "Value"),xls.getCellValue("Currency", "Value"),
-				xls.getCellValue("Payment Type2", "Value"),xls.getCellValue("username", "Value"),xls.getCellValue("password", "Value"),
-				"Validate Nas Credit One way Domestic with one Adualt"}};
+				xls.getCellValue("Payment Type2", "Value"),"Validate Nas Credit One way Domestic with one Adualt"}};
 	}
 
 

@@ -29,7 +29,7 @@ public class TC21_roundTripDomesticEconomy_DMM_GIZ extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				

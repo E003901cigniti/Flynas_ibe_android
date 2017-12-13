@@ -24,7 +24,7 @@ public class TC05_oneWayDomesticEconomy_RUH_TIF  extends BookingPageFlow{
 			String adult,String child,String infant,String seatSelect,String Description) throws Throwable {
 		try {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];			
 			String deptDate = pickDate(depDate);

@@ -30,7 +30,7 @@ public class TC14_roundTripDomesticEconomy_JED_AHB extends BookingPageFlow{
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];			
 			String deptDate = pickDate(depDate);

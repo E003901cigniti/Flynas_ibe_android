@@ -31,7 +31,7 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 			String retrndate = pickDate(retdate);
 			
 			//User Login
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");

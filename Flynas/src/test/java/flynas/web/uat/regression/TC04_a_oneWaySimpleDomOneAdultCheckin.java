@@ -11,12 +11,12 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC04_a_oneWayDomOneAdultCheckin extends BookingPageFlow{
+public class TC04_a_oneWaySimpleDomOneAdultCheckin extends BookingPageFlow{
 	
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC04_oneWayDomAdultCheckin");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_04a_oneWayDomOneAdultCheckin ( String tripType, 
+	public  void TC04a_oneWaySimpleDomOneAdultCheckin ( String tripType, 
 			String origin, String dest, String deptDate,String origin2,String departure2, String retdate,
 			String Adult,String Child,String infant, String promo, String strBookingClass, String FlightType,String totalpass,String nationality,String Doctypr,
 			String docNumber, String naSmiles,String Mobile,String SelectSeat,
@@ -31,7 +31,7 @@ public class TC04_a_oneWayDomOneAdultCheckin extends BookingPageFlow{
 			String retrndate = pickDate(retdate);
 			
 			//User Login
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
@@ -60,13 +60,13 @@ public class TC04_a_oneWayDomOneAdultCheckin extends BookingPageFlow{
 			performCheckin(SelectSeat,paymenttype,totalpass);
 			validateCheckin();
 			
-			Reporter.SuccessReport("TC_04a_oneWayDomOneAdultCheckin", "Passed");
+			Reporter.SuccessReport("TC04_a_oneWaySimpleDomOneAdultCheckin", "Passed");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC_04a_oneWayDomOneAdultCheckin", "Failed");
+			Reporter.failureReport("TC04_a_oneWaySimpleDomOneAdultCheckin", "Failed");
 		}
 	}
 	
@@ -99,7 +99,7 @@ public class TC04_a_oneWayDomOneAdultCheckin extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			"",
-		    		"Validate One way Domestic with one Adualt"}};
+		    		"Validate One way Simple class Domestic booking and checkIn"}};
 	}
 
 }

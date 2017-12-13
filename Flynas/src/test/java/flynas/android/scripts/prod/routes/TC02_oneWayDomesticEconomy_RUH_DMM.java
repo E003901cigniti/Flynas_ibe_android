@@ -28,7 +28,7 @@ public class TC02_oneWayDomesticEconomy_RUH_DMM extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			//Handlepopup();
 			
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			
 			String username =Credentials[0];
 			String password =Credentials[1];

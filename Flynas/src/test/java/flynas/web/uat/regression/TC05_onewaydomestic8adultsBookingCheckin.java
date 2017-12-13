@@ -38,7 +38,7 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 					//Initializing departure date and return date
 					strDepatureDate = pickDate(strDepatureDate);
 				
-					String[] Credentials = pickCredentials("UATcredentials");
+					String[] Credentials = pickCredentials("UserCredentials");
 					String username =Credentials[0];
 					String password =Credentials[1];
 					

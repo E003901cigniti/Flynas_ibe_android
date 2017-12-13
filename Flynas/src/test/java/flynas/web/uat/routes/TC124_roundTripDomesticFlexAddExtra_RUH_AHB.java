@@ -26,7 +26,7 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 			String mobilenum,String paymentType,String newDate, String Description) throws Throwable {
 		try {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];			
 			String deptDate = pickDate(depDate);
@@ -38,7 +38,7 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
 			Select_A_Meal();
-			Selecting_loung();
+			Select_lounge();
 			inputExtras("12");
 			selectallSeats(seatSelect,"2",triptype);
 			payment(paymentType, "");

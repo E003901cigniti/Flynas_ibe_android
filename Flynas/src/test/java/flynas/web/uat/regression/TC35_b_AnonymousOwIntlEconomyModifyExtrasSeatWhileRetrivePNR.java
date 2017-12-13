@@ -44,7 +44,7 @@ public class TC35_b_AnonymousOwIntlEconomyModifyExtrasSeatWhileRetrivePNR extend
 					Baggage_Extra(strTripType);
 					addSportsEqpmnt(strTripType);
 					Select_A_Meal();
-					Selecting_loung();
+					Select_lounge();
 					inputExtras("12");
 					waitforElement(BookingPageLocators.manageMyBookingTittle);
 					waitUtilElementhasAttribute(BookingPageLocators.body);

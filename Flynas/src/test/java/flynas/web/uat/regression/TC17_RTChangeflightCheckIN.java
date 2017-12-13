@@ -36,7 +36,7 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			String 	deptdate = pickDate(departurDate);
 			String 	rtrndate = pickDate(rtnDate);
 			
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 		

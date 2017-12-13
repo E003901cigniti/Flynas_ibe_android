@@ -29,7 +29,7 @@ public class TC03_oneWayDomesticEcoChangeDate extends BookingPageFlow{
 			// Handlepopup();
 
 			
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			
 			String username =Credentials[0];
 			String password =Credentials[1];

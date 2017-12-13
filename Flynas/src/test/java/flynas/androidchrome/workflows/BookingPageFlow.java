@@ -1406,7 +1406,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			
 		}
 	}
-	public void Selecting_loung() throws Throwable
+	public void Select_longue() throws Throwable
 	{
 		if(isElementPresent(BookingPageLocators.Loung)==true)
 		{

@@ -93,17 +93,31 @@ public class projectUtilities<RenderedWebElement> extends BookingPageLocators {
 		}
 	}
 	
-	public void VerifyAlertmessage(String Text) throws Throwable
+	public void VerifyErrorMessage(String Text) throws Throwable
 	{
+		Thread.sleep(5000);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		if(isElementDisplayedTemp(BookingPageLocators.Error)==true){
-			if(getText(BookingPageLocators.alertText, "Alert message").contains(Text));
-			
+			System.out.println(getText(BookingPageLocators.alertText, "Alert message"));
+			if(getText(BookingPageLocators.alertText, "Alert message").contains(Text));			
 			Reporter.SuccessReport("Validating if failure message", Text+" message displayed");		
-		}
-		else{
-			Reporter.failureReport("Validating if failure message", Text+ "message is not displayed");					
-		}
+			}
+			else{
+			Reporter.failureReport("Validating if failure message", Text+" message is not displayed");					
+			}
+	}
+	
+	public void VerifyAlertMessage(String Text) throws Throwable
+	{
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		if(isElementDisplayedTemp(BookingPageLocators.Alert)==true){
+			System.out.println(getText(BookingPageLocators.alertText, "Alert message"));
+			if(getText(BookingPageLocators.alertText, "Alert message").contains(Text));			
+			Reporter.SuccessReport("Validating if failure message", Text+" message displayed");		
+			}
+			else{
+			Reporter.failureReport("Validating if failure message", Text+" message is not displayed");					
+			}
 	}
 
 

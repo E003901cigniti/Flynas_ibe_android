@@ -40,7 +40,7 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 		
 			
 			//User Login
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");

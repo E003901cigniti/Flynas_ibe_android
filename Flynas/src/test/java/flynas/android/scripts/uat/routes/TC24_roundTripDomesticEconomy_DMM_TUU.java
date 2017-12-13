@@ -31,7 +31,7 @@ public class TC24_roundTripDomesticEconomy_DMM_TUU extends BookingPageFlow{
 			//Handlepopup();
 			
 			
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			
 			String username =Credentials[0];
 			String password =Credentials[1];

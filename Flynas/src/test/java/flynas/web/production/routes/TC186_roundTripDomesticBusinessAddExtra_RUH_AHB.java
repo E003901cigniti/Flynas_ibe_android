@@ -33,7 +33,7 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);	
 			
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 						
 			inputBookingDetails(triptype,origin, dest, deptDate , "RUH", "AMM", retrnDate,adult, child, infant,"","","");
@@ -43,7 +43,7 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
 			Select_A_Meal();
-			Selecting_loung();
+			Select_lounge();
 			inputExtras("12");
 			selectallSeats(seatSelect,"2",triptype);
 			payment(paymentType, "");

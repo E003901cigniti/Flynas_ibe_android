@@ -30,7 +30,7 @@ public class TC129_oneWayDomesticBusiness_RUH_TIF  extends BookingPageFlow{
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
 										
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				

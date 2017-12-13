@@ -35,7 +35,7 @@ public class TC10_oneWayDomesticEconomy_RUH_ABT extends BookingPageFlow{
 			
 			
 										
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				

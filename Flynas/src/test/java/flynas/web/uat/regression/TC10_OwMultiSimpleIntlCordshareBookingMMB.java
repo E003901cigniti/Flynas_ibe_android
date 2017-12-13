@@ -30,7 +30,7 @@ public class TC10_OwMultiSimpleIntlCordshareBookingMMB extends BookingPageFlow{
 			String	retrndate = pickDate(strReturnDate);
 			
 			//User Login
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");

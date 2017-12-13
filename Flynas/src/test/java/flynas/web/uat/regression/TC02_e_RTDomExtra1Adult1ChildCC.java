@@ -31,7 +31,7 @@ public class TC02_e_RTDomExtra1Adult1ChildCC extends BookingPageFlow{
 			String	retrndate = pickDate(retdate);
 			
 
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");

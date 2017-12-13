@@ -30,7 +30,7 @@ public class TC91_oneWayDomesticFlex_AHB_GIZ extends BookingPageFlow{
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];			
 			String deptDate = pickDate(depDate);

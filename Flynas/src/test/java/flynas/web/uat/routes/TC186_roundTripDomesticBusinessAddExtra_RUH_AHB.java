@@ -25,7 +25,7 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 			String Description) throws Throwable {
 		try {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];			
 			String deptDate = pickDate(depDate);
@@ -37,7 +37,7 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
 			Select_A_Meal();
-			Selecting_loung();
+			Select_lounge();
 			inputExtras("12");
 			selectallSeats(seatSelect,"2",triptype);
 			payment(paymentType, "");

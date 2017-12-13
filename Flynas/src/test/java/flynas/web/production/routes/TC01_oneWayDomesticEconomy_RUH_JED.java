@@ -25,12 +25,12 @@ public class TC01_oneWayDomesticEconomy_RUH_JED extends BookingPageFlow{
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
 										
-			String[] Credentials = pickCredentials("PRODcredentials");
-				String username =Credentials[0];
-				String password =Credentials[1];					
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];					
 				
-				click(BookingPageLocators.login_lnk, "Login");				
-				login(username,password);
+			click(BookingPageLocators.login_lnk, "Login");				
+			login(username,password);
 			
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);

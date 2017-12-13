@@ -29,7 +29,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow {
 			
 			Homepage homepage = new Homepage();
 						
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			
 			String username =Credentials[0];
 			String password =Credentials[1];

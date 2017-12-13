@@ -27,7 +27,7 @@ public class TC67_oneWayDomesticFlex_RUH_TIF extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			//Handlepopup();
 			
-				String[] Credentials = pickCredentials("UATcredentials");
+				String[] Credentials = pickCredentials("UserCredentials");
 			
 			String username =Credentials[0];
 			String password =Credentials[1];

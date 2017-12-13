@@ -30,7 +30,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			String	retrndate = pickDate(retdate);
 			
 			//User Login
-			String[] Credentials = pickCredentials("UATNasCredentials");
+			String[] Credentials = pickCredentials("NasCreditCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");

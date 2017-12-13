@@ -118,7 +118,8 @@ public class BookingPageLocators extends ActionEngine{
 	public static String selectMM = "//div[@class='pass_tab']/div[#]//descendant::div[@class='dob_con dob_conmonth']/div/ul/li//descendant::div[@class='ui-select-choices-row'][";
 	public static String yyyy = "//div[@class='pass_tab']/div[#]//descendant::div[@class='dob_conyear']";
 	public static String selectYYYY = "//div[@class='pass_tab']/div[#]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row'][";
-	public static String selectyyinfant = "//div[@class='pass_tab']/div[#]//descendant::div[@class='dob_conyear']/div/ul/li/div[contains(@class,'ui-select-choices-row')]";
+	public static String selectyyinfant = "//div[@class='pass_tab']/div[#]//descendant::div[@class='dob_conyear']/div/ul/li/div["
+			+ "(@class,'ui-select-choices-row')]";
 	public static String nation = "//div[@class='pass_tab']/div[#]//descendant::div[@class='nationdropdown']";
 	public static String selectNation = "//div[@class='pass_tab']/div[#]//descendant::div[@class='nationdropdown']/div/ul/li//descendant::div[@class='ui-select-choices-row']";
 	
@@ -193,6 +194,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By totaldue = By.xpath("//span[contains(text(),'Total amount due: ')]/b");
  	public static By pasword = By.xpath("//input[@type='password']");
 	public static By Error  = By.xpath("//h3[contains(text(),'Error')]");
+	public static By Alert  = By.xpath("//h3[contains(text(),'Alert')]");
 	public static By naSmileId = By.xpath("//input[@name='rewardnum']");
 	public static By naSmilepwd = By.xpath("//input[@name='rewardspassword']");
 	public static By signIn_lnk = By.xpath("//a[contains(text(),'Sign In')]");

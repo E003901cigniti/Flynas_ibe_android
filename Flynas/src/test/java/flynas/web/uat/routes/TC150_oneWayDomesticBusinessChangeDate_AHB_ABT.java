@@ -27,7 +27,7 @@ public class TC150_oneWayDomesticBusinessChangeDate_AHB_ABT extends BookingPageF
 			String Description) throws Throwable {
 		try {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];			
 			String deptDate = pickDate(depDate);

@@ -31,7 +31,7 @@ public class TC45_oneWayDomCancelverifyMMB extends BookingPageFlow{
 			String	retrndate = pickDate(retdate);
 			
 
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");

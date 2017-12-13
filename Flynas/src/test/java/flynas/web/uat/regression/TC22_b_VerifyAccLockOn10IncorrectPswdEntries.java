@@ -42,7 +42,7 @@ public class TC22_b_VerifyAccLockOn10IncorrectPswdEntries extends BookingPageFlo
 			//navigating to login page
 			util.clickLogin();
 			LoginPg.ClickJoinNow();
-			String username = memberRegisterPg.memberRegistration();
+			String username = memberRegisterPg.memberRegistration("","Adult"); // Registering a new Adult member
 			memberRegisterPg.verifingMemberRegistration();
 			
 			//Loging out
@@ -50,7 +50,7 @@ public class TC22_b_VerifyAccLockOn10IncorrectPswdEntries extends BookingPageFlo
 			util.clickok();
 			
 			LoginPg.lockAccount(username);
-			util.VerifyAlertmessage("account is locked");
+			util.VerifyErrorMessage("account is locked");
 						
 			Reporter.SuccessReport("TC22_b_VerifyAccLockOn10IncorrectPswdEntries", "Pass");
 			

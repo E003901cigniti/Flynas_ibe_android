@@ -102,7 +102,7 @@ public class ActionEngine extends TestEngine {
 			e.printStackTrace();
 		} finally {
 			if (!flag) {
-				Reporter.failureReport("Click", "Unable to clicked on "
+				Reporter.failureReport("Click", "Unable to click on "
 						+ locatorName);
 				return flag;
 			} else if (b && flag) {

@@ -27,7 +27,7 @@ public class TC62_roundTripDomesticEconomyAddExtra_RUH_AHB extends BookingPageFl
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				
@@ -41,7 +41,7 @@ public class TC62_roundTripDomesticEconomyAddExtra_RUH_AHB extends BookingPageFl
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
 			Select_A_Meal();
-			Selecting_loung();
+			Select_lounge();
 			inputExtras("12");
 			selectallSeats(seatSelect,"2",triptype);
 			payment(paymentType, "");

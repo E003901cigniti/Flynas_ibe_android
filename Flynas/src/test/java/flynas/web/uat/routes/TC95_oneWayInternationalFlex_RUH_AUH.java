@@ -24,7 +24,7 @@ public class TC95_oneWayInternationalFlex_RUH_AUH extends BookingPageFlow{
 			String child,String infant,String seatSelect,String newdate,	String strTolPass,String domOrInt,String Description) throws Throwable {
 		try {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];			
 			String deptDate = pickDate(depDate);

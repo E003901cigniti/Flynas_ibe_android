@@ -37,7 +37,7 @@ public class TC09_RTInt1adult1Child1infantBus extends BookingPageFlow{
 							strDocumentNum, strNaSmile, strMobile, strEmail,"","","");
 					Baggage_Extra(strTripType);
 					Select_A_Meal();
-					Selecting_loung();
+					Select_longue();
 					inputExtras(charity);
 					selectallSeats(strSelectSeat,"2",strTripType);
 					payment(strPaymentType,"");

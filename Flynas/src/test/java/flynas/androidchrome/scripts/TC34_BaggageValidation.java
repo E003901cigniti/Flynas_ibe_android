@@ -20,20 +20,17 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 
 	@Test(dataProvider = "testData",groups={"Economy"})
 	public  void TC_34_BaggageValidation( String username,String password,String bookingClass,String mobilenum,String paymentType,
-			String newDate,String pickDate,String rtnDate,String origin,String dest,String triptype,String adult,String child,
+			String newDate,String departureDate,String rtnDate,String origin,String dest,String triptype,String adult,String child,
 			String infant,String seatSelect,String Description) throws Throwable {
 		try {
 			
-			DateFormat dateFormat = new SimpleDateFormat("dd-MMMM yyyy");
-			Date date = new Date();
-			String deptdate = dateFormat.format(date);
-			String 	depdate = newDateForCheckIN(deptdate);
+			String deptdate = pickDate(departureDate);
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 										
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
-			inputBookingDetails(triptype,origin, dest, depdate , "", "", rtnDate,adult, child, infant,"","","");
+			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);

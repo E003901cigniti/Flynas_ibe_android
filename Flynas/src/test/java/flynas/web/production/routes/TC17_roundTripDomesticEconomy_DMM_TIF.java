@@ -36,7 +36,7 @@ public class TC17_roundTripDomesticEconomy_DMM_TIF extends BookingPageFlow{
 			String retrnDate = pickDate(rtnDate);
 			
 										
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				

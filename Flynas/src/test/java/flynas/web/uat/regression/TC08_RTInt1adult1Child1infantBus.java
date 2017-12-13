@@ -34,7 +34,7 @@ public class TC08_RTInt1adult1Child1infantBus extends BookingPageFlow {
 					String	deptdate = pickDate(strDepatureDate);
 					String	retrndate = pickDate(strReturnDate);
 					
-					String[] Credentials = pickCredentials("UATcredentials");
+					String[] Credentials = pickCredentials("UserCredentials");
 					String username =Credentials[0];
 					String password =Credentials[1];
 					

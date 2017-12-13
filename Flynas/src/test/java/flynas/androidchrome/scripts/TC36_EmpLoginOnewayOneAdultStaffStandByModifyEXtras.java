@@ -64,7 +64,7 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
 			Select_A_Meal();
-			Selecting_loung();
+			Select_lounge();
 			inputExtras("12");
 			waitforElement(BookingPageLocators.manageMyBookingTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);

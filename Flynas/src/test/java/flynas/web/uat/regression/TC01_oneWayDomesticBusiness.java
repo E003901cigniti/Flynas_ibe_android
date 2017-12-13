@@ -29,7 +29,7 @@ public class TC01_oneWayDomesticBusiness extends BookingPageFlow{
 			String	deptdate = pickDate(deptDate);
 			String	retrndate = pickDate(retdate);
 			
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");

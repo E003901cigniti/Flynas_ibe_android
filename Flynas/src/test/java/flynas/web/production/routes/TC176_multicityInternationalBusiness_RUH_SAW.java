@@ -35,7 +35,7 @@ public class TC176_multicityInternationalBusiness_RUH_SAW extends BookingPageFlo
 			String retrnDate = pickDate(rtnDate);
 									
 										
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				

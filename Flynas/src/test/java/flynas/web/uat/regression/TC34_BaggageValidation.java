@@ -27,14 +27,14 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			
 			String deptdate = pickDate(departureDate);
-			String 	depdate = newDateForCheckIN(deptdate);
+		
 			
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];							
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
-			inputBookingDetails(triptype,origin, dest, depdate , "", "", rtnDate,adult, child, infant,"","","");
+			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
 			continueOnPassengerDetails();
 			validating_BaggageWeights();

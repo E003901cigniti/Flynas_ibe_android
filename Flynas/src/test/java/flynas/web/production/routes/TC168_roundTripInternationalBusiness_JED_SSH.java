@@ -35,7 +35,7 @@ public class TC168_roundTripInternationalBusiness_JED_SSH extends  BookingPageFl
 			String retrnDate = pickDate(rtnDate);
 			
 										
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				

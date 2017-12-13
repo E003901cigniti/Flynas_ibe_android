@@ -33,7 +33,7 @@ public class TC113_multicityInternationalFlex_JED_SAW extends BookingPageFlow{
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
 										
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				

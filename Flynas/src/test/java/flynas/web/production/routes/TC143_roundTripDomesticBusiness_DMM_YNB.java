@@ -33,7 +33,7 @@ public class TC143_roundTripDomesticBusiness_DMM_YNB extends BookingPageFlow{
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
 			
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				

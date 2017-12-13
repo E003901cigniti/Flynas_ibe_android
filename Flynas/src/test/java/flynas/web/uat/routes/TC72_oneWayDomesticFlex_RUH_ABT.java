@@ -28,7 +28,7 @@ public class TC72_oneWayDomesticFlex_RUH_ABT extends BookingPageFlow{
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,
 			String Description) throws Throwable {
 		try {
-			String[] Credentials = pickCredentials("UATcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];			
 			String deptDate = pickDate(depDate);

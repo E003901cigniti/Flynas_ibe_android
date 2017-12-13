@@ -36,7 +36,7 @@ public class TC03_a_oneWayDomesticChangeDate extends BookingPageFlow {
 					String	deptdate = pickDate(strDepatureDate);
 					String	retrndate = pickDate(strReturnDate);
 					
-					String[] Credentials = pickCredentials("UATcredentials");
+					String[] Credentials = pickCredentials("UserCredentials");
 					String username =Credentials[0];
 					String password =Credentials[1];
 					click(BookingPageLocators.login_lnk, "Login");

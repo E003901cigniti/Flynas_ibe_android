@@ -17,57 +17,45 @@ import flynas.web.workflows.MemberRegistrationPage;
 import flynas.web.workflows.MyProfilePage;
 import flynas.web.workflows.projectUtilities;
 
-public class TC20_memberRegistration extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_20");
-
+public class TC20_b_verifyRegistrationFailureWithExistingMailID extends BookingPageFlow{
+	
+	@SuppressWarnings("rawtypes")
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_20_memberRegistration( String Password,String Nationality,String DocumentType,String DocNumber,String Mobile,
-			String EmailAddress,String Description) throws Throwable {
+	public  void TC20b_verifyRegistrationFailureWithExistingMailID( String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			//instantiating page objects
 			projectUtilities util = new projectUtilities();
 			LoginPage LoginPg = new LoginPage();
-			BookingPage Bookingpg = new BookingPage();
 			MemberRegistrationPage memberRegisterPg = new MemberRegistrationPage();
-			MyProfilePage profilePage = new MyProfilePage();
-			MemberDashboard memberdb = new MemberDashboard();
+		
+			
+			
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
 			
 			//navigating to login page
 			util.clickLogin();
 			LoginPg.ClickJoinNow();
-			String username = memberRegisterPg.memberRegistration();
-			memberRegisterPg.verifingMemberRegistration();
-			
-			//Loging out
-			util.logout();
-			util.clickok();
-			
-			//Verifying member registration by loging in.
-			LoginPg.login(username, "Test@1234");		
+			memberRegisterPg.memberRegistration(username,"Adult");
+			util.VerifyErrorMessage("already exists");
+				
 						
-			Reporter.SuccessReport("TC20_memberRegistration", "Pass");
+			Reporter.SuccessReport("TC20_b_verifyRegistrationFailureWithExistingMailID", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC20_memberRegistration", "Failed");
+			Reporter.SuccessReport("TC20_b_verifyRegistrationFailureWithExistingMailID", "Failed");
 		}
 	}
 	
 	@DataProvider(name="testData")
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
-	    		{
-	    		xls.getCellValue("Password", "Value"),
-	    		xls.getCellValue("Nationality", "Value"),
-	    		xls.getCellValue("Document Type", "Value"),
-	    		xls.getCellValue("Doc Number", "Value"),
-	    		xls.getCellValue("Mobile", "Value"),
-	    		xls.getCellValue("Email Address", "Value"),
-	    		"Validate Member Login"}};
+	    		{"Validate Error message on Regestration with existing Email ID"}};
 	}
 
 }

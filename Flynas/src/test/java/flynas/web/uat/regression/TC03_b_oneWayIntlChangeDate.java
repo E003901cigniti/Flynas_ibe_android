@@ -37,7 +37,7 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 					
 					click(BookingPageLocators.login_lnk, "Login");
 					switchtoChildWindow();
-					String[] Credentials = pickCredentials("UATcredentials");
+					String[] Credentials = pickCredentials("UserCredentials");
 					String username =Credentials[0];
 					String password =Credentials[1];					
 					login(username,password);

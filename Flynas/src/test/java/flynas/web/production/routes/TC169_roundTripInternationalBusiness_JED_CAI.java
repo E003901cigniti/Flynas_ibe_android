@@ -35,7 +35,7 @@ public class TC169_roundTripInternationalBusiness_JED_CAI extends BookingPageFlo
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
 										
-			String[] Credentials = pickCredentials("PRODcredentials");
+			String[] Credentials = pickCredentials("UserCredentials");
 				String username =Credentials[0];
 				String password =Credentials[1];					
 				
