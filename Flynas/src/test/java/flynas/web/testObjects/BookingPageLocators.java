@@ -13,6 +13,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By loadimg = By.xpath("//div[@class='loading sk-wave']");
 	public static By body = By.xpath("//body[@block-ui='main']");
 	public static By closepopup = By.xpath("//button[@type='submit']");
+	public static By naSmileTaost = By.xpath("//iframe[@id='yief130002']");
 	public static By closetoast = By.xpath("//span[@id='close']");
 	public static By alertText = By.xpath("//div[@class='modal-body']/div");
 	

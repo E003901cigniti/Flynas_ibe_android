@@ -61,12 +61,12 @@ public class TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge extends Boo
 			clickContinueBtn();						
 			payonMMB(paymenttype);						// Payment on MMB
 			validate_ticketStatus(strPNR);				// Verifying booking status
-			Reporter.SuccessReport("TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge", "Pass");
+			Reporter.SuccessReport("TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge", "Failed");
+			Reporter.failureReport("TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge", "Failed");
 		}
 	}
 	

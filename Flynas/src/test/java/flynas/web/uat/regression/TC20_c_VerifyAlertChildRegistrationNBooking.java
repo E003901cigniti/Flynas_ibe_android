@@ -80,7 +80,7 @@ public class TC20_c_VerifyAlertChildRegistrationNBooking extends BookingPageFlow
 		    		xls.getCellValue("Currency", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
-		    	  	"Validate Member Login"}};
+		    	  	"Validate Child booking failure"}};
 	}
 
 }

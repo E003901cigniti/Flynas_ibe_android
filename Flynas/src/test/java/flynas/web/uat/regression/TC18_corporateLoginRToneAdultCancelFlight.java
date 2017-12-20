@@ -23,7 +23,7 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 	public  void TC_18_corporateLoginRToneAdultCancelFlight(String bookingClass,
 			String mobilenum,String paymentType,String newDate,String departurDate,String rtnDate,String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,String domOrInt,
-			String totalPass,String nationality,String docNum,String docType,String Description) throws Throwable {
+			String totalPass,String nationality,String docNum,String docType,String email, String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -40,7 +40,7 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
 			selectClass(bookingClass, "Economy");
-			inputPassengerDetails(domOrInt, totalPass, nationality,docType,docNum, "",mobilenum, username, "", "", "");;
+			inputPassengerDetails(domOrInt, totalPass, nationality,docType,docNum, "",mobilenum, email, "", "", "");;
 			coninueOnBaggage();
 			selectSeat(seatSelect, "");	
 			payment(paymentType, "");
@@ -83,6 +83,7 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 	    		xls.getCellValue("Nationality", "Value"),
 	    		xls.getCellValue("Doc Number", "Value"),
 	    		xls.getCellValue("Document Type", "Value"),
+	    		xls.getCellValue("Psngr email", "Value"),
 	    		"Validate member Login Round Trip Cancel Flight"}};
 	}
 

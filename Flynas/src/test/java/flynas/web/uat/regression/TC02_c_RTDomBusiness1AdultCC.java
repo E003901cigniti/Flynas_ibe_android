@@ -92,7 +92,7 @@ public class TC02_c_RTDomBusiness1AdultCC extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-		    		"Validate Roundtrip Domestic Business Class 1 Adult CC booking with"
+		    		"Validate Roundtrip Domestic Business Class 1 Adult CC booking"
     			}
 	    	};
 	}

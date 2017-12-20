@@ -96,7 +96,7 @@ public class TC01_oneWayDomesticBusiness extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-		    		"Validate One way Domestic with one Adualt With Business"}};
+		    		"Validate One way Domestic with one Adult With Business"}};
 	}
 
 }

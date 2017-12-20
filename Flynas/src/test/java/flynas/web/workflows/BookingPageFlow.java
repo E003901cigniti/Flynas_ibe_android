@@ -86,11 +86,18 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		//scrolling to find triptype
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.roundTrip));
 		//Select Trip Mode
+		String atrib;
 		if(tripType.equalsIgnoreCase("Round Trip")){
-			click(BookingPageLocators.roundTrip, "Round Trip");
+			atrib =driver.findElement(BookingPageLocators.roundTrip).getAttribute("class");
+			if(!atrib.contains("active"))
+				click(BookingPageLocators.roundTrip, "Round Trip");
 		} else if(tripType.equalsIgnoreCase("One Way")){
+			atrib =driver.findElement(BookingPageLocators.oneWay).getAttribute("class");
+			if(!atrib.contains("active"))
 			click(BookingPageLocators.oneWay, "One Way");
 		} else if(tripType.equalsIgnoreCase("Multi City")){
+			atrib =driver.findElement(BookingPageLocators.multiCity).getAttribute("class");
+			if(!atrib.contains("active"))
 			click(BookingPageLocators.multiCity, "Multi City");
 		}
 		
@@ -1088,7 +1095,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			
 			if(paymentType.equalsIgnoreCase("Credit Card"))
 			{
-				if(isElementDisplayedTemp(BookingPageLocators.pasword)==true)
+				if(isElementDisplayedTemp(BookingPageLocators.ccSubmit)==true)
 				{
 					type(BookingPageLocators.pasword, "1234", "Password");
 					click(BookingPageLocators.ccSubmit,"Submit Button");
@@ -1206,13 +1213,18 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	}
 	
 	public void closetoast() throws Throwable{		
-	try{//String handle = driver.getWindowHandle();
-		int size = driver.findElements(By.tagName("iframe")).size();
-		System.out.println("No of iframes : "+size);
-		driver.switchTo().frame("background");
-		if(isElementPresent(BookingPageLocators.closetoast)==true){
+	try{
+		//driver.switchTo().activeElement();
+		//String handle = driver.getWindowHandle();
+		List<WebElement> elements = driver.findElements(By.tagName("iframe"));
+		System.out.println("No of iframes : "+ elements.size());
+	  	if(isElementPresent(BookingPageLocators.naSmileTaost)==true){
+	  		driver.switchTo().frame("yief130002");
 			System.out.println("nasmile Toast appeared");
 			click(BookingPageLocators.closetoast, "nasmile Toast close button");
+			}
+		else{
+			System.out.println("No nasmile Toast");
 			}
 		//driver.switchTo().window(handle);
 		}catch (Exception e){
@@ -1524,6 +1536,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			Reporter.failureReport("Ticket Confirmation", "Ticket has not booked");
 			
 		}
+		closetoast();
 	}
 	
 	public void validate_ticketStatus_AR(String pnr) throws Throwable
@@ -2514,12 +2527,19 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		//scrolling to find triptype
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.roundTrip_pdctn_AR));
-		//Selecting Trip Type		
+		//Selecting Trip Type
+		String atrib;
 		if(tripType.equalsIgnoreCase("Round Trip")){
+			atrib =driver.findElement(BookingPageLocators.roundTrip_pdctn_AR).getAttribute("class");
+			if(!atrib.contains("active"))
 			click(BookingPageLocators.roundTrip_pdctn_AR, "Round Trip");
 		} else if(tripType.equalsIgnoreCase("One Way")){
+			atrib =driver.findElement(BookingPageLocators.oneWay_pdctn_AR).getAttribute("class");
+			if(!atrib.contains("active"))
 			click(BookingPageLocators.oneWay_pdctn_AR, "One Way");
 		} else if(tripType.equalsIgnoreCase("Multi City")){
+			atrib =driver.findElement(BookingPageLocators.multiCity_pdctn_AR).getAttribute("class");
+			if(!atrib.contains("active"))
 			click(BookingPageLocators.multiCity_pdctn_AR, "Multi City");
 		}
 		
@@ -2979,11 +2999,18 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		//scrolling to find Trip type button
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.roundTrip_pdctn_TR));			
 		//Selecting Trip type		
+		String atrib;
 		if(tripType.equalsIgnoreCase("Round Trip")){
+			atrib = driver.findElement(BookingPageLocators.roundTrip_pdctn_TR).getAttribute("class");
+			if(!atrib.contains("active"))
 			click(BookingPageLocators.roundTrip_pdctn_TR, "Round Trip");
 		} else if(tripType.equalsIgnoreCase("One Way")){
+			atrib = driver.findElement(BookingPageLocators.oneWay_pdctn_TR).getAttribute("class");
+			if(!atrib.contains("active"))
 			click(BookingPageLocators.oneWay_pdctn_TR, "One Way");
 		} else if(tripType.equalsIgnoreCase("Multi City")){
+			atrib = driver.findElement(BookingPageLocators.multiCity_pdctn_TR).getAttribute("class");
+			if(!atrib.contains("active"))
 			click(BookingPageLocators.multiCity_pdctn_TR, "Multi City");
 		}
 		

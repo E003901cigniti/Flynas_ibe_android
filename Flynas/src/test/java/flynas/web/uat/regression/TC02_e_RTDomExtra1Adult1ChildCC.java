@@ -91,7 +91,7 @@ public class TC02_e_RTDomExtra1Adult1ChildCC extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-		    		"Validate Roundtrip Domestic Extra Class Multi pax CC booking with"
+		    		"Validate Roundtrip Domestic Extra Class Multi pax CC booking"
     			}
 	    	};
 	}

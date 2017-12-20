@@ -26,11 +26,9 @@ public class TC03_a_oneWayDomesticChangeDate extends BookingPageFlow {
 			String strAdultCount, String strChildCount, String strInfantCount, String strPromo, 
 			String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,
 			String strNaSmile,  String strMobile, String strEmail, String strSelectSeat, String strPaymentType,String bookingtype,
-			String strNewDate, String charity,String Currency, String strLastName)throws Throwable{
-				try{					
+			String strNewDate, String charity,String Currency, String strLastName,String description)throws Throwable{
+				try{									
 					
-					
-					String description = "Validate One Way Domestic ChangeDate";
 					TestEngine.testDescription.put(HtmlReportSupport.tc_name, description);
 					
 					String	deptdate = pickDate(strDepatureDate);
@@ -115,7 +113,8 @@ public class TC03_a_oneWayDomesticChangeDate extends BookingPageFlow {
     			"",
     			xls.getCellValue("username", "Value"),
     			xls.getCellValue("password", "Value"),
-    			xls.getCellValue("Last Name", "Value")
+    			xls.getCellValue("Last Name", "Value"),
+    			"Validate One Way Domestic ChangeDate"
     			}};
 	}
 	

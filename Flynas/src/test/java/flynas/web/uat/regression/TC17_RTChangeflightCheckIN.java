@@ -49,6 +49,7 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			selectSeat(seatSelect, "");	
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
+			validate_ticketStatus(strpnr);
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			

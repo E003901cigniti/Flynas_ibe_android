@@ -23,9 +23,8 @@ public class TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR 
 			String strDepatureDate,String origin2,String departure2,String strReturnDate,String strTotalPessenger,String strAdultCount,
 			String strChildCount,String strInfantCount,String strPromo,String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,
 			String strNaSmile,  String strMobile, String strEmail, String strSelectSeat, String strPaymentType,String bookingtype,
-			String strNewDate, String charity,String Currency)throws Throwable{
+			String strNewDate, String charity,String Currency,String description)throws Throwable{
 				try{
-					String description = "Validate OneWay Domestic Economy MMB- change date, modify extras, select business lounge";
 					
 					TestEngine.testDescription.put(HtmlReportSupport.tc_name, description);
 					String	deptdate = pickDate(strDepatureDate);
@@ -94,7 +93,8 @@ public class TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR 
     			xls.getCellValue("Payment Type", "Value"),"",
     			xls.getCellValue("New Date", "Value"),
     			xls.getCellValue("Charity Donation", "Value"),
-    			xls.getCellValue("Currency", "Value")}};
+    			xls.getCellValue("Currency", "Value"),
+    			"Validate OneWay Domestic Economy MMB- change date, modify extras, select business lounge"}};
 	}
 	
 }
