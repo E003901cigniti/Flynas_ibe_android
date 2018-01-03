@@ -35,19 +35,9 @@ public class TC05_verifingSerCharChildDisRTFlexDom  extends BookingPageFlow{
 			}else{
 				System.out.println("No Baggage Page Available");
 			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				clickContinueBtn();
-					if(isElementDisplayedTemp(BookingPageLocators.ok)==true){
-						click(BookingPageLocators.ok, "OK");
-					}
-			}else{
-				System.out.println("No Seat Page Available");
-			}
+			continueOnSeatSelection();
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber().trim();
-			verifingStatusSadad();
+			verifyPNRforSadad();
 			verifingServiceCharge(triptype, bookingClass, totalpass);
 			verifingChildDiscount(bookingClass);
 			Reporter.SuccessReport("TC05_verifingSerCharChildDisRTFlexDom", "Pass");

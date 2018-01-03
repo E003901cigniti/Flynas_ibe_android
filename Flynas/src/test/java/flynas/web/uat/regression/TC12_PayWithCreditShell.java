@@ -44,7 +44,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			selectClass(strBookingClass, tripType);
 			
 			//entering passenger details
-			String Passengername[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
+			//String Passengername[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
 			//System.out.println(Passengername[0]);	
 			//System.out.println(Passengername[1]);
 			
@@ -74,10 +74,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			
 			//Selecting class
 			selectClass(strBookingClass, tripType);
-			
-			//Entering passenger details
-			//inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,Passengername[0],Passengername[1],payment2);
-			
+						
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
 			

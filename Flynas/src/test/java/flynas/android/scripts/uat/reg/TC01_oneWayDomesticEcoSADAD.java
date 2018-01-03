@@ -20,12 +20,11 @@ public class TC01_oneWayDomesticEcoSADAD extends BookingPageFlow{
 
 	@Test(dataProvider = "testData",groups={"Android"})
 	public  void TC_01_oneWayDomesticEcoSADAD(String tripType, String origin, String dest, 
-			String deptDate, String origin2,String departure2, String retdate,String Audalt,String Child,String infant, String promo, 
-			String strBookingClass,
-			String FlightType,String totalpass,String namtionality,String Doctypr,String docNumber,
-			String naSmiles,String Mobile,String email ,String SelectSeat,String paymenttype,String bookingtype, 
-			String charity,String Currency, String Description
-			) throws Throwable {
+			String deptDate, String origin2,String departure2, String retdate,String Audalt,String Child,
+			String infant, String promo, String strBookingClass,String FlightType,String totalpass,String nationality,
+			String Doctype,String docNumber,String naSmiles,String Mobile,String email ,String SelectSeat,
+			String paymenttype,String bookingtype, String charity,String Currency, String Description) throws Throwable 
+	{
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -38,7 +37,7 @@ public class TC01_oneWayDomesticEcoSADAD extends BookingPageFlow{
 			inputBookingDetails(tripType, origin, dest, depDate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency);
  			selectClass(strBookingClass, tripType);
  			waitforElement(BookingPageLocators.title);
- 			continueOnPsngrDtls();
+ 			inputPassengerDetails(FlightType, totalpass, nationality,Doctype, docNumber, "", Mobile, email,"","",paymenttype);
  			continueOnExtras();
 			selectSeat(SelectSeat, bookingtype,"");
 			payment(paymenttype,"");

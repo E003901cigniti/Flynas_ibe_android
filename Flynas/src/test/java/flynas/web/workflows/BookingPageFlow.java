@@ -1095,7 +1095,13 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			
 			if(paymentType.equalsIgnoreCase("Credit Card"))
 			{
-				if(isElementDisplayedTemp(BookingPageLocators.ccSubmit)==true)
+				List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+				for(int i=0;i<frames.size();i++){
+					System.out.println(frames.get(i).getAttribute("id"));
+				}
+				driver.switchTo().frame("authWindow");
+				driver.manage().timeouts().implicitlyWait(5000,TimeUnit.MILLISECONDS);
+				if(isElementPresent(BookingPageLocators.pasword)==true)
 				{
 					type(BookingPageLocators.pasword, "1234", "Password");
 					click(BookingPageLocators.ccSubmit,"Submit Button");
@@ -1525,11 +1531,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		if(getText(BookingPageLocators.summaryStatus,"Status").trim().equals("Confirmed")||getText(BookingPageLocators.summaryStatus,"Status").trim().equals("Pending"))
 		{
 			String env = driver.getCurrentUrl();
-			if(env.contains("uat")){
-			writingPNR("IBE_UATRoutes_PNR",pnr);
-			}else{writingPNR("IBE_ProdRoutes_pnr",pnr);}
-			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked with PNR "+pnr);
+			if(env.contains("develop_r41")){writingPNR("IBE_NAV_PNR",pnr);}
+			else if(env.contains("uat")){writingPNR("IBE_UAT_PNR",pnr);}
+			else{writingPNR("IBE_PROD_PNR",pnr);}
 			
+			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked with PNR "+pnr);			
 		}
 		else
 		{	
@@ -1545,9 +1551,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		if(getText(BookingPageLocators.summaryStatus_AR_uat,"Status").trim().equals("مؤكد"))
 		{
 			String env = driver.getCurrentUrl();
-			if(env.contains("uat")){
-			writingPNR("IBE_UATRoutes_PNR",pnr);
-			}else{writingPNR("IBE_ProdRoutes_pnr",pnr);}
+			if(env.contains("develop_r41")){writingPNR("IBE_NAV_PNR",pnr);}
+			else if(env.contains("uat")){writingPNR("IBE_UAT_PNR",pnr);}
+			else{writingPNR("IBE_PROD_PNR",pnr);}
 			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked with PNR "+pnr);
 		}
 		else
@@ -1558,14 +1564,13 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	public void validate_ticketStatus_TR(String pnr) throws Throwable
 	{
 		waitforElement(BookingPageLocators.summaryStatus_TR_uat);
-		waitUtilElementhasAttribute(BookingPageLocators.body);
 		if(getText(BookingPageLocators.summaryStatus_TR_uat,"Status").trim().equals("Confirmed")
 			||getText(BookingPageLocators.summaryStatus_TR_uat,"Status").trim().equals("Onaylandı")	)
 		{
 			String env = driver.getCurrentUrl();
-			if(env.contains("uat")){
-			writingPNR("IBE_UATRoutes_PNR",pnr);
-			}else{writingPNR("IBE_ProdRoutes_pnr",pnr);}
+			if(env.contains("develop_r41")){writingPNR("IBE_NAV_PNR",pnr);}
+			else if(env.contains("uat")){writingPNR("IBE_UAT_PNR",pnr);}
+			else{writingPNR("IBE_PROD_PNR",pnr);}
 			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked with PNR "+pnr);
 		}
 		else
@@ -1575,16 +1580,25 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	}
 	
 	public void verifyPNRforSadad() throws Throwable{
-		
+		waitforElement(BookingPageLocators.body);
 		if(isElementPresent(BookingPageLocators.txtPNR, "Booking Reference")){
+			String Status= getText(BookingPageLocators.summaryStatus, "PNR Status");
+			if (Status.equalsIgnoreCase("Pending")){
 			String pnr = driver.findElement(By.xpath("//div[text()='Booking Reference: ']/b")).getText();
+			String env = driver.getCurrentUrl();
+				if(env.contains("develop_r41")){writingPNR("IBE_NAV_PNR",pnr);}
+				else if(env.contains("uat")){writingPNR("IBE_UAT_PNR",pnr);}
+				else{writingPNR("IBE_PROD_PNR",pnr);}
+				
 			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked,PNR : " + pnr);
-			writingPNR("ProductionRoutes_pnr",pnr);
+			}
+			else {
+				Reporter.failureReport("Ticket Confirmation", "Ticket not booked");
+				writingPNR("ProductionRoutes_pnr","Fail");
+			}
 		}
-		else
-		{
-			Reporter.failureReport("Ticket Confirmation", "Ticket has not booked");
-			writingPNR("ProductionRoutes_pnr","Fail");
+		else{
+			Reporter.failureReport("Ticket Confirmation", "Payment failed");			
 		}	
 	}
 	
@@ -1603,17 +1617,6 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		}
 	}
 	
-	public void verifingStatusSadad() throws Throwable
-	{
-		if(getText(BookingPageLocators.summaryStatus, "PNR Status").equalsIgnoreCase("Pending"))
-		{
-			Reporter.SuccessReport("PNR Status", "Pending");
-		}
-		else
-		{
-			Reporter.SuccessReport("PNR Status", "Not Pending");
-		}
-	}
 	
 	public static String pickDate(String xlsDate){
 		
@@ -1823,23 +1826,20 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		List<WebElement> select = driver.findElements(BookingPageLocators.select);
 		List<WebElement> error = driver.findElements(BookingPageLocators.mealError);
 		List<WebElement> meal =driver.findElements(BookingPageLocators.meal);
-		int k=0, i=1;
+		int i=1, j=0, k=0,l=0 ;
 			if(error.size()==0){
-				flights.get(0).click();
-				for(int j=0;j<passengers.size();j++){
-					
-					if(passengers.get(j).isDisplayed()==true){
-						passengers.get(j).click();
-						select.get(k).click();
-						Reporter.SuccessReport("Verifing Select Meal", "Selected");
-						k=k+2;
-						waitUtilElementhasAttribute(BookingPageLocators.body);
-					}else{
-						j=j-1;
-						flights.get(i).click();
-						i=i+1;
-					}
-			}	
+				for(l=0;l<flights.size();l++){
+					flights.get(l).click();
+					passengers = driver.findElements(BookingPageLocators.passengersToSelectMeal);
+					System.out.println(passengers.size());
+					for(j=0;j<passengers.size()/flights.size();j++){					
+							passengers.get(j).click();
+							select.get(k).click();
+							Reporter.SuccessReport("Verifing Select Meal", "Meal Selected");
+							waitUtilElementhasAttribute(BookingPageLocators.body);
+						}						
+					j=0;
+				}
 			}else{
 				
 				if(error.size()>0){
@@ -2428,11 +2428,6 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	//production
 	public void verifingServiceCharge(String tripType,String Bookingcls,String totalpass) throws Throwable
 	{		
-		if(Bookingcls.equalsIgnoreCase("Economy")){
-			Bookingcls="Simple";
-		}else if(Bookingcls.equalsIgnoreCase("Flex")){
-			Bookingcls="Extra";
-		}
 			List<WebElement> collapseButton = driver.findElements(BookingPageLocators.collapsebtn(Bookingcls));
 			List<WebElement> flights = driver.findElements(By.xpath("//div[@class='s_flightinfo1 clearfix']/span[1]"));
 					
@@ -2444,13 +2439,14 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				String serviceCharge = srcharge.get(i).getText();
 				String[] scharges = serviceCharge.split("\\s");
 				float ServiceCharge = Float.parseFloat(scharges[1]);
-				
-				if(ServiceCharge==25.00*(Integer.parseInt(totalpass)))
+				int totalpsngrs = Integer.parseInt(totalpass);
+				System.out.println(totalpsngrs);
+				if(ServiceCharge==25.00*totalpsngrs)
 				{
 					System.out.println("Successfully Verified Service Charge");
 					Reporter.SuccessReport("Verifing service Charge Per Person as "+serviceCharge, "Successfully Verified");
 				}
-				else if(flights.get(0).getText().contains("/"))
+				else if(flights.get(i).getText().contains("/"))
 				{
 					if(ServiceCharge==50.00*(Integer.parseInt(totalpass)))
 					{
@@ -2469,11 +2465,6 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	public void verifingChildDiscount(String bookingClass) throws Throwable
 	{
 		//String childFare=null;
-		if(bookingClass.equalsIgnoreCase("Economy")){
-			bookingClass="Simple";
-		}else if(bookingClass.equalsIgnoreCase("Flex")){
-			bookingClass="Extra";
-		}
 		List<WebElement> collapseButton = driver.findElements(BookingPageLocators.collapsebtn(bookingClass));
 		for(int i=0;i<collapseButton.size();i++)
 		{		
@@ -2895,35 +2886,34 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				
 			}
 			
-		}
-		
+		}		
 		clickContinueBtn();
 		return true;
 	}
-	public void verifingStatusSadad_Arabic() throws Throwable
-	{
-		if(getText(BookingPageLocators.summaryStatus_AR, "PNR Status").trim().equalsIgnoreCase("Pending"))
-		{
-			System.out.println(getText(BookingPageLocators.summaryStatus_AR, "PNR Status"));
-			Reporter.SuccessReport("PNR Status", "Pending");
-		}
-		else
-		{
-			Reporter.SuccessReport("PNR Status", "Not Pending");
-		}
-	}
-
+	
 	public void verifyPNRforSadad_Arabic() throws Throwable{
-		if(isElementPresent(BookingPageLocators.summaryRefNumber_AR, "Booking Reference")){
-			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked,PNR : " + 
-		driver.findElement(By.xpath("//div[text()=' رقم الحجز: ']/b")).getText());
-			System.out.println(driver.findElement(By.xpath("//div[text()=' رقم الحجز: ']/b")).getText());
-		}
-		else
-		{
-			Reporter.SuccessReport("Ticket Confiramation", "Ticket has not booked");
+		waitforElement(BookingPageLocators.body);
+		if(isElementPresent(BookingPageLocators.summaryRefNumber_AR_uat, "Booking Reference")){
+		String Status= getText(BookingPageLocators.summaryStatus_AR, "PNR Status");
+		if (Status.equalsIgnoreCase("قيد الانتظار")){
+			String pnr = driver.findElement(BookingPageLocators.summaryRefNumber_AR_uat).getText();
+			String env = driver.getCurrentUrl();
+				if(env.contains("develop_r41")){writingPNR("IBE_NAV_PNR",pnr);}
+				else if(env.contains("uat")){writingPNR("IBE_UAT_PNR",pnr);}
+				else{writingPNR("IBE_PROD_PNR",pnr);}			
+			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked,PNR : " + pnr);
+			}
+			else
+			{
+			Reporter.SuccessReport("Ticket Confiramation", "Ticket not booked");
+			}
+		}else{
+			Reporter.failureReport("Ticket Confirmation", "Payment failed");			
 		}	
+
 	}
+	
+	
 	public void verifingChildDiscount_Arabic(String bookingClass) throws Throwable
 	{
 		
@@ -3221,31 +3211,32 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			e.printStackTrace();
 			return FirstLastName;
 		}
-}
-	public void verifingStatusSadad_Tarkish() throws Throwable
-	{
-		if(getText(BookingPageLocators.summaryStatus_TR, "PNR Status").trim().equalsIgnoreCase("Pending"))
-		{
-			System.out.println(getText(BookingPageLocators.summaryStatus_TR, "PNR Status"));
-			Reporter.SuccessReport("PNR Status", "Pending");
-		}
-		else
-		{
-			Reporter.SuccessReport("PNR Status", "Not Pending");
-		}
 	}
-
+	
 	public void verifyPNRforSadad_Tarkish() throws Throwable{
+		waitforElement(BookingPageLocators.body);
 		if(isElementPresent(BookingPageLocators.summaryRefNumber_TR, "Booking Reference")){
-			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked,PNR : " + 
-		driver.findElement(By.xpath("//div[text()='Reservasyon: ']/b")).getText());
-			System.out.println(driver.findElement(By.xpath("//div[text()='Reservasyon: ']/b")).getText());
+			String Status= getText(BookingPageLocators.summaryStatus_TR, "PNR Status");
+			if (Status.equalsIgnoreCase("Beklemede")){
+			String pnr = driver.findElement(summaryRefNumber_TR).getText();
+			String env = driver.getCurrentUrl();
+				if(env.contains("develop_r41")){writingPNR("IBE_NAV_PNR",pnr);}
+				else if(env.contains("uat")){writingPNR("IBE_UAT_PNR",pnr);}
+				else{writingPNR("IBE_PROD_PNR",pnr);}				
+			Reporter.SuccessReport("Ticket Confirmation", "Ticket has booked,PNR : " + pnr);
+			}
+			else {
+				Reporter.failureReport("Ticket Confirmation", "Ticket not booked");
+				writingPNR("ProductionRoutes_pnr","Fail");
+			}
 		}
 		else
 		{
-			Reporter.SuccessReport("Ticket Confiramation", "Ticket has not booked");
+			Reporter.SuccessReport("Ticket Confiramation", "Payment failed");
 		}	
 	}
+	
+	
 	public void verifingMemberRegistration_Production() throws Throwable
 	{
 		if(isElementPresent(BookingPageLocators.memberRegistrationConf)==true)
@@ -3441,7 +3432,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 						}
 					
 						}		
-	}
+			}
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
 			
@@ -3663,8 +3654,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				System.out.println("No Seat Page");
 			}
 		}
-		
-		
+			
 		
 	}
 		

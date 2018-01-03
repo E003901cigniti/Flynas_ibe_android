@@ -29,29 +29,11 @@ public class TC16_verifingServiceChargeMTSingleEco extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails_Arabic(triptype,origin, dest, deptDate ,origin2,dept2, rtrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass,triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Availabel");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				clickContinueBtn();
-					if(isElementPresent(BookingPageLocators.ok)==true){
-						click(BookingPageLocators.ok, "OK");
-					}
-			}else{
-				System.out.println("No Seat Page Available");
-			}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment_Production_Arabic(paymentType);
 			verifyPNRforSadad_Arabic();
-			verifingStatusSadad_Arabic();
 			verifingServiceCharge(triptype, BookingClassSr.trim(), totalpass);
 			
 			Reporter.SuccessReport("TC16_verifingServiceChargeMTSingleEco", "Pass");

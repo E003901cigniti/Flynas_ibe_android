@@ -29,30 +29,18 @@ public class TC02_oneWayDomesticEconomy_RUH_DMM extends BookingPageFlow{
 			String retrnDate = pickDate(rtnDate);
 										
 			String[] Credentials = pickCredentials("UserCredentials");
-				String username =Credentials[0];
-				String password =Credentials[1];					
+			String username =Credentials[0];
+			System.out.println(username);
+			String password =Credentials[1];
+			System.out.println(password);
 				
-				click(BookingPageLocators.login_lnk, "Login");				
-				login(username,password);
+			click(BookingPageLocators.login_lnk, "Login");				
+			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-			clickContinueBtn();
-			}else{
-				System.out.println("No Baggae Page Available");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok))
-					click(BookingPageLocators.ok, "OK");
-			}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();

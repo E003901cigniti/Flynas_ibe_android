@@ -38,13 +38,7 @@ public class TC01_verifingChildDiscount extends BookingPageFlow {
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, "");
 			inputPassengerDetails(flightType, totalpass, nationality, Doctype,docNum,"", mobilenum, username, "", "", "");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-			clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Availabel");
-			}
+			coninueOnBaggage();
 			waitforElement(BookingPageLocators.selectseattittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
@@ -56,8 +50,7 @@ public class TC01_verifingChildDiscount extends BookingPageFlow {
 			}
 			
 			payment(paymentType, "");
-			getReferenceNumber().trim();
-			verifingStatusSadad();
+			verifyPNRforSadad();
 			verifingServiceCharge(triptype, bookingClass, totalpass);
 			verifingChildDiscount(bookingClass);
 			

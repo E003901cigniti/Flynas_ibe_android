@@ -156,7 +156,7 @@ public class TestEngine extends HtmlReportSupport {
 				 }
 				 else
 				 {
-					 url = (configProps.getProperty("URL_UAT"));
+					 url = (configProps.getProperty("URL_PRODUCTION"));
 				 }
 			
 				Reporter.reportCreater();
@@ -225,6 +225,7 @@ public class TestEngine extends HtmlReportSupport {
 				}
 				Iosdriver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"),
 						capabilitiesForAppium);
+				Iosdriver.resetApp();
 				driver = Iosdriver;
 				driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
 			} catch (Exception e) {
@@ -258,6 +259,7 @@ public class TestEngine extends HtmlReportSupport {
 				System.out.println(apk.getCanonicalPath());
 				capabilitiesForAppium.setCapability("app", apk.getCanonicalPath());
 				AndroidDriver2 = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"),capabilitiesForAppium);
+				AndroidDriver2.resetApp();
 				driver = (AndroidDriver2);				
 			} catch (Exception e) {
 				e.printStackTrace();			
@@ -555,9 +557,9 @@ public class TestEngine extends HtmlReportSupport {
 			e.printStackTrace();
 		} finally {
 			if ((browser.toLowerCase().contains("iphone"))) {
-				//Iosdriver.closeApp();
+				Iosdriver.resetApp();
 			}else if(browser.toLowerCase().contains("android")){ 
-				//AndroidDriver2.closeApp();
+				AndroidDriver2.resetApp();
 				
 			}else{
 				driver.quit();

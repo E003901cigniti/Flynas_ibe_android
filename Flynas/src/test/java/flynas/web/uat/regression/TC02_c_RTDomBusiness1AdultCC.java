@@ -40,13 +40,10 @@ public class TC02_c_RTDomBusiness1AdultCC extends BookingPageFlow{
 					
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
 			selectClass(strBookingClass, tripType);
-			
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
-			
 			//Clicking continue button on Baggage details page
 			coninueOnBaggage();
-			
 			selectSeat(SelectSeat, bookingtype);
 			payment(paymenttype,"");
 			String strPNR = getReferenceNumber();

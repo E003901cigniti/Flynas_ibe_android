@@ -118,13 +118,6 @@ public class BookingPageFlow extends BookingPageLocators{
 			}
 		}	
 				
-		if(Currency!="")
-		{
-				click(BookingPageLocators.Currency, "Currency");
-				Thread.sleep(2000);
-				click(BookingPageLocators.currencytype(Currency), Currency);
-		}
-		
 		if(promo!="")
 		{
 				click(BookingPageLocators.promo, "promo");
@@ -1029,9 +1022,9 @@ public class BookingPageFlow extends BookingPageLocators{
 		 System.out.println(PNR);
 		 String status = getText(BookingPageLocators.confirmation_Status, "Status");
 		 System.out.println(status);
-		 if(status.equalsIgnoreCase("Pending"))
+		 if(status.equalsIgnoreCase("Pending")||status.equalsIgnoreCase("Fail"))
 		 {
-			 Reporter.SuccessReport("Ticket Confiramation", "Ticket has  booked,PNR :"+PNR+" With Status "+status);
+			 Reporter.SuccessReport("SADAD Booking Confiramation", "Ticket has  booked,PNR :"+PNR+" With Status "+status);
 			
 		 }
 			 

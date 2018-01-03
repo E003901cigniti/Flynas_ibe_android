@@ -29,30 +29,12 @@ public class TC02_verifingServiceChargeperPerson extends BookingPageFlow {
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, "");
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			clickContinueBtn();
-			clickContinueBtn();
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-			clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Availabel");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				clickContinueBtn();
-					if(isElementPresent(BookingPageLocators.ok)==true){
-						click(BookingPageLocators.ok, "OK");
-					}
-			}else{
-				System.out.println("No seat Available");
-			}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber().trim();
-			verifingStatusSadad();
+			verifyPNRforSadad();
 			verifingServiceCharge(triptype, bookingClass, totalpass);
 			Reporter.SuccessReport("TC02_verifingServiceChargeperPerson", "Pass");
 			

@@ -28,27 +28,10 @@ public class TC07_verifingServiceChargewithMTEco extends BookingPageFlow{
 			inputBookingDetails(triptype,origin, dest, deptDate , origin2, dest2, rtrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, "");
 			String[] FirstLastName=	inputPassengerDetails(flightType, totalpass, nationality, Doctype,docNum,"", mobilenum, username, "", "", "");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				Select_A_Meal();
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page Available");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				clickContinueBtn();
-					if(isElementDisplayedTemp(BookingPageLocators.ok)==true){
-						click(BookingPageLocators.ok, "OK");
-					}
-			}else{
-				System.out.println("No Seat Page Available");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber().trim();
-			verifingStatusSadad();
+			verifyPNRforSadad();
 			verifingServiceCharge(triptype, bookingClass, totalpass);
 			
 			Reporter.SuccessReport("TC07_verifingServiceChargewithMTEco", "Pass");

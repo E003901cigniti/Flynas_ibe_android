@@ -41,7 +41,7 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 					"F123456", "1234567890", mobilenum, username,"","","");
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
-			Select_A_Meal();
+		//	Select_A_Meal();
 			Select_lounge();
 			inputExtras("12");
 			selectallSeats(seatSelect,"2",triptype);

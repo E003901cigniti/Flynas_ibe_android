@@ -187,6 +187,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By sadadOP = By.xpath("//sadadop[@form='paymentForm']/div/div/div/input");
 	public static By sadadEnter = By.xpath("//sadadop[@form='paymentForm']//descendant::button[@class='btn btn-primary']");
 	public static By ccSubmit = By.xpath("//input[@name='UsernamePasswordEntry']");
+	public static By helpimg = By.xpath("//a/img");
 	public static By paymentType = By.xpath("//div[@class='passblock']");
 	public static By ipt_pnr  = By.xpath("//input[@name='pnr']");
 	public static By Amount = By.xpath("//input[@name='creditFileAmount']");
@@ -260,7 +261,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By InFlightMeal = By.xpath("//h1[contains(text(),'In-flight meals')]");
 	public static By inflightmeal = By.xpath("//h1[contains(text(),'In-flight meals')]/following-sibling::p/following::div[3]/ul/li/a");
 	public static By flightsinSelectmeal = By.xpath("//h1[contains(text(),'In-flight meals')]/following::div[1]/div/div/div/div[1]/ul/li/a");
-	public static By passengersToSelectMeal = By.xpath("//div[contains(@class,'col-pass')]");
+	public static By passengersToSelectMeal = By.xpath("//div[contains(@class,'btn_con clearfix margin_t15')]/preceding-sibling::div[@class='col-pass active']");
 	public static By selectedflightes(int value)
 	{
 		return By.xpath("//h1[contains(text(),'In-flight meals')]/following::ul["+value+"]/li/a");

@@ -30,26 +30,11 @@ public class TC23_verifingSerCharChildDisRTMultiFlexDomTR extends BookingPageFlo
 			inputBookingDetails_Tarkish(triptype,origin, dest, deptDate , "", "", rtrnDate,adult, child, infant,"","");
 			selectClass(bookingClass,triptype);
 			inputPassengerDetails_Tarkish(flightType, totalpass, nationality, Doctype, docNum, naSmile, mobilenum, username, "", "", "");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Availabel");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				clickContinueBtn();
-					if(isElementPresent(BookingPageLocators.ok)==true){
-						click(BookingPageLocators.ok, "OK");
-					}
-			}else{
-				System.out.println("No Seat Page Available");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType,"");
 			verifyPNRforSadad_Tarkish();
-			verifingStatusSadad_Tarkish();
+			
 			verifingServiceCharge(triptype, BookingClassSr.trim(), totalpass);
 			verifingChildDiscount_Tarkish(BookingClassSr.trim());
 			

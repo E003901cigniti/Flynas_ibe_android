@@ -28,16 +28,8 @@ public class TC08_verifingServiceChragewithMTSingleFlex extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , origin2,dest2, rtrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, "");
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Availabel");
-			}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
 			waitforElement(BookingPageLocators.selectseattittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
@@ -45,10 +37,8 @@ public class TC08_verifingServiceChragewithMTSingleFlex extends BookingPageFlow{
 			}else{
 				System.out.println("No Seat Page Available");
 			}
-			
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber();
-			verifingStatusSadad();
+			verifyPNRforSadad();
 			verifingServiceCharge(triptype, bookingClass, totalpass);
 			
 			Reporter.SuccessReport("TC08_verifingServiceChragewithMTSingleFlex", "Pass");

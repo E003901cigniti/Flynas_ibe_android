@@ -28,16 +28,8 @@ public class TC12_verifingServiceChargeRTSingleFlexIntAR extends BookingPageFlow
 			login(username,password);
 			inputBookingDetails_Arabic(triptype,origin, dest, deptDate , "", "", rtrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass,triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page Available");
-			}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
 			waitforElement(BookingPageLocators.selectseattittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
@@ -50,7 +42,7 @@ public class TC12_verifingServiceChargeRTSingleFlexIntAR extends BookingPageFlow
 			}			
 			payment_Production_Arabic(paymentType);
 			verifyPNRforSadad_Arabic();
-			verifingStatusSadad_Arabic();
+			
 			verifingServiceCharge(triptype, BookingClassSr.trim(), totalpass);
 			Reporter.SuccessReport("TC12_verifingServiceChargeRTSingleFlexIntAR", "Pass");
 			

@@ -37,9 +37,7 @@ public class TC30_BaggageValidation extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", rtnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			waitforElement(BookingPageLocators.baggagetittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			validating_BaggageWeights();				

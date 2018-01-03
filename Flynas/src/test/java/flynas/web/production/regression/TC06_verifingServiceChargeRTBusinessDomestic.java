@@ -29,26 +29,10 @@ public class TC06_verifingServiceChargeRTBusinessDomestic extends BookingPageFlo
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, "");
 			inputPassengerDetails(flightType, totalpass, nationality, Doctype,docNum,"", mobilenum, username, "", "", "");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Page Available");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
-				clickContinueBtn();
-					if(isElementDisplayedTemp(BookingPageLocators.ok)==true){
-						click(BookingPageLocators.ok, "OK");
-					}
-			}else{
-				System.out.println("No Seat Page Available");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber().trim();
-			verifingStatusSadad();
+			verifyPNRforSadad();
 			verifingServiceCharge(triptype, bookingClass, totalpass);
 			
 			Reporter.SuccessReport("TC06_verifingServiceChargeRTBusinessDomestic", "Pass");

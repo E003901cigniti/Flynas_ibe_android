@@ -43,10 +43,8 @@ public class TC02_d_RTIntlBusiness1AdultCC extends BookingPageFlow{
 			
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
-			
 			//Clicking continue button on Baggage details page
 			coninueOnBaggage();
-			
 			selectSeat(SelectSeat, bookingtype);
 			payment(paymenttype,"");
 			String strPNR = getReferenceNumber();

@@ -41,20 +41,8 @@ public class TC90_oneWayDomesticFlex_AHB_WAE extends BookingPageFlow{
 			selectClass(bookingClass, triptype);
 			inputPassengerDetails(domOrInt, strTolPass, "Afghanistan", "National ID Card", 
 					"F123456", "1234567890", mobilenum, "flynasqa@gmail.com","","","");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-			clickContinueBtn();
-			}else{
-				System.out.println("No Baggae Page Available");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok))
-					click(BookingPageLocators.ok, "OK");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();

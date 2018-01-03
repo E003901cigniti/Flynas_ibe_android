@@ -41,12 +41,12 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
 			selectClass(bookingClass, "Economy");
-			inputPassengerDetails(domOrInt, totalPass, nationality,docType,docNum, "",mobilenum, username+"@gmail.com", "", "", "");;
+			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber().trim();
-			searchFlight(strpnr, username+"@gmail.com", "", "");
+			searchFlight(strpnr, username, "", "");
 			modifyExtras();
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);

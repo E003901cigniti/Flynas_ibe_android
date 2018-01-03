@@ -16,7 +16,7 @@ public class TC02_f_oneWayDomesticSimpleSADAD extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_02_oneWayDomesticBusiness");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_02_oneWayDomesticEcoSADAD(String tripType, 
+	public  void TC_02_f_oneWayDomesticSimpleSADAD(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
 			String strBookingClass,String FlightType,String totalpass, String nationality,
@@ -49,14 +49,14 @@ public class TC02_f_oneWayDomesticSimpleSADAD extends BookingPageFlow{
 			
 			selectSeat(SelectSeat, bookingtype);
 			payment(paymenttype,"");
-			verifyPNRforSadad();
+			verifyAlertPopup();
 			
-			Reporter.SuccessReport("TC_02_oneWayDomesticEcoSADAD", "Pass");
+			Reporter.SuccessReport("TC02_f_oneWayDomesticSimpleSADAD", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC_02_oneWayDomesticEcoSADAD", "Failed");
+			Reporter.failureReport("TC02_f_oneWayDomesticSimpleSADAD", "Failed");
 		}
 	}
 	

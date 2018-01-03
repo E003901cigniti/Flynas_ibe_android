@@ -20,42 +20,24 @@ public class TC28_oneWayDomesticEconomy_AHB_WAE extends BookingPageFlow{
 
 	@Test(dataProvider = "testData",groups={"Economy"})
 	public  void TC_28_oneWayDomesticEconomy_AHB_WAE( String bookingClass,
-			String mobilenum,
-			String paymentType,
-			String newDate,
-			String Departuredate,String rtnDate,
-			String origin,
+			String mobilenum,String paymentType,String newDate,String Departuredate,String rtnDate,String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,
-			String newdate,	String strTolPass,String domOrInt,String Description) throws Throwable {
+			String strTolPass,String domOrInt,String Description) throws Throwable {
 		try {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
 			String[] Credentials = pickCredentials("UserCredentials");
-				String username =Credentials[0];
-				String password =Credentials[1];					
+			String username =Credentials[0];
+			String password =Credentials[1];					
 				
-				click(BookingPageLocators.login_lnk, "Login");				
-				login(username,password);
+			click(BookingPageLocators.login_lnk, "Login");				
+			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-			clickContinueBtn();
-			}else{
-				System.out.println("No Baggae Page Available");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok))
-					click(BookingPageLocators.ok, "OK");
-			}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();
@@ -80,19 +62,18 @@ public class TC28_oneWayDomesticEconomy_AHB_WAE extends BookingPageFlow{
 	    		
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
 	    		xls.getCellValue("Origin", "Value28"),
 	    		xls.getCellValue("Destination", "Value28"),
 	    		xls.getCellValue("Trip Type", "Value"),
-	    		xls.getCellValue("Adults Count", "Value2"),
+	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
-	    		"01-April 2017",
-	    		xls.getCellValue("Total Passenger", "Value2"),
+	    		xls.getCellValue("Select Seat", "Value"),
+	    		xls.getCellValue("Total Passenger", "Value"),
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		"Validate oneWay Domestic Economy_ABH_WAE"}};
 	}

@@ -39,16 +39,8 @@ public class TC27_oneWayDomesticEconomy_AHB_BHH extends BookingPageFlow{
 				login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-			clickContinueBtn();
-			}else{
-				System.out.println("No Baggae Page Available");
-			}
+			continueOnPassengerDetails();
+			coninueOnBaggage();
 			selectSeat(seatSelect, "");
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();

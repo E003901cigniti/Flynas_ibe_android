@@ -28,21 +28,20 @@ public class TC62_roundTripDomesticEconomyAddExtra_RUH_AHB extends BookingPageFl
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
 			String[] Credentials = pickCredentials("UserCredentials");
-				String username =Credentials[0];
-				String password =Credentials[1];					
+			String username =Credentials[0];
+			String password =Credentials[1];					
 				
-				click(BookingPageLocators.login_lnk, "Login");				
-				login(username,password);
+			click(BookingPageLocators.login_lnk, "Login");				
+			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "RUH", "AMM", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
-			Select_A_Meal();
+			//Select_A_Meal();
 			Select_lounge();
 			inputExtras("12");
+			
 			selectallSeats(seatSelect,"2",triptype);
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
@@ -76,7 +75,7 @@ public class TC62_roundTripDomesticEconomyAddExtra_RUH_AHB extends BookingPageFl
 	    		xls.getCellValue("Destination", "Value62"),
 	    		xls.getCellValue("Trip Type", "Value2"),
 	    		xls.getCellValue("Adults Count", "Value"),
-	    		xls.getCellValue("Child Count", "Value2"),
+	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		"Extra Leg Room",
 	    		"Validate RoundTrip Domestic Economy AddExtra_RUH_AHB"}};

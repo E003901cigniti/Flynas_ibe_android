@@ -27,26 +27,10 @@ public class TC10_verifingSerCharChildDisInArabic extends BookingPageFlow {
 			inputBookingDetails_Arabic(triptype,origin, dest, deptDate , "", "", rtnDate,adult, child, infant,"","","");
 			selectClass(bookingClass,triptype);
 			inputPassengerDetails_Arabic(flightType, totalpass, nationality, Doctype,docNum,"", mobilenum, username, "", "", "");
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
-				clickContinueBtn();
-			}else{
-				System.out.println("No Baggage Availabel");
-			}
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				clickContinueBtn();
-					if(isElementPresent(BookingPageLocators.ok)==true){
-						click(BookingPageLocators.ok, "OK");
-					}
-			}else{
-				System.out.println("No Seat Page Available");
-			}
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment_Production_Arabic(paymentType);
 			verifyPNRforSadad_Arabic();
-			verifingStatusSadad_Arabic();
 			verifingServiceCharge(triptype, BookingClassSr.trim(), totalpass);
 			verifingChildDiscount_Arabic(BookingClassSr.trim());
 			Reporter.SuccessReport("TC10_verifingSerCharChildDisInArabic", "Pass");

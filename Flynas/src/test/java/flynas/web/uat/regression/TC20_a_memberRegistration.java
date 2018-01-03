@@ -21,7 +21,7 @@ public class TC20_a_memberRegistration extends BookingPageFlow{
 	
 	@SuppressWarnings("rawtypes")
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_20_memberRegistration(String Description) throws Throwable {
+	public  void TC20_a_memberRegistration(String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -44,13 +44,13 @@ public class TC20_a_memberRegistration extends BookingPageFlow{
 			//Verifying member registration by loging in.
 			LoginPg.login(username, "Test@1234");		
 						
-			Reporter.SuccessReport("TC20_memberRegistration", "Pass");
+			Reporter.SuccessReport("TC20_a_memberRegistration", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC20_memberRegistration", "Failed");
+			Reporter.SuccessReport("TC20_a_memberRegistration", "Failed");
 		}
 	}
 	

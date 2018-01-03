@@ -34,19 +34,11 @@ public class TC01_oneWayDomesticEconomy_RUH_JED extends BookingPageFlow{
 			
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
 			selectClass(bookingClass, triptype);
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			Baggage_Extra(triptype);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				clickContinueBtn();
-				if(isElementDisplayedTemp(BookingPageLocators.ok))
-					click(BookingPageLocators.ok, "OK");
-			}
+			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();
