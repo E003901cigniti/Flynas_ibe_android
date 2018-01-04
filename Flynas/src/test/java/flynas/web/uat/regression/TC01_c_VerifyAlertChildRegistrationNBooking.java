@@ -17,12 +17,12 @@ import flynas.web.workflows.MemberRegistrationPage;
 import flynas.web.workflows.MyProfilePage;
 import flynas.web.workflows.projectUtilities;
 
-public class TC20_c_VerifyAlertChildRegistrationNBooking extends BookingPageFlow{
+public class TC01_c_VerifyAlertChildRegistrationNBooking extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_20");
 
 	@SuppressWarnings("rawtypes")
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC20c_VerifyAlertChildRegistrationNBooking(String tripType,String origin,String dest,
+	public  void TC_01_c_VerifyAlertChildRegistrationNBooking(String tripType,String origin,String dest,
 			String deptdate,String origin2,String departure2,String retrndate,String Adult,String Child,
 			String infant,String promo,String Currency,String paymenttype,String BookingClass, 
 			String Description) throws Throwable {
@@ -52,13 +52,13 @@ public class TC20_c_VerifyAlertChildRegistrationNBooking extends BookingPageFlow
 			continueOnPassengerDetails();
 			util.VerifyAlertMessage("mandatory fields");
 			
-			Reporter.SuccessReport("TC20_c_VerifyAlertChildRegistrationNBooking", "Pass");
+			Reporter.SuccessReport("TC_01_c_VerifyAlertChildRegistrationNBooking", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC20_c_VerifyAlertChildRegistrationNBooking", "Failed");
+			Reporter.SuccessReport("TC_01_c_VerifyAlertChildRegistrationNBooking", "Failed");
 		}
 	}
 	

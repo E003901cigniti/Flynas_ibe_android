@@ -15,12 +15,12 @@ import flynas.web.workflows.MemberDashboard;
 import flynas.web.workflows.MyProfilePage;
 import flynas.web.workflows.projectUtilities;
 
-public class TC21_updatemyProfileOfMemberDetails extends BookingPageFlow {
+public class TC01_d_updatemyProfileOfMemberDetails extends BookingPageFlow {
 	
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_21");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_21_updatemyProfileOfMemberDetails( String EmailAddress,String Password,			
+	public  void TC_01_d_updatemyProfileOfMemberDetails( String EmailAddress,String Password,			
 			String Description) throws Throwable {
 		try {
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -67,13 +67,13 @@ public class TC21_updatemyProfileOfMemberDetails extends BookingPageFlow {
 			util.verifyDateupdate("Document expire date",firstDocExpDt,updateDocExpdt);
 			//util.verifytextupdate("Mobile Number",FirstMobileNum,updatedMobileNum);
 			
-			Reporter.SuccessReport("TC21_updatemyProfileOfMemberDetails", "Pass");
+			Reporter.SuccessReport("TC01_d_updatemyProfileOfMemberDetails", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC21_updatemyProfileOfMemberDetails", "Failed");
+			Reporter.SuccessReport("TC01_d_updatemyProfileOfMemberDetails", "Failed");
 		}
 	}
 	

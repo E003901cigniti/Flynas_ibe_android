@@ -14,11 +14,11 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 import flynas.web.workflows.MemberRegistrationPage;
 
-public class TC22_resetPasswordusingmyProfile extends BookingPageFlow{
+public class TC01_f_resetPasswordusingmyProfile extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_22");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_22_resetPasswordusingmyProfile( String Password,String Nationality,String DocumentType,
+	public  void TC_01_f_resetPasswordusingmyProfile( String Password,String Nationality,String DocumentType,
 			String DocNumber,
 			String Mobile,
 			String EmailAddress,
@@ -65,13 +65,13 @@ public class TC22_resetPasswordusingmyProfile extends BookingPageFlow{
 				Reporter.failureReport("Verifing Pasword Reset", "User is unable to login with new password");
 			}
 			
-			Reporter.SuccessReport("TC22_resetPasswordusingmyProfile", "Pass");
+			Reporter.SuccessReport("TC_01_f_resetPasswordusingmyProfile", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC22_resetPasswordusingmyProfile", "Failed");
+			Reporter.SuccessReport("TC_01_f_resetPasswordusingmyProfile", "Failed");
 		}
 	}
 	

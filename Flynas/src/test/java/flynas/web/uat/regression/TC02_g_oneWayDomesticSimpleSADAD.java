@@ -11,12 +11,12 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC02_c_RTDomBusiness1AdultCC extends BookingPageFlow{
+public class TC02_g_oneWayDomesticSimpleSADAD extends BookingPageFlow{
 	
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_02_oneWayDomesticBusiness");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC02c_RTDomBusiness1AdultCC(String tripType, 
+	public  void TC_02_g_oneWayDomesticSimpleSADAD(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
 			String strBookingClass,String FlightType,String totalpass, String nationality,
@@ -40,22 +40,23 @@ public class TC02_c_RTDomBusiness1AdultCC extends BookingPageFlow{
 					
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
 			selectClass(strBookingClass, tripType);
+			
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
+			
 			//Clicking continue button on Baggage details page
 			coninueOnBaggage();
+			
 			selectSeat(SelectSeat, bookingtype);
 			payment(paymenttype,"");
-			String strPNR = getReferenceNumber();
-			System.out.println(strPNR);
-			validate_ticketStatus(strPNR);
+			verifyAlertPopup();
 			
-			Reporter.SuccessReport("TC02_c_RTDomBusiness1AdultCC", "Pass");
+			Reporter.SuccessReport("TC02_g_oneWayDomesticSimpleSADAD", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC02_c_RTDomBusiness1AdultCC", "Failed");
+			Reporter.failureReport("TC02_g_oneWayDomesticSimpleSADAD", "Failed");
 		}
 	}
 	
@@ -75,7 +76,7 @@ public class TC02_c_RTDomBusiness1AdultCC extends BookingPageFlow{
 		    		xls.getCellValue("Child Count", "Value"),
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
-		    		xls.getCellValue("Booking Class", "Value3"),
+		    		xls.getCellValue("Booking Class", "Value"),
 		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),
@@ -85,11 +86,11 @@ public class TC02_c_RTDomBusiness1AdultCC extends BookingPageFlow{
 		    		xls.getCellValue("Mobile", "Value"),
 		    		xls.getCellValue("Email Address", "Value"),
 		    		xls.getCellValue("Select Seat", "Value"),
-		    		xls.getCellValue("Payment Type", "Value"),
+		    		xls.getCellValue("Payment Type", "Value2"),
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-		    		"Validate Roundtrip Domestic Business Class 1 Adult CC booking"
+		    		"Validate One way Domestic with one Adult"
     			}
 	    	};
 	}

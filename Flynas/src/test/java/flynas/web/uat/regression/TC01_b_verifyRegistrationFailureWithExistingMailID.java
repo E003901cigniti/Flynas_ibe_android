@@ -17,11 +17,11 @@ import flynas.web.workflows.MemberRegistrationPage;
 import flynas.web.workflows.MyProfilePage;
 import flynas.web.workflows.projectUtilities;
 
-public class TC20_a_memberRegistration extends BookingPageFlow{
+public class TC01_b_verifyRegistrationFailureWithExistingMailID extends BookingPageFlow{
 	
 	@SuppressWarnings("rawtypes")
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC20_a_memberRegistration(String Description) throws Throwable {
+	public  void TC_01_b_verifyRegistrationFailureWithExistingMailID( String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -31,33 +31,31 @@ public class TC20_a_memberRegistration extends BookingPageFlow{
 			MemberRegistrationPage memberRegisterPg = new MemberRegistrationPage();
 		
 			
+			
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
+			
 			//navigating to login page
 			util.clickLogin();
 			LoginPg.ClickJoinNow();
-			String username = memberRegisterPg.memberRegistration("","Adult"); // Registering a new Adult member
-			memberRegisterPg.verifingMemberRegistration();
-			
-			//Loging out
-			util.logout();
-			util.clickok();
-			
-			//Verifying member registration by loging in.
-			LoginPg.login(username, "Test@1234");		
+			memberRegisterPg.memberRegistration(username,"Adult");
+			util.VerifyErrorMessage("already exists");
+				
 						
-			Reporter.SuccessReport("TC20_a_memberRegistration", "Pass");
+			Reporter.SuccessReport("TC_01_b_verifyRegistrationFailureWithExistingMailID", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC20_a_memberRegistration", "Failed");
+			Reporter.SuccessReport("TC_01_b_verifyRegistrationFailureWithExistingMailID", "Failed");
 		}
 	}
 	
 	@DataProvider(name="testData")
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
-	    		{"Validate Member Login"}};
+	    		{"Validate Error message on Regestration with existing Email ID"}};
 	}
 
 }

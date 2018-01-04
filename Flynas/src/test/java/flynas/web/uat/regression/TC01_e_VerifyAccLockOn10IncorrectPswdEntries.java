@@ -19,11 +19,11 @@ import flynas.web.workflows.MemberRegistrationPage;
 import flynas.web.workflows.MyProfilePage;
 import flynas.web.workflows.projectUtilities;
 
-public class TC22_b_VerifyAccLockOn10IncorrectPswdEntries extends BookingPageFlow{
+public class TC01_e_VerifyAccLockOn10IncorrectPswdEntries extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_22");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC22b_VerifyAccLockOn10IncorrectPswdEntries( String Password,String Nationality,String DocumentType,
+	public  void TC_01_e_VerifyAccLockOn10IncorrectPswdEntries( String Password,String Nationality,String DocumentType,
 			String DocNumber,
 			String Mobile,
 			String EmailAddress,
@@ -52,13 +52,13 @@ public class TC22_b_VerifyAccLockOn10IncorrectPswdEntries extends BookingPageFlo
 			LoginPg.lockAccount(username);
 			util.VerifyErrorMessage("account is locked");
 						
-			Reporter.SuccessReport("TC22_b_VerifyAccLockOn10IncorrectPswdEntries", "Pass");
+			Reporter.SuccessReport("TC01_e_VerifyAccLockOn10IncorrectPswdEntries", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.SuccessReport("TC22_b_VerifyAccLockOn10IncorrectPswdEntries", "Failed");
+			Reporter.SuccessReport("TC01_e_VerifyAccLockOn10IncorrectPswdEntries", "Failed");
 		}
 	}
 	
