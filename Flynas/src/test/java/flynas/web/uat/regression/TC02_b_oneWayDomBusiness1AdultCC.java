@@ -11,54 +11,58 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC02_b_oneWayDomSimple1AdultCC extends BookingPageFlow{
+public class TC02_b_oneWayDomBusiness1AdultCC extends BookingPageFlow{
 	
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_02_oneWayDomesticBusiness");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_02_b_oneWayDomSimple1AdultCC(String tripType, 
-			String origin, String dest,String deptDate, String origin2,String departure2,
-			String retdate,String Adult,String Child,String infant, String promo, 
-			String strBookingClass,String FlightType,String totalpass, String nationality,
-			String Doctypr,String docNumber,String naSmiles,String Mobile,
-			String email ,String SelectSeat,String paymenttype,String bookingtype, 
-			String charity,String Currency, String Description
+	public  void TC_02_b_oneWayDomBusiness1AdultCC(String tripType, String origin, String dest,String deptDate,String origin2,
+			String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
+			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,String naSmiles,
+			String Mobile,String email ,String SelectSeat,String paymenttype,String bookingtype,String charity,
+			String Currency,String Description
 			) throws Throwable {
 		try {
-			//System.out.println(paymenttype);
+			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
+			
 			String	deptdate = pickDate(deptDate);
 			String	retrndate = pickDate(retdate);
 			
-
 			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
-					
-			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
+			
+			inputBookingDetails(tripType, origin, dest, deptdate, origin2,departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
+			
+			//Selecting a fare class
 			selectClass(strBookingClass, tripType);
 			
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
-			
+					
 			//Clicking continue button on Baggage details page
 			coninueOnBaggage();
 			
+			//Selecting seat 
 			selectSeat(SelectSeat, bookingtype);
-			payment(paymenttype,"");
-			String strPNR = getReferenceNumber();
-			System.out.println(strPNR);
-			validate_ticketStatus(strPNR);
 			
-			Reporter.SuccessReport("TC02_b_oneWayDomSimple1AdultCC", "Pass");
+			//Payment
+			payment(paymenttype,"");
+			
+			//Validating booking status 
+			String PNR=getReferenceNumber();
+			validate_ticketStatus(PNR);
+			
+			Reporter.SuccessReport("TC02_b_oneWayDomBusiness1AdultCC", "Passed");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC02_b_oneWayDomSimple1AdultCC", "Failed");
+			Reporter.failureReport("TC02_b_oneWayDomBusiness1AdultCC", "Failed");
 		}
 	}
 	
@@ -66,9 +70,9 @@ public class TC02_b_oneWayDomSimple1AdultCC extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			
-		    		xls.getCellValue("Trip Type", "Value2"),
-		    		xls.getCellValue("Origin", "Value"),
+	    				    			
+	    			xls.getCellValue("Trip Type", "Value"),
+	    			xls.getCellValue("Origin", "Value"),
 		    		xls.getCellValue("Destination", "Value"),
 		    		xls.getCellValue("Departure Date", "Value"),
 		    		"",
@@ -92,9 +96,7 @@ public class TC02_b_oneWayDomSimple1AdultCC extends BookingPageFlow{
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-		    		"Validate One way Domestic Simple 1 Adult CC booking"
-    			}
-	    	};
+		    		"Validate One way Domestic with one Adult With Business"}};
 	}
 
 }

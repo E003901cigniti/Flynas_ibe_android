@@ -15,11 +15,11 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR extends BookingPageFlow{
+public class TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_35");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public void TC_35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR(String strTripType,String strFlightType,String strOrigin,String strDestination,
+	public void TC_35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat(String strTripType,String strFlightType,String strOrigin,String strDestination,
 			String strDepatureDate,String origin2,String departure2,String strReturnDate,String strTotalPessenger,String strAdultCount,
 			String strChildCount,String strInfantCount,String strPromo,String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,
 			String strNaSmile,  String strMobile, String strEmail, String strSelectSeat, String strPaymentType,String bookingtype,
@@ -57,11 +57,11 @@ public class TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR 
 					payment(strPaymentType, "");
 					String strPNR = getReferenceNumber().trim();
 					validate_ticketStatus(strPNR);
-					Reporter.SuccessReport("TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR", "Pass");
+					Reporter.SuccessReport("TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat", "Pass");
 					
 					}catch(Exception e){
 						e.printStackTrace();
-						Reporter.failureReport("TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR", "Fail");
+						Reporter.failureReport("TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat", "Fail");
 						
 					}
 	}
@@ -94,7 +94,7 @@ public class TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR 
     			xls.getCellValue("New Date", "Value"),
     			xls.getCellValue("Charity Donation", "Value"),
     			xls.getCellValue("Currency", "Value"),
-    			"Validate OneWay Domestic Economy MMB- change date, modify extras, select business lounge"}};
+    			"Validate OneWay Domestic Economy MMB - change date, modify extras, select business lounge"}};
 	}
 	
 }

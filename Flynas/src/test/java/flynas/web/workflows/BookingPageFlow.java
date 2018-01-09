@@ -2195,7 +2195,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	public void selectClassForStaff(String bookingClass) throws Throwable
 	{
 		waitforElement(BookingPageLocators.selectflightsection);
-		waitUtilElementhasAttribute(BookingPageLocators.body);
+		waitUtilElementhasAttribute(BookingPageLocators.body); 
 		List<WebElement> flighttables = driver.findElements(By.xpath("//table[@class='table flight_table']"));
 		List<WebElement> current = driver.findElements(By.xpath("//li[@class='current']"));
 		for(int j=0;j<current.size();j++)
@@ -2257,22 +2257,6 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			}
 			
 			
-		/*	else if(bookingClass.equalsIgnoreCase("Business")){
-				List<WebElement> ClassBusines = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-				for(int i=0;i<ClassBusines.size();i++){
-					if(ClassBusines.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||ClassBusines.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||ClassBusines.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
-						System.out.println("Sold Out");
-					}else{
-						ClassBusines.get(i).click();
-						waitUtilElementhasAttribute(BookingPageLocators.body);
-						break;
-					}
-					
-				}
-				
-			}*/
 			
 		
 		}
