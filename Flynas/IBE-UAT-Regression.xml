@@ -19,8 +19,8 @@
 						<class name="flynas.web.uat.regression.TC01_d_updatemyProfileOfMemberDetails"/>
 						<class name="flynas.web.uat.regression.TC01_e_VerifyAccLockOn10IncorrectPswdEntries"/>
 						<class name="flynas.web.uat.regression.TC01_f_resetPasswordusingmyProfile"/>
-						<class name="flynas.web.uat.regression.TC02_a_oneWayDomesticBusiness"/>
-						<class name="flynas.web.uat.regression.TC02_b_oneWayDomSimple1AdultCC"/>
+						<class name="flynas.web.uat.regression.TC02_a_oneWayDomSimple1AdultCC"/>
+						<class name="flynas.web.uat.regression.TC02_b_oneWayDomBusiness1AdultCC"/>
 						<class name="flynas.web.uat.regression.TC02_c_RTDomSimple1AdultCC"/>
 						<class name="flynas.web.uat.regression.TC02_d_RTDomBusiness1AdultCC"/>
 						<class name="flynas.web.uat.regression.TC02_e_RTIntlBusiness1AdultCC"/>
@@ -57,7 +57,8 @@
 						<class name="flynas.web.uat.regression.TC32_anonymousReissueTheTicketWithHigherFare"/> 
 						<class name="flynas.web.uat.regression.TC33_anonymousRevalidateTheTicketWithSameFare"/> 
 						<class name="flynas.web.uat.regression.TC34_BaggageValidation"/>
-						<class name="flynas.web.uat.regression.TC35_AnonymousOneWayDomesticEconomyModifyExtrasSeatWhileRetrivePNR"/>
+						<class name="flynas.web.uat.regression.TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat"/>
+						<class name="flynas.web.uat.regression.TC35_b_AnonymousOwIntlEconomy_MMB_ModifyExtrasSeat"/>
 						<class name="flynas.web.uat.regression.TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras"/>
 						<class name="flynas.web.uat.regression.TC37_EmpLoginStaffConfmedModifyExtras"/>
 						<class name="flynas.web.uat.regression.TC38_corporateLoginRoundTripModifyExtras"/>
