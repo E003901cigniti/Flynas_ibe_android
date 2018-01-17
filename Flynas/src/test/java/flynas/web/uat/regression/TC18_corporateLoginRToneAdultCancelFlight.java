@@ -39,15 +39,15 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
-			selectClass(bookingClass, "Economy");
-			continueOnPassengerDetails();
+			selectClass(bookingClass, "");
+			String[] Passengername = inputPassengerDetails(domOrInt, totalPass, nationality, docType, docNum, "", mobilenum, email, "", "", "");
 			coninueOnBaggage();
 			selectSeat(seatSelect, "");	
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
-			searchFlight(strPNR, username, "", "");
+			searchFlight(strPNR, username, "", Passengername[1]);
 			cancelFlight("All");
 									
 			Reporter.SuccessReport("TC18_corporateLoginRToneAdultCancelFlight", "Pass");

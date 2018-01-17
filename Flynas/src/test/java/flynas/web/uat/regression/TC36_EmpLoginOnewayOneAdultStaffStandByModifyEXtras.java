@@ -37,36 +37,23 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 			String[] Credentials = pickCredentials("EmployeeCreds");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			click(emplogin_lnk, "Employe Login");
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, depdat, "", "", "",adult, child, infant,"","",paymentType);
 			selectClassForStaff(bookingClass);
-			waitforElement(BookingPageLocators.mobileNum);
-			if(getText(BookingPageLocators.mobileNum,"MobileNumber").length() == 0)
-			{
-				type(BookingPageLocators.mobileNum, mobilenum, "MobileNumber");
-				Thread.sleep(2000);
-				clickContinueBtn();
-			}
-			else
-			{
-				clickContinueBtn();
-			}
-			/*Thread.sleep(3000);
-			clickContinueBtn();
-			Thread.sleep(5000);
-			clickContinueBtn();
-			Thread.sleep(5000);
-			click(BookingPageLocators.ok, "OK");*/
+			continueOnPassengerDetails();
+			coninueOnBaggage();
+			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber().trim();
-			searchFlight(strpnr, username, "", "");
+			searchFlight(strpnr, username, "",lastname);
 			modifyExtras();
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
-			Select_A_Meal();
+			//Select_A_Meal();
 			Select_lounge();
 			inputExtras("12");
 			waitforElement(BookingPageLocators.manageMyBookingTittle);

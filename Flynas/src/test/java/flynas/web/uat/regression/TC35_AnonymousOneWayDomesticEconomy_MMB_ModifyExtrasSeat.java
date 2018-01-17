@@ -32,17 +32,17 @@ public class TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat extends Bo
 					inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2,departure2, rtrndate,
 							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
 					selectClass(strBookingClass, strTripType);
-					String strLastName[] = inputPassengerDetails(strFlightType, strTotalPessenger, strNationality, strDocumentType, 
+					String LastName[] = inputPassengerDetails(strFlightType, strTotalPessenger, strNationality, strDocumentType, 
 							strDocumentNum, strNaSmile, strMobile, strEmail,"","","");
 					coninueOnBaggage();
 					continueOnSeatSelection();
 					payment(strPaymentType, "");
 					String strpnr = getReferenceNumber().trim();
-					searchFlight(strpnr, strEmail, "", "");
+					searchFlight(strpnr, strEmail, "",LastName[1]);
 					modifyExtras();
 					Baggage_Extra(strTripType);
 					addSportsEqpmnt(strTripType);
-					Select_A_Meal();
+					//Select_A_Meal();
 					Select_lounge();
 					inputExtras("12");
 					waitforElement(BookingPageLocators.manageMyBookingTittle);

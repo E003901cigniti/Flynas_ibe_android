@@ -944,6 +944,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		submit3Dsecurepin();		
 	}
 	
+	
 
 	public boolean payment(String paymentType,String value) throws Throwable 
 	{		
@@ -975,11 +976,13 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				//selectValueFromDropDown(BookingPageLocators.selectExpYear, "Expiry Year", configProps.getProperty("expYYYY"));
 				type(BookingPageLocators.cvvNum,configProps.getProperty("cvv"),"cvv");
 			}
+		
 			else if(paymentType.equalsIgnoreCase("Voucher"))
 			{
 				type(BookingPageLocators.voucherNum,configProps.getProperty("voucher"),"Voucher");
 				click(BookingPageLocators.retrieveVoucher, "Retrieve Voucher");
 			} 
+		
 			else if(paymentType.equalsIgnoreCase("SADAD"))
 			{
 		
@@ -993,6 +996,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					}
 				}
 			}
+		
 			else if(paymentType.equalsIgnoreCase("Nas"))
 			{
 				List<WebElement> payments = driver.findElements(BookingPageLocators.paymentType);
@@ -1045,6 +1049,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					}
 				}
 			}
+		
 			else if(paymentType.equalsIgnoreCase("Hold Booking"))
 			{
 				List<WebElement> paymentss = driver.findElements(BookingPageLocators.paymentType);
@@ -1058,21 +1063,23 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				}
 			}
 			
-	if(!paymentType.equalsIgnoreCase("naSmile"))
-		{
-			Thread.sleep(2000);
-			/*if(driver.findElement(BookingPageLocators.ccCheckbox).isSelected()==true)
+		
+		if(driver.findElement(BookingPageLocators.ccCheckbox).isSelected()==true)
 			{
-				System.out.println("Already Checked");
+				System.out.println("Terms and conditions already Checked");
 			}
 			else
 			{
 			click(BookingPageLocators.ccCheckbox, "Terms & Conditions");
 			}
-			Thread.sleep(2000);*/
-			clickContinueBtn();
+			Thread.sleep(2000);
 			
-			if(isElementDisplayedTemp(BookingPageLocators.Error)==true && paymentType.equalsIgnoreCase("SADAD"))
+			
+		//Click continue on payment page
+		clickContinueBtn();
+		
+		//handling error pop-up
+		if(isElementDisplayedTemp(BookingPageLocators.Error)==true && paymentType.equalsIgnoreCase("SADAD"))
 			{
 				click(BookingPageLocators.ok, "OK");
 				Reporter.SuccessReport("Verifing SADAD", "Payment through SADAD not posible");
@@ -1082,98 +1089,96 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			{
 				System.out.println("No Error Message");
 			}
-			
-			if(isElementDisplayedTemp(BookingPageLocators.ok)==true)
+		
+		//handling alert pop-up
+		if(isElementDisplayedTemp(BookingPageLocators.ok)==true)
 			{
-				click(BookingPageLocators.ok, "OK");
-				payment("Credit Card", "");
+				click(BookingPageLocators.ok, "OK");				
 			}
 			else
 			{
 				System.out.println("No Alert");
 			}
-			
-			if(paymentType.equalsIgnoreCase("Credit Card"))
+		
+		//handling 3D secure page
+		if(paymentType.equalsIgnoreCase("Credit Card"))
 			{
 				List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-				for(int i=0;i<frames.size();i++){
-					System.out.println(frames.get(i).getAttribute("id"));
-				}
-				driver.switchTo().frame("authWindow");
-				driver.manage().timeouts().implicitlyWait(5000,TimeUnit.MILLISECONDS);
-				if(isElementPresent(BookingPageLocators.pasword)==true)
-				{
-					type(BookingPageLocators.pasword, "1234", "Password");
-					click(BookingPageLocators.ccSubmit,"Submit Button");
-					if(isElementDisplayedTemp(BookingPageLocators.ok)==true)
+				if(isElementPresent(By.cssSelector("i‌​frame[id='authWindow']"))==true){
+					driver.switchTo().frame("authWindow");
+					driver.manage().timeouts().implicitlyWait(5000,TimeUnit.MILLISECONDS);
+					if(isElementPresent(BookingPageLocators.pasword)==true)
 					{
-						click(BookingPageLocators.ok, "OK");
-						payment("Credit Card", "");
+						type(BookingPageLocators.pasword, "1234", "Password");
+						click(BookingPageLocators.ccSubmit,"Submit Button");
+						if(isElementDisplayedTemp(BookingPageLocators.ok)==true)
+						{
+							click(BookingPageLocators.ok, "OK");
+							//payment("Credit Card", "");
+						}
 					}
 				}
+				
 				else
 				{
 				System.out.println("No Secure Page");
 				}
 			
 			}
-			else
-			{
-				System.out.println(" ");
-			}
-		}
+			
+		
 	
 	//Code to add invalid card detail
 	
 	if(paymentType.equalsIgnoreCase("invalidcc"))
-	{
-		List<WebElement> paymentss = driver.findElements(BookingPageLocators.paymentType);
-		for(int i=0;i<paymentss.size();i++){
-			if(paymentss.get(i).getText().contains("Credit Card")
-			||paymentss.get(i).getText().contains("Kredi Kartı")
-			||paymentss.get(i).getText().contains("البطاقات الإئتمانية")){
-				paymentss.get(i).click();
-				waitUtilElementhasAttribute(BookingPageLocators.body);
-				break;
+		{
+			List<WebElement> paymentss = driver.findElements(BookingPageLocators.paymentType);
+			for(int i=0;i<paymentss.size();i++){
+				if(paymentss.get(i).getText().contains("Credit Card")
+						||paymentss.get(i).getText().contains("Kredi Kartı")
+						||paymentss.get(i).getText().contains("البطاقات الإئتمانية")){
+					paymentss.get(i).click();
+					waitUtilElementhasAttribute(BookingPageLocators.body);
+					break;
+				}
 			}
+			waitforElement(BookingPageLocators.cardNumber);
+			type(BookingPageLocators.cardNumber,configProps.getProperty("InvalidcardNumber").trim(),"Card Number");
+			type(BookingPageLocators.cardName,configProps.getProperty("cardHolderName"),"Card Holder Name");
+			click(BookingPageLocators.expMonth,"Expiry Month");
+			//	driver.findElement(By.xpath("//a/div[text()='"+configProps.getProperty("expMM")+"' OR text()='يناير']")).click();
+			driver.findElement(By.xpath("//a/div[contains(text(),'"+configProps.getProperty("expMM")+"') or ./text()='يناير' or ./text()='Ocak']")).click();
+			//	selectValueFromDropDown(BookingPageLocators.selectExpMonth, "Expiry Month", configProps.getProperty("expMM"));
+			click(BookingPageLocators.expYear,"Expiry Year");
+			driver.findElement(By.xpath("//a/div[text()='"+configProps.getProperty("expYYYY")+"']")).click();
+			//selectValueFromDropDown(BookingPageLocators.selectExpYear, "Expiry Year", configProps.getProperty("expYYYY"));
+			type(BookingPageLocators.cvvNum,configProps.getProperty("cvv"),"cvv");
 		}
-		waitforElement(BookingPageLocators.cardNumber);
-		type(BookingPageLocators.cardNumber,configProps.getProperty("InvalidcardNumber").trim(),"Card Number");
-		type(BookingPageLocators.cardName,configProps.getProperty("cardHolderName"),"Card Holder Name");
-		click(BookingPageLocators.expMonth,"Expiry Month");
-		//	driver.findElement(By.xpath("//a/div[text()='"+configProps.getProperty("expMM")+"' OR text()='يناير']")).click();
-		driver.findElement(By.xpath("//a/div[contains(text(),'"+configProps.getProperty("expMM")+"') or ./text()='يناير' or ./text()='Ocak']")).click();
-		//	selectValueFromDropDown(BookingPageLocators.selectExpMonth, "Expiry Month", configProps.getProperty("expMM"));
-		click(BookingPageLocators.expYear,"Expiry Year");
-		driver.findElement(By.xpath("//a/div[text()='"+configProps.getProperty("expYYYY")+"']")).click();
-		//selectValueFromDropDown(BookingPageLocators.selectExpYear, "Expiry Year", configProps.getProperty("expYYYY"));
-		type(BookingPageLocators.cvvNum,configProps.getProperty("cvv"),"cvv");
-	}
 	
 	if(paymentType.equalsIgnoreCase("wrongcc"))
-	{
-		List<WebElement> paymentss = driver.findElements(BookingPageLocators.paymentType);
-		for(int i=0;i<paymentss.size();i++){
-			if(paymentss.get(i).getText().contains("Credit Card")
-			||paymentss.get(i).getText().contains("Kredi Kartı")
-			||paymentss.get(i).getText().contains("البطاقات الإئتمانية")){
-				paymentss.get(i).click();
-				waitUtilElementhasAttribute(BookingPageLocators.body);
-				break;
+		{
+			List<WebElement> paymentss = driver.findElements(BookingPageLocators.paymentType);
+			for(int i=0;i<paymentss.size();i++){
+				if(paymentss.get(i).getText().contains("Credit Card")
+						||paymentss.get(i).getText().contains("Kredi Kartı")
+						||paymentss.get(i).getText().contains("البطاقات الإئتمانية")){
+					paymentss.get(i).click();
+					waitUtilElementhasAttribute(BookingPageLocators.body);
+					break;
+				}
 			}
+			waitforElement(BookingPageLocators.cardNumber);
+			type(BookingPageLocators.cardNumber,configProps.getProperty("MasterCrdNumber").trim(),"Card Number");
+			type(BookingPageLocators.cardName,configProps.getProperty("cardHolderName"),"Card Holder Name");
+			click(BookingPageLocators.expMonth,"Expiry Month");
+			//	driver.findElement(By.xpath("//a/div[text()='"+configProps.getProperty("expMM")+"' OR text()='يناير']")).click();
+			driver.findElement(By.xpath("//a/div[contains(text(),'"+configProps.getProperty("expMM")+"') or ./text()='يناير' or ./text()='Ocak']")).click();
+			//	selectValueFromDropDown(BookingPageLocators.selectExpMonth, "Expiry Month", configProps.getProperty("expMM"));
+			click(BookingPageLocators.expYear,"Expiry Year");
+			driver.findElement(By.xpath("//a/div[text()='"+configProps.getProperty("expYYYY")+"']")).click();
+			//selectValueFromDropDown(BookingPageLocators.selectExpYear, "Expiry Year", configProps.getProperty("expYYYY"));
+			type(BookingPageLocators.cvvNum,configProps.getProperty("cvv"),"cvv");
 		}
-		waitforElement(BookingPageLocators.cardNumber);
-		type(BookingPageLocators.cardNumber,configProps.getProperty("MasterCrdNumber").trim(),"Card Number");
-		type(BookingPageLocators.cardName,configProps.getProperty("cardHolderName"),"Card Holder Name");
-		click(BookingPageLocators.expMonth,"Expiry Month");
-		//	driver.findElement(By.xpath("//a/div[text()='"+configProps.getProperty("expMM")+"' OR text()='يناير']")).click();
-		driver.findElement(By.xpath("//a/div[contains(text(),'"+configProps.getProperty("expMM")+"') or ./text()='يناير' or ./text()='Ocak']")).click();
-		//	selectValueFromDropDown(BookingPageLocators.selectExpMonth, "Expiry Month", configProps.getProperty("expMM"));
-		click(BookingPageLocators.expYear,"Expiry Year");
-		driver.findElement(By.xpath("//a/div[text()='"+configProps.getProperty("expYYYY")+"']")).click();
-		//selectValueFromDropDown(BookingPageLocators.selectExpYear, "Expiry Year", configProps.getProperty("expYYYY"));
-		type(BookingPageLocators.cvvNum,configProps.getProperty("cvv"),"cvv");
-	}
 	
 		return true;
 	}
@@ -1243,9 +1248,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		driver.get(configProps.getProperty("URL_UAT_MMB"));
 		waitforElement(BookingPageLocators.sfpbookingReference);
 		type(BookingPageLocators.sfpbookingReference, referenceNum, "Reference Number");
-		type(BookingPageLocators.sfpEmail, email, "Email");
+		//type(BookingPageLocators.sfpEmail, email, "Email");
 		//type(BookingPageLocators.sfpMoblie, mobile, "Mobile");
-		//type(BookingPageLocators.sfpLastName, lastName, "Last Name");
+		type(BookingPageLocators.sfpLastName, lastName, "Last Name");
 		click(BookingPageLocators.sfpFindBooking, "Find booking");	
 		waitforElement(BookingPageLocators.manageMyBookingTittle);
 	
@@ -1257,10 +1262,10 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		driver.get(configProps.getProperty("URL_Checkin"));
 		waitForElementPresent(BookingPageLocators.sfpbookingReference, "Reference Number");
 		type(BookingPageLocators.sfpbookingReference, referenceNum, "Reference Number");
-		type(BookingPageLocators.sfpEmail, email, "Email");
+		//type(BookingPageLocators.sfpEmail, email, "Email");
 		//type(BookingPageLocators.sfpMoblie, mobile, "Mobile");
 		type(BookingPageLocators.sfpLastName, lastName, "Last Name");
-		click(BookingPageLocators.checkInNow, "Check in now");
+		click(BookingPageLocators.checkInNow, "Check-in button");
 		}
 	
 	public void changeDate(String newDepatureDate,String newReturnDate, String Flightway) throws Throwable{
@@ -1560,6 +1565,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		{
 			Reporter.failureReport("Ticket Confirmation", "Ticket has not booked");
 		}
+		closetoast();
 	}
 	public void validate_ticketStatus_TR(String pnr) throws Throwable
 	{
@@ -1577,6 +1583,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		{
 			Reporter.failureReport("Ticket Confirmation", "Ticket has not booked");
 		}
+		closetoast();
 	}
 	
 	public void verifyPNRforSadad() throws Throwable{
@@ -1835,7 +1842,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					for(j=0;j<passengers.size()/flights.size();j++){					
 							passengers.get(j).click();
 							select.get(k).click();
-							Reporter.SuccessReport("Verifing Select Meal", "Meal Selected");
+							Reporter.SuccessReport("Selecting Meal", "Meal Selected");
 							waitUtilElementhasAttribute(BookingPageLocators.body);
 						}						
 					j=0;
@@ -1853,7 +1860,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 						}else{
 							a=a+1;
 						}
-						Reporter.SuccessReport("Verifing Select Meal", "No Meal Available to select"+f);
+						Reporter.SuccessReport("Selecting Meal", "No Meal Available to select"+f);
 					
 					}else{
 						for(int p=0;p<passengers.size();p++){
@@ -1867,7 +1874,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 						passengers.get(p).click();
 						select.get(k).click();
 						waitUtilElementhasAttribute(BookingPageLocators.body);
-						Reporter.SuccessReport("Verifing Select Meal", "Selected");
+						Reporter.SuccessReport("Selecting Meal", "Selected");
 						k=k+2;
 						waitUtilElementhasAttribute(BookingPageLocators.body);
 					}					
@@ -1878,7 +1885,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			}	
 		}else{
 			System.out.println("NO Meal Available in this Route");
-			Reporter.SuccessReport("Verifing Meal Select", "NO Meal Available in this Route");
+			Reporter.SuccessReport("Select meal", "NO Meal Available in this Route");
 		}removeMeal();
 	}
 	
@@ -1901,7 +1908,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		}
 		List<WebElement> mealSummary = driver.findElements(BookingPageLocators.mealInSummary);
 		if(mealSummary.size()==0){
-			Reporter.SuccessReport("Verifing Meal Removing Function", "Successfully Removed");
+			Reporter.SuccessReport("Unselect Meal", "Successfully Unselected");
 			
 		}
 	}
@@ -1915,7 +1922,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			{
 				allPassengers.get(i).click();
 				waitUtilElementhasAttribute(BookingPageLocators.body);
-				Reporter.SuccessReport("Verifing Selectinh Loung", "Successfully Selected");
+				Reporter.SuccessReport("Selecting Lounge", "Successfully Selected");
 				
 			}
 		/*List<WebElement> Loung = driver.findElements(BookingPageLocators.Loung_table);
@@ -1937,8 +1944,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		
 		else
 		{
-			System.out.println("No Loung");
-			Reporter.SuccessReport("Verifing Loung Select", "No Loung is available to select");
+			Reporter.SuccessReport("Selecting Lounge", "No Lounge is available to select");
 		}
 		//clickContinueBtn();
 	}
@@ -2095,7 +2101,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 
 					Weight.get(x).click();
 					waitUtilElementhasAttribute(BookingPageLocators.body);
-					Reporter.SuccessReport("Extra Baggage", "Selected");
+					Reporter.SuccessReport("Select Extra Baggage", "Selected successfully");
 					break;
 										
 				}
@@ -2128,7 +2134,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		}
 		List<WebElement> baginsummary = driver.findElements(BookingPageLocators.baggageInSummary);
 		if(baginsummary.size()==0){
-			Reporter.SuccessReport("Validating Remove Baggage Functionality", "Baggage Removed Successfully");
+			Reporter.SuccessReport("Removing Baggage", "Baggage Removed Successfully");
 		}
 		/*if(isElementDisplayedTemp(BookingPageLocators.baggageInSummary)==false){
 			Reporter.SuccessReport("Validating Remove Baggage Functionality", "Baggage Removed Successfully");
@@ -2336,11 +2342,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		waitforElement(BookingPageLocators.registerConformation);
 		if(isElementPresent(BookingPageLocators.registerConformation)==true)
 		{
-			Reporter.SuccessReport("Verifing Member Registratin", "Member is Successfully Registered");
+			Reporter.SuccessReport("Verifing Member Registration", "Member is Successfully Registered");
 		}
 		else
 		{
-			Reporter.failureReport("Verifing Member Registratin", "Member is not Successfully Registered");
+			Reporter.failureReport("Verifing Member Registration", "Member is not Successfully Registered");
 		}
 	}
 	public int verifingFlightsAvailablity() throws InterruptedException
@@ -2406,7 +2412,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		By Fare = By.xpath("//span[contains(text(),'"+fare+"')]");
 		if(isElementPresent(Fare)==true)
 		{
-			Reporter.SuccessReport("Revalidate the ticket with same fare", "Ticket has revalidated without any fare changes");
+			Reporter.SuccessReport("Revalidate the ticket with same fare", "Ticket revalidated without any fare changes");
 		}
 	}
 	//production
@@ -2435,11 +2441,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					if(ServiceCharge==50.00*(Integer.parseInt(totalpass)))
 					{
 						System.out.println("Successfully Verified Service Charge");
-						Reporter.SuccessReport("Verifing service Charge Per Person as "+serviceCharge, "Successfully Verified");
+						Reporter.SuccessReport("Verifing service Charge Per Person to be : "+serviceCharge, "Service charge applied ");
 					}
 				}
 				else{
-					Reporter.failureReport("Service Charge is not applied as expected : "+serviceCharge, "Verifying Service charge failed");
+					Reporter.failureReport("Verifing service Charge Per Person to be : "+serviceCharge, "Service charge not applied");
 				}
 				collapseButton.get(i).click();
 				Thread.sleep(2000);
@@ -2471,7 +2477,6 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			float Discount = Float.parseFloat(disAmount[1]);
 			if(disAmount[1].contains(Avg))
 			{
-				System.out.println("Successfully Verified Discount");
 				Reporter.SuccessReport("Verifing Child Discount of 25%", "Discount Successfully Applied");
 			}
 			/*String[] childamount = Amount[1].split("\\.");

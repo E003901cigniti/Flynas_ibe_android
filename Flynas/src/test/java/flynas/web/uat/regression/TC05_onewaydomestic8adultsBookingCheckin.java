@@ -24,7 +24,7 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC05_oneWayDom8AdultCheckin");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public void TC_05_onewaydomestic8adultsBookingCheckin(String lastname, String strTripType, 
+	public void TC_05_onewaydomestic8adultsBookingCheckin(String strTripType, 
 			String strFlightType, String strOrigin,String strDestination, String strDepatureDate,
 			String strAdultCount, String strChildCount, String strInfantCount, String strPromo,  String strTotalPessenger,
 			String strNationality,String strDocumentType,String strDocumentNum,String strNaSmile,String strMobile,
@@ -41,6 +41,7 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 					String[] Credentials = pickCredentials("UserCredentials");
 					String username =Credentials[0];
 					String password =Credentials[1];
+					String lastname = Credentials[3];
 					
 					//User Login
 					click(BookingPageLocators.login_lnk, "Login");
@@ -65,7 +66,7 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 					String strpnr = getReferenceNumber();
 					String strPNR = strpnr.trim();
 					validate_ticketStatus(strPNR);
-					searchFlightCheckin(strPNR, username, "","");
+					searchFlightCheckin(strPNR, username, "",lastname);
 					performCheckin(strSelectSeat, strPaymentType,strTotalPessenger);
 					validateCheckin();
 					
@@ -82,8 +83,6 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 		@DataProvider(name="testData")
 		public Object[][] createdata1() {
 		    return (Object[][]) new Object[][] {{
-		    	
-    			xls.getCellValue("Last Name", "Value"),
 		    	xls.getCellValue("Trip Type", "Value"),
 		    	xls.getCellValue("Flight Type", "Value"),
 		    	xls.getCellValue("Origin", "Value"),

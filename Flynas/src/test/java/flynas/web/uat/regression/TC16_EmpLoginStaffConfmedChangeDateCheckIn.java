@@ -35,6 +35,7 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 			String[] Credentials = pickCredentials("EmployeeCreds");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			
 			
 			click(emplogin_lnk, "Employe Login");
@@ -42,18 +43,7 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate, "", "", rtrndate,adult, child, infant,"","",paymentType);
 			selectClassForStaff(bookingClass);
-			waitforElement(BookingPageLocators.mobileNum);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(getText(BookingPageLocators.mobileNum,"MobileNumber")=="")
-			{
-				type(BookingPageLocators.mobileNum, mobilenum, "MobileNumber");
-				clickContinueBtn();
-			}
-			else
-			{
-				clickContinueBtn();
-			}
-			
+			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
 			payment(paymentType, "");
@@ -62,7 +52,7 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 			System.out.println(strPNR);
 			
 			String newdate = pickDate(newDate);
-			String strPNRChangeDate = changeDate(strPNR, username, mobilenum, "", newdate, selectseat,"",bookingClass,1);
+			String strPNRChangeDate = changeDate(strPNR, username, mobilenum,lastname, newdate, selectseat,"",bookingClass,1);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			System.out.println(strPNRChangeDate);
 			if(strPNRChangeDate.trim().equalsIgnoreCase(strPNR)){

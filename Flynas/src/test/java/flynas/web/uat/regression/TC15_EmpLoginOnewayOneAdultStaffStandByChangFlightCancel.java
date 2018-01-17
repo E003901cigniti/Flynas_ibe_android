@@ -35,6 +35,7 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 			String[] Credentials = pickCredentials("EmployeeCreds");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			click(emplogin_lnk, "Employe Login");
@@ -42,30 +43,19 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, depdat, "", "", "",adult, child, infant,"","",paymentType);
 			selectClassForStaff(bookingClass);
-			waitforElement(BookingPageLocators.mobileNum);
-			if(getText(BookingPageLocators.mobileNum,"MobileNumber").length() == 0)
-			{
-				type(BookingPageLocators.mobileNum, mobilenum, "MobileNumber");
-				Thread.sleep(2000);
-				clickContinueBtn();
-			}
-			else
-			{
-				clickContinueBtn();
-			}
-			/*Thread.sleep(3000);
-			clickContinueBtn();
-			Thread.sleep(5000);
-			clickContinueBtn();
-			Thread.sleep(5000);
-			click(BookingPageLocators.ok, "OK");*/
+			//Clicking continue button on Passenger details page
+			continueOnPassengerDetails();
+			
+			//Clicking continue button on Baggage details page
+			coninueOnBaggage();
+			
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			
 			String	newdate  = pickDate(newDate);
-			String strPNRChangeDate = changeDate(strPNR, username, mobilenum, "", newdate, "","",bookingClass,0);
+			String strPNRChangeDate = changeDate(strPNR, username, mobilenum, lastname, newdate, "","",bookingClass,0);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			System.out.println(strPNRChangeDate);
 			

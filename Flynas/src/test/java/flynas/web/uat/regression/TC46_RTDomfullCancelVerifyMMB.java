@@ -34,6 +34,7 @@ public class TC46_RTDomfullCancelVerifyMMB extends BookingPageFlow{
 			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -52,9 +53,9 @@ public class TC46_RTDomfullCancelVerifyMMB extends BookingPageFlow{
 			String strPNR = getReferenceNumber();
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);
-			searchFlight(strPNR, username, "", "");
+			searchFlight(strPNR, username, "", lastname);
 			cancelFlight("All");
-			searchFlight(strPNR, username, "", "");
+			searchFlight(strPNR, username, "", lastname);
 			verifyAlertPopup();
 			
 			Reporter.SuccessReport("TC46_RTDomfullCancelVerifyMMB", "Pass");

@@ -30,6 +30,7 @@ public class TC54_RtDOMBookingCheckinNaSmiles extends BookingPageFlow{
 			String[] Credentials = pickCredentials("BronzeCreds");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -50,7 +51,7 @@ public class TC54_RtDOMBookingCheckinNaSmiles extends BookingPageFlow{
 			
 			String PNR=getReferenceNumber();
 			validate_ticketStatus(PNR);
-			searchFlightCheckin(PNR, username, "", "");
+			searchFlightCheckin(PNR, username, "", lastname);
 			performCheckin(SelectSeat,paymenttype2,totalpass);
 			validateCheckin();
 			

@@ -22,11 +22,11 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public void TC03b_oneWayIntlChangeDate(String strTripType, String strFlightType, String strOrigin,
-			String strDestination, String strDepatureDate, String origin2,String departure2,String strReturnDate, String strTotalPessenger,
-			String strAdultCount, String strChildCount, String strInfantCount, String strPromo, 
+			String strDestination, String strDepatureDate, String origin2,String departure2,String strReturnDate,
+			String strTotalPessenger,String strAdultCount, String strChildCount, String strInfantCount, String strPromo, 
 			String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,
 			String strNaSmile,  String strMobile, String strSelectSeat, String strPaymentType,String bookingtype,
-			String strNewDate, String charity,String Currency, String strLastName,String description)throws Throwable{
+			String strNewDate, String charity,String Currency,String description)throws Throwable{
 				try{					
 					
 					TestEngine.testDescription.put(HtmlReportSupport.tc_name, description);
@@ -38,7 +38,8 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 					switchtoChildWindow();
 					String[] Credentials = pickCredentials("UserCredentials");
 					String username =Credentials[0];
-					String password =Credentials[1];					
+					String password =Credentials[1];	
+					String Lastname =Credentials[3];
 					login(username,password);
 					
 					inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2, departure2,retrndate,
@@ -63,7 +64,7 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 					
 					//Verifying PNR numbers
 					String	newdate = pickDate(strNewDate);
-					String strPNRChangeDate = changeDate(strPNR, username, strMobile, strLastName, newdate, strSelectSeat,strTotalPessenger,strBookingClass,0);
+					String strPNRChangeDate = changeDate(strPNR, username, strMobile, Lastname, newdate, strSelectSeat,strTotalPessenger,strBookingClass,0);
 					
 					//Reporting the test case status
 					if(strPNRChangeDate.trim().equalsIgnoreCase(strPNR)){
@@ -110,9 +111,6 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
     			xls.getCellValue("New Date", "Value"),
     			xls.getCellValue("Charity Donation", "Value"),
     			"",
-    			xls.getCellValue("username", "Value"),
-    			xls.getCellValue("password", "Value"),
-    			xls.getCellValue("Last Name", "Value"),
     			"Validate One Way International ChangeDate"
     			}};
 	}

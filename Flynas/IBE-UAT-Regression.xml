@@ -30,6 +30,9 @@
 						<class name="flynas.web.uat.regression.TC03_b_oneWayIntlChangeDate"/> 
 						<class name="flynas.web.uat.regression.TC04_a_oneWaySimpleDomOneAdultCheckin"/>
 						<class name="flynas.web.uat.regression.TC04_b_RtIntlOneAdultCheckinfail"/>
+						<class name="flynas.web.uat.regression.TC04_c_oneWaySimpleIntlMutiPaxCheckinFail"/>
+						<class name="flynas.web.uat.regression.TC04_d_oneWayExtraIntlMutiPaxCheckinFail"/>
+						<class name="flynas.web.uat.regression.TC04_e_oneWayBusinessIntlMutiPaxCheckinFail"/>
 						<class name="flynas.web.uat.regression.TC05_onewaydomestic8adultsBookingCheckin"/> 
 					  	<class name="flynas.web.uat.regression.TC06_oneWay2InternationalEco"/>
 						<class name="flynas.web.uat.regression.TC07_RTDom4adultBusinessCC"/> 
@@ -60,7 +63,7 @@
 						<class name="flynas.web.uat.regression.TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat"/>
 						<class name="flynas.web.uat.regression.TC35_b_AnonymousOwIntlEconomy_MMB_ModifyExtrasSeat"/>
 						<class name="flynas.web.uat.regression.TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras"/>
-						<class name="flynas.web.uat.regression.TC37_EmpLoginStaffConfmedModifyExtras"/>
+						<class name="flynas.web.uat.regression.TC37_EmpLoginStaffConfirmedModifyExtras"/>
 						<class name="flynas.web.uat.regression.TC38_corporateLoginRoundTripModifyExtras"/>
 						<class name="flynas.web.uat.regression.TC39_agencyLoginRondTripModifyExtras"/>
 						<class name="flynas.web.uat.regression.TC45_oneWayDomCancelverifyMMB"/>
@@ -82,5 +85,7 @@
 		 
 		</classes>
 	</test>
+	
+	
 
 </suite>

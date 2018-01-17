@@ -44,7 +44,7 @@ public class TC10_OwMultiSimpleIntlCordshareBookingMMB extends BookingPageFlow{
 			selectCodeshareConectflight(bookingclass,Bookingtype);
 			
 			//entering passenger details
-			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,username,"","","");
+			String[] psngrname= inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,username,"","","");
 			
 			//Click continue on Baggage page
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
@@ -68,7 +68,7 @@ public class TC10_OwMultiSimpleIntlCordshareBookingMMB extends BookingPageFlow{
 			
 						
 			//Verifying Error message in MMB
-			searchFlight(PNR, username, "", "");
+			searchFlight(PNR, username, "", psngrname[1]);
 			verifyAlertPopup();
 			
 			

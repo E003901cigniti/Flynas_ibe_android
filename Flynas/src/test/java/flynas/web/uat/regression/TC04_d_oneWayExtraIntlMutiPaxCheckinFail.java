@@ -35,6 +35,7 @@ public class TC04_d_oneWayExtraIntlMutiPaxCheckinFail extends BookingPageFlow{
 			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -58,7 +59,7 @@ public class TC04_d_oneWayExtraIntlMutiPaxCheckinFail extends BookingPageFlow{
 			String PNR = strpnr.trim();
 			System.out.println("PNR**********"+PNR);
 			validate_ticketStatus(PNR);
-			searchFlightCheckin(PNR, username, "", "");
+			searchFlightCheckin(PNR, username, "",lastname);
 			verifyAlertPopup();
 			
 			Reporter.SuccessReport("TC04_d_oneWayExtraIntlMutiPaxCheckinFail", "Passed");

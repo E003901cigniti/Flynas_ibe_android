@@ -33,6 +33,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			String[] Credentials = pickCredentials("NasCreditCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -61,7 +62,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			System.out.println(strPNR);	
 			closetoast();
 			//Searchin the pnr in mmb
-			searchFlight(strPNR, email, "", "");
+			searchFlight(strPNR, username, "",lastname);
 			
 			//Cancelling the flight
 			cancelFlight("All");

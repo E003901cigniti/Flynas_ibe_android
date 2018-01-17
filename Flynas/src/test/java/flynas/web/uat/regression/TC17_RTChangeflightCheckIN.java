@@ -39,6 +39,7 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 		
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
@@ -54,7 +55,7 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			System.out.println(strPNR);
 			
 			String newdate = pickDate(newDate);
-			String strPNRChangedate = changeDate(strPNR, username, mobilenum, "", newdate, "","",bookingClass,0);
+			String strPNRChangedate = changeDate(strPNR, username, mobilenum,lastname, newdate, "","",bookingClass,0);
 			String strPNRChangeDate = strPNRChangedate.trim();
 			
 			System.out.println(strPNRChangeDate);

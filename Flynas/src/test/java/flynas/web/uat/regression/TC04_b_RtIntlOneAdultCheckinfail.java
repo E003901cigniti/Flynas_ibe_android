@@ -19,7 +19,7 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 	public  void TC04b_RtIntlOneAdultCheckinFail ( String tripType, 
 			String origin, String dest, String deptDate,String origin2,String departure2, String retdate,
 			String Adult,String Child,String infant, String promo, String strBookingClass, String FlightType,String totalpass,String nationality,String Doctypr,
-			String docNumber, String naSmiles,String Mobile,String email ,String SelectSeat,
+			String docNumber, String naSmiles,String Mobile,String SelectSeat,
 			String paymenttype, String bookingtype,String Charity, 
 			String Currency,String Description) throws Throwable {
 		try {
@@ -34,6 +34,7 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -56,7 +57,7 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 			String PNR = strpnr.trim();
 			System.out.println("PNR**********"+PNR);
 			validate_ticketStatus(PNR);
-			searchFlightCheckin(PNR, email, "", "");
+			searchFlightCheckin(PNR, username, "", lastname);
 			verifyAlertPopup();
 			
 			Reporter.SuccessReport("TC04_b_RtIntlOneAdultCheckinFail", "Passed");
@@ -93,7 +94,6 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 		    		xls.getCellValue("Doc Number", "Value"),
 		    		xls.getCellValue("na Smiles", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
-		    		xls.getCellValue("Email Address", "Value"),
 		    		xls.getCellValue("Select Seat", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		"",

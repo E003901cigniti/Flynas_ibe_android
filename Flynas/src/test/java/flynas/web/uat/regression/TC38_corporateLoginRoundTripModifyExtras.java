@@ -24,7 +24,7 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 	public  void TC_38_corporateLoginRoundTripModifyExtras( String bookingClass,
 			String mobilenum,String paymentType,String newDate,String strDeptDate,String rtnDate,String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,String domOrInt,
-			String totalPass,String nationality,String docNum,String docType,String Description) throws Throwable {
+			String totalPass,String nationality,String docNum,String docType,String email, String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -41,16 +41,16 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
 			selectClass(bookingClass, "Economy");
-			continueOnPassengerDetails();
+			String[] lastname = inputPassengerDetails(domOrInt, totalPass, nationality, docType, docNum, "", mobilenum, email, "", "", "");
 			coninueOnBaggage();
 			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber().trim();
-			searchFlight(strpnr, username, "", "");
+			searchFlight(strpnr, username, "", lastname[1]);
 			modifyExtras();
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
-			Select_A_Meal();
+			//Select_A_Meal();
 			Select_lounge();
 			inputExtras("12");
 			waitforElement(BookingPageLocators.manageMyBookingTittle);
@@ -103,6 +103,7 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 	    		xls.getCellValue("Nationality", "Value"),
 	    		xls.getCellValue("Doc Number", "Value"),
 	    		xls.getCellValue("Document Type", "Value"),
+	    		xls.getCellValue("Psngr email", "Value"),
 	    		"Validate Corporate Login RoundTrip ModifyExtras"}};
 	}
 

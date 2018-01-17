@@ -35,6 +35,8 @@ public class TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge extend
 			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
+			
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -50,7 +52,7 @@ public class TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge extend
 			String strPNR = getReferenceNumber();		//Capturing  PNR 
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);				// Verifying booking status
-			searchFlight(strPNR, username, "", "");		// Search flight on MMB page
+			searchFlight(strPNR, username, "", lastname);		// Search flight on MMB page
 			changeDate("",changertrnDt,"Returning");	// change date on both departure and return
 			selectClassOneleg(strBookingClass, tripType,"Returning");  	// Selecting class in new flight
 			selectSeat(SelectSeat, bookingtype);		// Selecting Seats in New flight

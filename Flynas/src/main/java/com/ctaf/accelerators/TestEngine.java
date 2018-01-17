@@ -156,7 +156,7 @@ public class TestEngine extends HtmlReportSupport {
 				 }
 				 else
 				 {
-					 url = (configProps.getProperty("URL_PRODUCTION"));
+					 url = (configProps.getProperty("URL_UAT"));
 				 }
 			
 				Reporter.reportCreater();

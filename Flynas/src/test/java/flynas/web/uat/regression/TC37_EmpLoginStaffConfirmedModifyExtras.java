@@ -14,11 +14,11 @@ import com.ctaf.utilities.Reporter;
 import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
-public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
+public class TC37_EmpLoginStaffConfirmedModifyExtras extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_16");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_37_EmpLoginStaffConfmedModifyExtras(String bookingClass,String mobilenum,
+	public  void TC_37_EmpLoginStaffConfirmedModifyExtras(String bookingClass,String mobilenum,
 			String paymentType,String newDate,String pickDate,String rtndate,String origin,String dest,String triptype,
 			String adult,String child,String infant,String selectseat,String Description) throws Throwable {
 		try {
@@ -29,6 +29,7 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 			String[] Credentials = pickCredentials("EmployeeCreds");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			click(emplogin_lnk, "Employe Login");
 			switchtoChildWindow();
@@ -37,20 +38,12 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 			selectClassForStaff(bookingClass);
 			waitforElement(BookingPageLocators.mobileNum);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(getText(BookingPageLocators.mobileNum,"MobileNumber")=="")
-			{
-				type(BookingPageLocators.mobileNum, mobilenum, "MobileNumber");
-				clickContinueBtn();
-			}
-			else
-			{
-				clickContinueBtn();
-			}
+			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber().trim();
-			searchFlight(strpnr, username, "", "");
+			searchFlight(strpnr, username, "",lastname);
 			modifyExtras();
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
@@ -75,13 +68,13 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 			validate_ticketStatus(strPNR);
 			
 			
-			Reporter.SuccessReport("TC37_EmpLoginStaffConfmedModifyExtras", "Pass");
+			Reporter.SuccessReport("TC37_EmpLoginStaffConfirmedModifyExtras", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC37_EmpLoginStaffConfmedModifyExtras", "Failed");
+			Reporter.failureReport("TC37_EmpLoginStaffConfirmedModifyExtras", "Failed");
 		}
 	}
 	
@@ -89,22 +82,20 @@ public class TC37_EmpLoginStaffConfmedModifyExtras extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("EmployeEmail", "Value"),
-	    		xls.getCellValue("Password", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
-	    		xls.getCellValue("NewDate", "Value"),
-	    		xls.getCellValue("Departure Date", "Value"),
-	    		xls.getCellValue("Return Date", "Value"),
-	    		xls.getCellValue("Origin", "Value1"),
-	    		xls.getCellValue("Destination", "Value1"),
+	    		xls.getCellValue("NewDate", "Value2"),
+	    		xls.getCellValue("Departure Date", "Value2"),
+	    		xls.getCellValue("Return Date", "Value2"),
+	    		xls.getCellValue("Origin", "Value2"),
+	    		xls.getCellValue("Destination", "Value2"),
 	    		xls.getCellValue("Trip Type", "Value"),
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		xls.getCellValue("Select Seat", "Value"),
-	    		"Validate Employe Login Round Trip One Adult StaffConformed Modify Extras"}};
+	    		"Validate Employe Login Round Trip One Adult StaffConfirmed Modify Extras"}};
 	}
 
 }

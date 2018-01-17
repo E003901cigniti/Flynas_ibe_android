@@ -34,6 +34,8 @@ public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
 			String password =Credentials[1];
+			String lastname =Credentials[3];
+			
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
@@ -56,7 +58,7 @@ public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 			
 			//Verifying PNR numbers
 			String	newdate = pickDate(newDate);
-			String strPNRChangeDate = changeDate(strPNR, username, "", "", newdate, SelectSeat,totalpass,strBookingClass,0);
+			String strPNRChangeDate = changeDate(strPNR, username, "", lastname, newdate, SelectSeat,totalpass,strBookingClass,0);
 			
 			//Reporting the test case status
 			if(strPNRChangeDate.trim().equalsIgnoreCase(strPNR)){
@@ -65,7 +67,7 @@ public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 				Reporter.failureReport("Change Flight Date", "Flight Date has NOT changed successfully");
 			}
 			
-			searchFlightCheckin(strPNR, username, "", "");
+			searchFlightCheckin(strPNR, username, "", lastname);
 			performCheckin(SelectSeat,paymenttype,totalpass);
 			validateCheckin();
 			

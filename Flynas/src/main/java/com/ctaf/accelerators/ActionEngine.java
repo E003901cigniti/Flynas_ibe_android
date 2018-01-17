@@ -102,11 +102,11 @@ public class ActionEngine extends TestEngine {
 			e.printStackTrace();
 		} finally {
 			if (!flag) {
-				Reporter.failureReport("Click", "Unable to click on "
+				Reporter.failureReport("Clicking "+locatorName, "Unable to click on "
 						+ locatorName);
 				return flag;
 			} else if (b && flag) {
-				Reporter.SuccessReport("Click", "Successfully clicked on "
+				Reporter.SuccessReport("Clicking "+locatorName, "Successfully clicked on "
 						+ locatorName);
 			}
 		}
@@ -139,16 +139,16 @@ public class ActionEngine extends TestEngine {
 			return false;
 		} finally {
 			if (!flag) {
-				Reporter.failureReport("Check IsElementPresent ", locatorName
-						+ " Element is not present on the page");
+				Reporter.failureReport("Checking if "+locatorName+"is present on the page", "Unable to locate element "+locatorName);
 				Assert.assertTrue(flag,"Unable find the element "+ locatorName);
 			} else if (b && flag) {
-				Reporter.SuccessReport("IsElementPresent ",
-						"Able to locate element " + locatorName);
+				Reporter.SuccessReport("Checking if "+locatorName+"is present on the page",	"Able to locate element " + locatorName);
 			}
 
 		}
 	}
+	
+	
     public static boolean isElementDisplayedTemp(WebElement we)
     throws Throwable {
         boolean flag = false;
@@ -164,12 +164,12 @@ public class ActionEngine extends TestEngine {
         return flag;
     }
     
-    public void verifyElementDisplayed(By by, String Description) throws Throwable{
+    public void verifyElementDisplayed(By by, String locatorName) throws Throwable{
         
         if(isElementDisplayed(by)){
-            Reporter.SuccessReport(Description, "Successful");
+            Reporter.SuccessReport("Checking if "+locatorName+" is displayed", locatorName+" is displayed");
         }else{
-            Reporter.failureReport(Description, "Failed");
+            Reporter.failureReport("Checking if "+locatorName+" is displayed", locatorName+" is not displayed");
         }
         
     }
@@ -273,7 +273,7 @@ public class ActionEngine extends TestEngine {
            }*/
     }
 	
-	public static boolean waitForElementHasSomeText(final By by, String locator)
+	public static boolean waitForElementHasSomeText(final By by, String locatorname)
 			throws Throwable {
 		boolean flag = false;
 		try {
@@ -284,18 +284,14 @@ public class ActionEngine extends TestEngine {
 				}
 			});
 		} catch (Exception e) {
-			Assert.assertTrue(flag,
-					"waitForElementHasSomeText : Falied to locate element"+locator
-					+" with some text");
+			Assert.assertTrue(flag,"Falied to locate element "+locatorname);
 			e.printStackTrace();
 			return false;
 		}finally {
 		if (!flag) {
-			Reporter.failureReport("waitForElementHasSomeText", "Failed to find element "+locator
-					+" with some text");
+			Reporter.failureReport("waiting for element "+locatorname, "Failed to find element ");
 		} else if (flag) {
-			Reporter.SuccessReport("waitForElementHasSomeText", " found element "+locator
-					+" with some text");
+			Reporter.SuccessReport("waiting for element "+locatorname, "Found the element");
 			return flag;
 		}
 	
@@ -418,13 +414,9 @@ public class ActionEngine extends TestEngine {
 			e.printStackTrace();   
 		} finally {
 			if (!flag) {
-				Reporter.failureReport("Type ",
-						"Data typing action is not perform on " + locatorName
-								+ " with data is " + testdata);
+				Reporter.failureReport("Entering text in "+locatorName, "Data entry failed");
 			} else if (b && flag) {
-				Reporter.SuccessReport("Type ",
-						"Data typing action is performed on " + locatorName
-								+ " with data is " + testdata);
+				Reporter.SuccessReport("Entering text in "+locatorName,	"Successfully entered the data : "+ testdata);
 			}
 		}
 		return flag;
@@ -615,12 +607,12 @@ public class ActionEngine extends TestEngine {
 			return false;
 		} finally {
 			if (!flag) {
-				Reporter.failureReport("RightClick ",
-						"RightClick action is not perform on " + locatorName);
+				Reporter.failureReport("RightClick on the element "+locatorName,
+						"RightClick action is not performed");
 
 			} else if (b && flag) {
-				Reporter.SuccessReport("RightClick ",
-						"RightClick Action is Done on " + locatorName);
+				Reporter.SuccessReport("RightClick on the element "+locatorName,
+						"RightClick action performed successfuly");
 			}
 		}
 	}
