@@ -69,13 +69,15 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 			payment(paymentType, "");
 			String strPNR = getReferenceNumber().trim();
 			validate_ticketStatus(strPNR);
-									
+				
+			updateStatus("IBE_UAT_Reg","TC38_corporateLoginRoundTripModifyExtras","Pass");
 			Reporter.SuccessReport("TC38_corporateLoginRoundTripModifyExtras", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC38_corporateLoginRoundTripModifyExtras","Fail");
 			Reporter.failureReport("TC38_corporateLoginRoundTripModifyExtras", "Failed");
 		}
 	}

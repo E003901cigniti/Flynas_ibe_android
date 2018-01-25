@@ -43,11 +43,13 @@ public class TC30_redemptionBookingwithPlatinumMember extends BookingPageFlow{
 			String PNR=getReferenceNumber();
 			validate_ticketStatus(PNR);
 			
+			updateStatus("IBE_UAT_Reg","TC30_redemptionBookingwithPlatinumMember","Pass");
 			Reporter.SuccessReport("TC30_redemptionBookingwithPlatinumMember", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC30_redemptionBookingwithPlatinumMember","Fail");
 			Reporter.SuccessReport("TC30_redemptionBookingwithPlatinumMember", "Failed");
 		}
 	}

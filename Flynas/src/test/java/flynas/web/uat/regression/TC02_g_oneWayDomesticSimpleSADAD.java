@@ -51,11 +51,13 @@ public class TC02_g_oneWayDomesticSimpleSADAD extends BookingPageFlow{
 			payment(paymenttype,"");
 			verifyAlertPopup();
 			
+			updateStatus("IBE_UAT_Reg","TC02_g_oneWayDomesticSimpleSADAD","Pass");
 			Reporter.SuccessReport("TC02_g_oneWayDomesticSimpleSADAD", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC02_g_oneWayDomesticSimpleSADAD","Fail");
 			Reporter.failureReport("TC02_g_oneWayDomesticSimpleSADAD", "Failed");
 		}
 	}

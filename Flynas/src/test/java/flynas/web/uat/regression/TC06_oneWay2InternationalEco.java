@@ -66,11 +66,13 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 			payment(strPaymentType,"");
 			String strPNR = getReferenceNumber();
 			validate_ticketStatus(strPNR);
-
+			
+			updateStatus("IBE_UAT_Reg","TC06_oneWay2InternationalEco","Pass");
 			Reporter.SuccessReport("TC_06_oneWay2InternationalEco", "Passed");
 			
 		}catch(Exception e){
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC06_oneWay2InternationalEco","Fail");
 			Reporter.failureReport("TC_06_oneWay2InternationalEco", "Fail");
 			
 		}

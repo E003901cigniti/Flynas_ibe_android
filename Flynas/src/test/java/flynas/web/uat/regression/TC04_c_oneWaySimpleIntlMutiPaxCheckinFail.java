@@ -62,12 +62,14 @@ public class TC04_c_oneWaySimpleIntlMutiPaxCheckinFail extends BookingPageFlow{
 			searchFlightCheckin(PNR, username, "",lastname);
 			verifyAlertPopup();
 			
+			updateStatus("IBE_UAT_Reg","TC04_c_oneWaySimpleIntlMutiPaxCheckinFail","Pass");
 			Reporter.SuccessReport("TC04_c_oneWaySimpleIntlMutiPaxCheckinFail", "Passed");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC04_c_oneWaySimpleIntlMutiPaxCheckinFail","Fail");
 			Reporter.failureReport("TC04_c_oneWaySimpleIntlMutiPaxCheckinFail", "Failed");
 		}
 	}

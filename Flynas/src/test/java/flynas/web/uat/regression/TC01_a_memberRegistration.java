@@ -43,13 +43,15 @@ public class TC01_a_memberRegistration extends BookingPageFlow{
 			
 			//Verifying member registration by loging in.
 			LoginPg.login(username, "Test@1234");		
-						
+			
+			updateStatus("IBE_UAT_Reg","TC01_a_memberRegistration","Pass");
 			Reporter.SuccessReport("TC01_a_memberRegistration", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC01_a_memberRegistration","Fail");
 			Reporter.SuccessReport("TC01_a_memberRegistration", "Failed");
 		}
 	}

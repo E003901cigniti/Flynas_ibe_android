@@ -73,13 +73,14 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 			String strPNR = getReferenceNumber().trim();
 			validate_ticketStatus(strPNR);
 		
-			
+			updateStatus("IBE_UAT_Reg","TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras","Pass");
 			Reporter.SuccessReport("TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras","Fail");
 			Reporter.failureReport("TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras", "Failed");
 		}
 	}

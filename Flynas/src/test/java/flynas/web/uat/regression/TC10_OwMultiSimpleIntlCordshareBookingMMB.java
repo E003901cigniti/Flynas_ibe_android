@@ -71,15 +71,15 @@ public class TC10_OwMultiSimpleIntlCordshareBookingMMB extends BookingPageFlow{
 			searchFlight(PNR, username, "", psngrname[1]);
 			verifyAlertPopup();
 			
-			
-			
-			
+					
+			updateStatus("IBE_UAT_Reg","TC10_OwMultiSimpleIntlCordshareBookingMMB","Pass");
 			Reporter.SuccessReport("TC10_OwMultiSimpleIntlCordshareBookingMMB", "Passed");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC10_OwMultiSimpleIntlCordshareBookingMMB","Fail");
 			Reporter.failureReport("TC10_OwMultiSimpleIntlCordshareBookingMMB", "Failed");
 		}
 	}

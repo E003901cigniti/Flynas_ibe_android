@@ -76,12 +76,14 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 			click(BookingPageLocators.manageMyBookings(strPNR), "ManageMyBookings");
 			cancelFlight("All");
 			
+			updateStatus("IBE_UAT_Reg","TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel","Pass");
 			Reporter.SuccessReport("TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel","Fail");
 			Reporter.failureReport("TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel", "Failed");
 		}
 	}

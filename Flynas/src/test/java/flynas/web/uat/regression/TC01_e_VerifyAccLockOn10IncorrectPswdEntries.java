@@ -51,13 +51,15 @@ public class TC01_e_VerifyAccLockOn10IncorrectPswdEntries extends BookingPageFlo
 			
 			LoginPg.lockAccount(username);
 			util.VerifyErrorMessage("account is locked");
-						
+			
+			updateStatus("IBE_UAT_Reg","TC01_e_VerifyAccLockOn10IncorrectPswdEntries","Pass");						
 			Reporter.SuccessReport("TC01_e_VerifyAccLockOn10IncorrectPswdEntries", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC01_e_VerifyAccLockOn10IncorrectPswdEntries","Fail");
 			Reporter.SuccessReport("TC01_e_VerifyAccLockOn10IncorrectPswdEntries", "Failed");
 		}
 	}

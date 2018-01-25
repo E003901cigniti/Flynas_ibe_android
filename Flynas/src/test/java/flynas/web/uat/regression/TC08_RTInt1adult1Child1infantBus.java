@@ -70,12 +70,14 @@ public class TC08_RTInt1adult1Child1infantBus extends BookingPageFlow {
 					String strPNR = getReferenceNumber();
 					validate_ticketStatus(strPNR);
 					
+					updateStatus("IBE_UAT_Reg","TC08_RTInt1adult1Child1infantBus","Pass");
 					Reporter.SuccessReport("TC08_RTInt1adult1Child1infantBus", "Pass");
 					
 					driver.close();
 			
 					}catch(Exception e){
 						e.printStackTrace();
+						updateStatus("IBE_UAT_Reg","TC08_RTInt1adult1Child1infantBus","Fail");
 						Reporter.failureReport("TC08_RTInt1adult1Child1infantBus", "Fail");
 						driver.close();
 					}

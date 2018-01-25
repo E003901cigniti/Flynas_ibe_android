@@ -63,11 +63,13 @@ public class TC57_RTDomDepartingLegMMBChangedateSeatsExtrasBaggageLounge extends
 			clickContinueBtn();						
 			payonMMB(paymenttype);						// Payment on MMB
 			validate_ticketStatus(strPNR);				// Verifying booking status
+			updateStatus("IBE_UAT_Reg","TC57_RTDomDepartingLegMMBChangedateSeatsExtrasBaggageLounge","Pass");
 			Reporter.SuccessReport("TC57_RTDomDepartingLegMMBChangedateSeatsExtrasBaggageLounge", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC57_RTDomDepartingLegMMBChangedateSeatsExtrasBaggageLounge","Fail");
 			Reporter.failureReport("TC57_RTDomDepartingLegMMBChangedateSeatsExtrasBaggageLounge", "Failed");
 		}
 	}

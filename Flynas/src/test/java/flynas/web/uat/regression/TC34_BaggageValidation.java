@@ -39,12 +39,14 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 			continueOnPassengerDetails();
 			validating_BaggageWeights();
 				
+			updateStatus("IBE_UAT_Reg","TC34_BaggageValidation","Pass");
 			Reporter.SuccessReport("TC34_BaggageValidation", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC34_BaggageValidation","Fail");
 			Reporter.failureReport("TC34_BaggageValidation", "Failed");
 		}
 	}

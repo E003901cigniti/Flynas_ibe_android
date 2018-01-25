@@ -59,11 +59,13 @@ public class TC51_RTIntlfullCancelVerifyMMB extends BookingPageFlow{
 			searchFlight(strPNR, username, "", lastname);
 			verifyAlertPopup();
 			
+			updateStatus("IBE_UAT_Reg","TC51_RTIntlfullCancelVerifyMMB","Pass");
 			Reporter.SuccessReport("TC51_RTIntlfullCancelVerifyMMB", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC51_RTIntlfullCancelVerifyMMB","Fail");
 			Reporter.failureReport("TC51_RTIntlfullCancelVerifyMMB", "Failed");
 		}
 	}

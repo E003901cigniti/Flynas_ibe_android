@@ -42,12 +42,14 @@ public class TC25_anonymousOneWayDomesticOneAdultCheckInTR extends BookingPageFl
 			performCheckin(SelectSeat,paymenttype,strTolPass);
 			validateCheckin();
 			
+			updateStatus("IBE_UAT_Reg","TC25_anonymousOneWayDomesticOneAdultCheckInTR","Pass");
 			Reporter.SuccessReport("TC25_anonymousOneWayDomesticOneAdultCheckInTR", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC25_anonymousOneWayDomesticOneAdultCheckInTR","Fail");
 			Reporter.SuccessReport("TC25_anonymousOneWayDomesticOneAdultCheckInTR", "Failed");
 		}
 	}

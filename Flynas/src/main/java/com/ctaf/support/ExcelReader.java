@@ -27,6 +27,7 @@ import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFFont;
 import org.apache.poi.xssf.usermodel.XSSFHyperlink;
 
@@ -78,6 +79,24 @@ public class ExcelReader {
 
 	}
 
+	public int findRow(String sheetName, String TC_ID){
+	        /*
+	         *  This is the method to find the row number         */
+
+	        int rowNum = 0; 
+	        int index = workbook.getSheetIndex(sheetName);
+	        System.out.println(index);
+	        sheet = workbook.getSheetAt(index);
+	        
+	        for(Row row : sheet) {	         
+	             if(row.getCell(0).getRichStringCellValue().getString().trim().equals(TC_ID)){
+	                    rowNum = row.getRowNum()+1;
+	                    return rowNum;  
+	              }	          
+	        }               
+	        return rowNum;
+	    }
+	
 	/*
 	 * 20000
 	 * 

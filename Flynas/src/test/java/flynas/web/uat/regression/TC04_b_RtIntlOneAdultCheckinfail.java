@@ -60,12 +60,14 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 			searchFlightCheckin(PNR, username, "", lastname);
 			verifyAlertPopup();
 			
+			updateStatus("IBE_UAT_Reg","TC04_b_RtIntlOneAdultCheckinfail","Pass");
 			Reporter.SuccessReport("TC04_b_RtIntlOneAdultCheckinFail", "Passed");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC04_b_RtIntlOneAdultCheckinfail","Fail");
 			Reporter.failureReport("TC04_b_RtIntlOneAdultCheckinFail", "Failed");
 		}
 	}

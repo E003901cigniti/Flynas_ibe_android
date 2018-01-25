@@ -62,11 +62,14 @@ public class TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge extend
 			clickContinueBtn();						
 			payonMMB(paymenttype);						// Payment on MMB
 			validate_ticketStatus(strPNR);				// Verifying booking status
+			
+			updateStatus("IBE_UAT_Reg","TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge","Pass");
 			Reporter.SuccessReport("TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge","Fail");
 			Reporter.failureReport("TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge", "Failed");
 		}
 	}

@@ -55,12 +55,13 @@ public class TC54_RtDOMBookingCheckinNaSmiles extends BookingPageFlow{
 			performCheckin(SelectSeat,paymenttype2,totalpass);
 			validateCheckin();
 			
-			
+			updateStatus("IBE_UAT_Reg","TC54_RtDOMBookingCheckinNaSmiles","Pass");
 			Reporter.SuccessReport("TC54_RtDOMBookingCheckinNaSmiles", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC54_RtDOMBookingCheckinNaSmiles","Fail");
 			Reporter.SuccessReport("TC54_RtDOMBookingCheckinNaSmiles", "Failed");
 		}
 	}

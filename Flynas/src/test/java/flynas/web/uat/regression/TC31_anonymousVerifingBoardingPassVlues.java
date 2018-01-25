@@ -59,18 +59,19 @@ public class TC31_anonymousVerifingBoardingPassVlues extends BookingPageFlow{
 				Thread.sleep(2000);
 				robot.keyPress(KeyEvent.VK_ENTER);
 				Thread.sleep(2000);
-				robot.keyRelease(KeyEvent.VK_ENTER);
-				
+				robot.keyRelease(KeyEvent.VK_ENTER);			
 						
 			}
 			verifingFile();
 			
+			updateStatus("IBE_UAT_Reg","TC31_anonymousVerifingBoardingPassVlues","Pass");
 			Reporter.SuccessReport("TC31_anonymousVerifingBoardingPassVlues", "Passed");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC31_anonymousVerifingBoardingPassVlues","Fail");
 			Reporter.failureReport("TC31_anonymousVerifingBoardingPassVlues", "Failed");
 		}
 	}

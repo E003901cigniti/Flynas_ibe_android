@@ -70,11 +70,13 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 					performCheckin(strSelectSeat, strPaymentType,strTotalPessenger);
 					validateCheckin();
 					
+					updateStatus("IBE_UAT_Reg","TC05_onewaydomestic8adultsBookingCheckin","Pass");
 					Reporter.SuccessReport("TC05_onewaydomestic8adultsBookingCheckin", "Pass");
 					
 								
 					}catch(Exception e){
 						e.printStackTrace();
+						updateStatus("IBE_UAT_Reg","TC05_onewaydomestic8adultsBookingCheckin","Fail");
 						Reporter.failureReport("TC05_onewaydomestic8adultsBookingCheckin", "Fail");
 						
 					}

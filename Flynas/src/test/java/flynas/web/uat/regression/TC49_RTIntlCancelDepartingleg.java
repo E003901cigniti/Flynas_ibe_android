@@ -58,12 +58,13 @@ public class TC49_RTIntlCancelDepartingleg extends BookingPageFlow{
 			//verification included in cancel flight method
 			cancelFlight("Departing");
 			
-			
+			updateStatus("IBE_UAT_Reg","TC49_RTIntlCancelDepartingleg","Pass");
 			Reporter.SuccessReport("TC49_RTIntlCancelDepartingleg", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC49_RTIntlCancelDepartingleg","Fail");
 			Reporter.failureReport("TC49_RTIntlCancelDepartingleg", "Failed");
 		}
 	}

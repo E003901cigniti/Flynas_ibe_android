@@ -63,11 +63,14 @@ public class TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge extends Book
 			clickContinueBtn();						
 			payonMMB(paymenttype);						// Payment on MMB
 			validate_ticketStatus(strPNR);				// Verifying booking status
+			
+			updateStatus("IBE_UAT_Reg","TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge","Pass");
 			Reporter.SuccessReport("TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge","Fail");
 			Reporter.failureReport("TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge", "Failed");
 		}
 	}

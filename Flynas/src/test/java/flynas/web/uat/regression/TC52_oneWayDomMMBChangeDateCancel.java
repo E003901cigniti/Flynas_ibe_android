@@ -70,11 +70,13 @@ public class TC52_oneWayDomMMBChangeDateCancel extends BookingPageFlow{
 			searchFlight(strPNR, username, "", lastname);
 			cancelFlight("All");
 			
+			updateStatus("IBE_UAT_Reg","TC52_oneWayDomMMBChangeDateCancel","Pass");
 			Reporter.SuccessReport("TC52_oneWayDomMMBChangeDateCancel", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC52_oneWayDomMMBChangeDateCancel","Fail");
 			Reporter.failureReport("TC52_oneWayDomMMBChangeDateCancel", "Failed");
 		}
 	}

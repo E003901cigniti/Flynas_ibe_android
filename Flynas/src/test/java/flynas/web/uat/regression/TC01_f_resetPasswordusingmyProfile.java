@@ -65,12 +65,14 @@ public class TC01_f_resetPasswordusingmyProfile extends BookingPageFlow{
 				Reporter.failureReport("Verifing Pasword Reset", "User is unable to login with new password");
 			}
 			
+			updateStatus("IBE_UAT_Reg","TC01_f_resetPasswordusingmyProfile","Pass");
 			Reporter.SuccessReport("TC_01_f_resetPasswordusingmyProfile", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC01_f_resetPasswordusingmyProfile","Fail");
 			Reporter.SuccessReport("TC_01_f_resetPasswordusingmyProfile", "Failed");
 		}
 	}

@@ -53,11 +53,13 @@ public class TC02_f_RTDomExtra1Adult1ChildCC extends BookingPageFlow{
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);
 			
+			updateStatus("IBE_UAT_Reg","TC02_f_RTDomExtra1Adult1ChildCC","Pass");
 			Reporter.SuccessReport("TC02_f_RTDomExtra1Adult1ChildCC", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC02_f_RTDomExtra1Adult1ChildCC","Fail");
 			Reporter.failureReport("TC02_f_RTDomExtra1Adult1ChildCC", "Failed");
 		}
 	}

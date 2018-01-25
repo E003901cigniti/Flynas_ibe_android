@@ -51,11 +51,13 @@ public static ConfiguratorSupport configProps=new ConfiguratorSupport("config.pr
 									
 					validate_ticketStatus(strPNR);
 					
+					updateStatus("IBE_UAT_Reg","TC32_anonymousReissueTheTicketWithHigherFare","Pass");
 					Reporter.SuccessReport("TC32_anonymousReissueTheTicketWithHigherFare", "Pass");
 					driver.close();
 			
 					}catch(Exception e){
 						e.printStackTrace();
+						updateStatus("IBE_UAT_Reg","TC32_anonymousReissueTheTicketWithHigherFare","Fail");
 						Reporter.SuccessReport("TC32_anonymousReissueTheTicketWithHigherFare", "Fail");
 						driver.close();
 					}

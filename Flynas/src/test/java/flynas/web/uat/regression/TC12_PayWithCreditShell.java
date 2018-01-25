@@ -94,12 +94,14 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			System.out.println(strPNR2);
 			validate_ticketStatus(strPNR2);
 			
+			updateStatus("IBE_UAT_Reg","TC12_PayWithCreditShell","Pass");
 			Reporter.SuccessReport("PayWithCreditShell", "Pass");					
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC12_PayWithCreditShell","Fail");
 			Reporter.failureReport("PayWithCreditShell", "Failed");
 		}
 	}

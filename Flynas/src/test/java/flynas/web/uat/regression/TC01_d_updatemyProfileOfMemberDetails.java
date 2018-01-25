@@ -67,12 +67,14 @@ public class TC01_d_updatemyProfileOfMemberDetails extends BookingPageFlow {
 			util.verifyDateupdate("Document expire date",firstDocExpDt,updateDocExpdt);
 			//util.verifytextupdate("Mobile Number",FirstMobileNum,updatedMobileNum);
 			
+			updateStatus("IBE_UAT_Reg","TC01_d_updatemyProfileOfMemberDetails","Pass");
 			Reporter.SuccessReport("TC01_d_updatemyProfileOfMemberDetails", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC01_d_updatemyProfileOfMemberDetails","Fail");
 			Reporter.SuccessReport("TC01_d_updatemyProfileOfMemberDetails", "Failed");
 		}
 	}

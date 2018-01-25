@@ -64,12 +64,14 @@ public class TC07_RTDom4adultBusinessCC extends BookingPageFlow {
 					System.out.println(strPNR);
 					validate_ticketStatus(strPNR);
 					
+					updateStatus("IBE_UAT_Reg","TC07_RTDom4adultBusinessCC","Pass");
 					Reporter.SuccessReport("TC07_RTDom4adultBusinessCC", "Pass");
 					
 					driver.close();
 			
 					}catch(Exception e){
 						e.printStackTrace();
+						updateStatus("IBE_UAT_Reg","TC07_RTDom4adultBusinessCC","Fail");
 						Reporter.failureReport("TC07_RTDom4adultBusinessCC", "Fail");
 						driver.close();
 					}

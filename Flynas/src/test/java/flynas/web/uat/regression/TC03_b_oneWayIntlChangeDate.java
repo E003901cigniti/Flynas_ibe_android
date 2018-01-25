@@ -73,12 +73,14 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 						Reporter.failureReport("Change Flight Date", "Flight Date has NOT changed successfully");
 					}
 					
+					updateStatus("IBE_UAT_Reg","TC03_b_oneWayIntlChangeDate","Pass");
 					Reporter.SuccessReport("TC03_b_oneWayIntlChangeDate", "Pass");
 					driver.close();
 			
 					}catch(Exception e){
 						e.printStackTrace();
-						Reporter.failureReport("TC03_b_oneWayIntlChangeDate", "Fail");
+						updateStatus("IBE_UAT_Reg","TC03_b_oneWayIntlChangeDate","Fail");
+						Reporter.failureReport("TC03_b_oneWayIntlChangeDate", "Failed");
 						driver.close();
 					}
 	}

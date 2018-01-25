@@ -1,9 +1,12 @@
 package flynas.web.workflows;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -26,6 +29,7 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.ctaf.dataDriver.Logger;
+import com.ctaf.googledrive.GoogleDriveAPI;
 import com.ctaf.support.ExcelReader;
 import com.ctaf.utilities.Reporter;
 import com.gargoylesoftware.htmlunit.javascript.host.dom.Document;
@@ -1103,28 +1107,33 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		//handling 3D secure page
 		if(paymentType.equalsIgnoreCase("Credit Card"))
 			{
+				boolean flag = false;
+				Thread.sleep(5000);
 				List<WebElement> frames = driver.findElements(By.tagName("iframe"));
-				if(isElementPresent(By.cssSelector("i‌​frame[id='authWindow']"))==true){
-					driver.switchTo().frame("authWindow");
-					driver.manage().timeouts().implicitlyWait(5000,TimeUnit.MILLISECONDS);
-					if(isElementPresent(BookingPageLocators.pasword)==true)
-					{
-						type(BookingPageLocators.pasword, "1234", "Password");
-						click(BookingPageLocators.ccSubmit,"Submit Button");
-						if(isElementDisplayedTemp(BookingPageLocators.ok)==true)
+				for(WebElement frame:frames){
+					System.out.println(frame.getAttribute("id"));
+					if(frame.getAttribute("id").equalsIgnoreCase("authWindow")){
+						driver.switchTo().frame("authWindow");
+						driver.manage().timeouts().implicitlyWait(5000,TimeUnit.MILLISECONDS);
+						if(isElementPresent(BookingPageLocators.pasword)==true)
 						{
-							click(BookingPageLocators.ok, "OK");
-							//payment("Credit Card", "");
+							type(BookingPageLocators.pasword, "1234", "Password");
+							click(BookingPageLocators.ccSubmit,"Submit Button");
+							if(isElementDisplayedTemp(BookingPageLocators.ok)==true){
+								click(BookingPageLocators.ok, "OK");
+								//payment("Credit Card", "");								
+							}
+							flag = true;
+							break;
 						}
-					}
-				}
-				
-				else
+						}
+					}										
+				if(flag== false)
 				{
 				System.out.println("No Secure Page");
 				}
 			
-			}
+		}
 			
 		
 	
@@ -3644,6 +3653,39 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			}
 		}
 			
+		
+		public void updateStatus(String Sheetname, String TCID, String status ) throws IOException{
+			
+			int row = GoogleDriveAPI.fnGetRowNo(Sheetname, TCID);
+			GoogleDriveAPI.getResponse(Sheetname, "B"+row, "B"+row);
+			GoogleDriveAPI.setValue(Sheetname, "B"+row, "B"+row, status);
+			String Exetime=ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE);
+			GoogleDriveAPI.setValue(Sheetname, "C"+row, "C"+row, Exetime);
+			
+			
+//			ExcelReader xls = new ExcelReader(configProps.getProperty("ResultSheet"),Sheetname);
+//			int rowNum = xls.findRow(Sheetname, TCID);
+//			System.out.println("Row number : "+rowNum);
+//			String Pcount = xls.getCellValue(TCID, "Total Pass Count");
+//			System.out.println("pass count: "+Pcount);
+//			String Fcount = xls.getCellValue(TCID, "Total Fail Count");
+//			System.out.println("Fail count : "+Fcount);
+//			xls.setCellData(Sheetname, "Status", rowNum, status);
+//			int count;
+//			if (status.equalsIgnoreCase("Pass")){
+//				count= Integer.parseInt(Pcount)+1;
+//				xls.setCellData(Sheetname, "Total Pass Count", rowNum,Integer.toString(count));
+//			}
+//			else{
+//				count= Integer.parseInt(Fcount)+1;
+//				xls.setCellData(Sheetname, "Total Fail Count", rowNum,Integer.toString(count));
+//			}
+//			System.out.println(ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE));
+//			String Exetime=ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE);		
+//			xls.setCellData(Sheetname, "Last Execution time", rowNum, Exetime);
+		
+			
+		}
 		
 	}
 		

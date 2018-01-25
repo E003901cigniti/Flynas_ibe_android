@@ -57,11 +57,13 @@ public class TC02_b_oneWayDomBusiness1AdultCC extends BookingPageFlow{
 			String PNR=getReferenceNumber();
 			validate_ticketStatus(PNR);
 			
+			updateStatus("IBE_UAT_Reg","TC02_b_oneWayDomBusiness1AdultCC","Pass");
 			Reporter.SuccessReport("TC02_b_oneWayDomBusiness1AdultCC", "Passed");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC02_b_oneWayDomBusiness1AdultCC","Fail");
 			Reporter.failureReport("TC02_b_oneWayDomBusiness1AdultCC", "Failed");
 		}
 	}

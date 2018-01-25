@@ -39,11 +39,13 @@ public class TC13_onewayDomesticwithUSdollars extends BookingPageFlow{
 			
 			validate_ticketStatus(strPNR);
 			
+			updateStatus("IBE_UAT_Reg","TC13_onewayDomesticwithUSdollars","Pass");
 			Reporter.SuccessReport("TC13_onewayDomesticwithUSdollars", "Passed");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC13_onewayDomesticwithUSdollars","Fail");
 			Reporter.SuccessReport("TC13_onewayDomesticwithUSdollars", "Failed");
 		}
 	}

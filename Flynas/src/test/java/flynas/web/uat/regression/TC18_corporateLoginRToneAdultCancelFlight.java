@@ -49,13 +49,15 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 			System.out.println(strPNR);
 			searchFlight(strPNR, username, "", Passengername[1]);
 			cancelFlight("All");
-									
+				
+			updateStatus("IBE_UAT_Reg","TC18_corporateLoginRToneAdultCancelFlight","Pass");
 			Reporter.SuccessReport("TC18_corporateLoginRToneAdultCancelFlight", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC18_corporateLoginRToneAdultCancelFlight","Fail");
 			Reporter.failureReport("TC18_corporateLoginRToneAdultCancelFlight", "Failed");
 		}
 	}

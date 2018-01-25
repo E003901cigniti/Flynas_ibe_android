@@ -67,13 +67,14 @@ public class TC37_EmpLoginStaffConfirmedModifyExtras extends BookingPageFlow{
 			String strPNR = getReferenceNumber().trim();
 			validate_ticketStatus(strPNR);
 			
-			
+			updateStatus("IBE_UAT_Reg","TC37_EmpLoginStaffConfirmedModifyExtras","Pass");
 			Reporter.SuccessReport("TC37_EmpLoginStaffConfirmedModifyExtras", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC37_EmpLoginStaffConfirmedModifyExtras","Fail");
 			Reporter.failureReport("TC37_EmpLoginStaffConfirmedModifyExtras", "Failed");
 		}
 	}

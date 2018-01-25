@@ -58,11 +58,13 @@ public class TC46_RTDomfullCancelVerifyMMB extends BookingPageFlow{
 			searchFlight(strPNR, username, "", lastname);
 			verifyAlertPopup();
 			
+			updateStatus("IBE_UAT_Reg","TC46_RTDomfullCancelVerifyMMB","Pass");
 			Reporter.SuccessReport("TC46_RTDomfullCancelVerifyMMB", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC46_RTDomfullCancelVerifyMMB","Fail");
 			Reporter.failureReport("TC46_RTDomfullCancelVerifyMMB", "Failed");
 		}
 	}

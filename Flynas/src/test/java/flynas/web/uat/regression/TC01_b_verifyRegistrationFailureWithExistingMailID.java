@@ -4,6 +4,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.ctaf.accelerators.TestEngine;
+import com.ctaf.googledrive.GoogleDriveAPI;
 import com.ctaf.support.ExcelReader;
 import com.ctaf.support.HtmlReportSupport;
 import com.ctaf.utilities.Reporter;
@@ -29,6 +30,7 @@ public class TC01_b_verifyRegistrationFailureWithExistingMailID extends BookingP
 			projectUtilities util = new projectUtilities();
 			LoginPage LoginPg = new LoginPage();
 			MemberRegistrationPage memberRegisterPg = new MemberRegistrationPage();
+			
 		
 			
 			
@@ -41,13 +43,14 @@ public class TC01_b_verifyRegistrationFailureWithExistingMailID extends BookingP
 			memberRegisterPg.memberRegistration(username,"Adult");
 			util.VerifyErrorMessage("already exists");
 				
-						
+			updateStatus("IBE_UAT_Reg","TC01_b_verifyRegistrationFailureWithExistingMailID","Pass");			
 			Reporter.SuccessReport("TC_01_b_verifyRegistrationFailureWithExistingMailID", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC01_b_verifyRegistrationFailureWithExistingMailID","Fail");
 			Reporter.SuccessReport("TC_01_b_verifyRegistrationFailureWithExistingMailID", "Failed");
 		}
 	}

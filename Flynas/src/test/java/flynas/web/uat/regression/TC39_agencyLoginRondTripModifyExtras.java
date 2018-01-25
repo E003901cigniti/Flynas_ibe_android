@@ -69,12 +69,15 @@ public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber().trim();
 			validate_ticketStatus(strpnr);
+			
+			updateStatus("IBE_UAT_Reg","TC39_agencyLoginRondTripModifyExtras","Pass");
 			Reporter.SuccessReport("TC39_agencyLoginRondTripModifyExtras", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC39_agencyLoginRondTripModifyExtras","Fail");
 			Reporter.SuccessReport("TC39_agencyLoginRondTripModifyExtras", "Failed");
 		}
 	}

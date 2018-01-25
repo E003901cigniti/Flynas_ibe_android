@@ -40,12 +40,14 @@ public class TC27_b_BookingwithInsufficientBronzepoints extends BookingPageFlow{
 			continueOnSeatSelection();
 			nasmilespayment(username,password);
 			verifyAlertPopup();
-						
+				
+			updateStatus("IBE_UAT_Reg","TC27_b_BookingwithInsufficientBronzepoints","Pass");
 			Reporter.SuccessReport("TC27_b_BookingwithinsufficientBronzepoints", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC27_b_BookingwithInsufficientBronzepoints","Fail");
 			Reporter.SuccessReport("TC27_b_BookingwithinsufficientBronzepoints", "Failed");
 		}
 	}

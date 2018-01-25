@@ -48,13 +48,14 @@ public class TC55_oneWayDomesticBusOneAdultAmexBookingAR extends BookingPageFlow
 			System.out.println(strPNR);
 			validate_ticketStatus_AR(strPNR);
 		
-			
+			updateStatus("IBE_UAT_Reg","TC55_oneWayDomesticBusOneAdultAmexBookingAR","Pass");
 			Reporter.SuccessReport("TC55_oneWayDomesticBusOneAdultAmexBookingAR", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC55_oneWayDomesticBusOneAdultAmexBookingAR","Fail");
 			Reporter.SuccessReport("TC55_oneWayDomesticBusOneAdultAmexBookingAR", "Failed");
 		}
 	}

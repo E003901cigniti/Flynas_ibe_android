@@ -41,11 +41,13 @@ ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_
 					changeDate(strPNR, strEmail, strMobile, strLastName[1], newdate, strSelectSeat,strTotalPessenger,strBookingClass,0);
 					validateFare(strBookingClass);
 					
+					updateStatus("IBE_UAT_Reg","TC33_anonymousRevalidateTheTicketWithSameFare","Pass");
 					Reporter.SuccessReport("TC33_anonymousRevalidateTheTicketWithSameFare", "Pass");
 					driver.close();
 			
 					}catch(Exception e){
 						e.printStackTrace();
+						updateStatus("IBE_UAT_Reg","TC33_anonymousRevalidateTheTicketWithSameFare","Fail");
 						Reporter.SuccessReport("TC33_anonymousRevalidateTheTicketWithSameFare", "Fail");
 						driver.close();
 					}

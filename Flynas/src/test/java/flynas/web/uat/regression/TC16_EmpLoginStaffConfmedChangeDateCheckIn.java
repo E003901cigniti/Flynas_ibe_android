@@ -64,12 +64,14 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 			performCheckin("","","");
 			validateCheckin();
 			
+			updateStatus("IBE_UAT_Reg","TC16_EmpLoginStaffConfmedChangeDateCheckIn","Pass");
 			Reporter.SuccessReport("TC16_EmpLoginStaffConfmedChangeDateCheckIn", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC16_EmpLoginStaffConfmedChangeDateCheckIn","Fail");
 			Reporter.failureReport("TC16_EmpLoginStaffConfmedChangeDateCheckIn", "Failed");
 		}
 	}

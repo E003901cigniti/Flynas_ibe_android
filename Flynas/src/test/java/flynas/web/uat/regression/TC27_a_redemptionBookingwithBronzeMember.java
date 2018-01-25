@@ -44,12 +44,13 @@ public class TC27_a_redemptionBookingwithBronzeMember extends BookingPageFlow{
 			validate_ticketStatus(PNR);
 			
 			
-			
+			updateStatus("IBE_UAT_Reg","TC27_a_redemptionBookingwithBronzeMember","Pass");
 			Reporter.SuccessReport("TC27_a_redemptionBookingwithBronzeMember", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC27_a_redemptionBookingwithBronzeMember","Fail");
 			Reporter.SuccessReport("TC27_a_redemptionBookingwithBronzeMember", "Failed");
 		}
 	}

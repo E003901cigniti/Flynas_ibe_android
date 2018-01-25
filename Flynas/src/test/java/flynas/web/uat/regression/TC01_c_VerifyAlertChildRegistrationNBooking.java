@@ -52,12 +52,14 @@ public class TC01_c_VerifyAlertChildRegistrationNBooking extends BookingPageFlow
 			continueOnPassengerDetails();
 			util.VerifyAlertMessage("mandatory fields");
 			
+			updateStatus("IBE_UAT_Reg","TC01_c_VerifyAlertChildRegistrationNBooking","Pass");
 			Reporter.SuccessReport("TC_01_c_VerifyAlertChildRegistrationNBooking", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC01_c_VerifyAlertChildRegistrationNBooking","Fail");
 			Reporter.SuccessReport("TC_01_c_VerifyAlertChildRegistrationNBooking", "Failed");
 		}
 	}

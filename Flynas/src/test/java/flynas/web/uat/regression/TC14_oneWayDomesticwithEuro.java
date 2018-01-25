@@ -37,11 +37,13 @@ public class TC14_oneWayDomesticwithEuro extends BookingPageFlow{
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);
 			
+			updateStatus("IBE_UAT_Reg","TC14_oneWayDomesticwithEuro","Pass");
 			Reporter.SuccessReport("TC14_oneWayDomesticwithEuro", "Passed");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC14_oneWayDomesticwithEuro","Fail");
 			Reporter.SuccessReport("TC14_oneWayDomesticwithEuro", "Failed");
 		}
 	}

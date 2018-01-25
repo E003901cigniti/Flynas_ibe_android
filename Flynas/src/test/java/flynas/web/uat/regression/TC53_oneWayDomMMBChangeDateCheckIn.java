@@ -71,11 +71,13 @@ public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 			performCheckin(SelectSeat,paymenttype,totalpass);
 			validateCheckin();
 			
+			updateStatus("IBE_UAT_Reg","TC53_oneWayDomMMBChangeDateCheckIn","Pass");
 			Reporter.SuccessReport("TC53_oneWayDomMMBChangeDateCheckIn", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC53_oneWayDomMMBChangeDateCheckIn","Fail");
 			Reporter.failureReport("TC53_oneWayDomMMBChangeDateCheckIn", "Failed");
 		}
 	}

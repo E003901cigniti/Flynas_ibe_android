@@ -61,12 +61,14 @@ public class TC04_a_oneWaySimpleDomOneAdultCheckin extends BookingPageFlow{
 			performCheckin(SelectSeat,paymenttype,totalpass);
 			validateCheckin();
 			
+			updateStatus("IBE_UAT_Reg","TC04_a_oneWaySimpleDomOneAdultCheckin","Pass");
 			Reporter.SuccessReport("TC04_a_oneWaySimpleDomOneAdultCheckin", "Passed");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC04_a_oneWaySimpleDomOneAdultCheckin","Fail");
 			Reporter.failureReport("TC04_a_oneWaySimpleDomOneAdultCheckin", "Failed");
 		}
 	}

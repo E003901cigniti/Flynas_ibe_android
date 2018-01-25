@@ -82,12 +82,14 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 				Reporter.failureReport("Verifing Account Balance Changed or not After Cancel Flight", "Account balance not Changed");
 			}
 			
+			updateStatus("IBE_UAT_Reg","TC19_agencyLoginRToneAdultoneChild","Pass");
 			Reporter.SuccessReport("TC19_agencyLoginRToneAdultoneChild", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC19_agencyLoginRToneAdultoneChild","Fail");
 			Reporter.SuccessReport("TC19_agencyLoginRToneAdultoneChild", "Failed");
 		}
 	}

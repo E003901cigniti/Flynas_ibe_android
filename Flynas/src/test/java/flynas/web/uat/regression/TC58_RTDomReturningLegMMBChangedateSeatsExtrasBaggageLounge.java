@@ -32,26 +32,26 @@ public class TC58_RTDomReturningLegMMBChangedateSeatsExtrasBaggageLounge extends
 			String	changertrnDt = pickDate(newRtrnDt);
 			
 			//Pick credentials and login
-//			String[] Credentials = pickCredentials("UserCredentials");
-//			String username =Credentials[0];
-//			String password =Credentials[1];
-//			String lastname =Credentials[3];
-//			click(BookingPageLocators.login_lnk, "Login");
-//			switchtoChildWindow();
-//			login(username,password);
-//			
-//			//Input trip details
-//			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
-//			selectClass(strBookingClass, tripType);
-//					
-//			continueOnPassengerDetails(); 				//Clicking continue button on Passenger details page
-//			coninueOnBaggage();							//Clicking continue button on Baggage details page
-//			continueOnSeatSelection(); 					//Skipping seat selection
-//			payment(paymenttype,"");  					// payment 
-//			String strPNR = getReferenceNumber();		//Capturing  PNR 
-//			System.out.println(strPNR);
-//			validate_ticketStatus(strPNR);				// Verifying booking status
-			searchFlight("G6RWYP", "", "", "new");		// Search flight on MMB page
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			String lastname =Credentials[3];
+			click(BookingPageLocators.login_lnk, "Login");
+			switchtoChildWindow();
+			login(username,password);
+			
+			//Input trip details
+			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
+			selectClass(strBookingClass, tripType);
+					
+			continueOnPassengerDetails(); 				//Clicking continue button on Passenger details page
+			coninueOnBaggage();							//Clicking continue button on Baggage details page
+			continueOnSeatSelection(); 					//Skipping seat selection
+			payment(paymenttype,"");  					// payment 
+			String strPNR = getReferenceNumber();		//Capturing  PNR 
+			System.out.println(strPNR);
+			validate_ticketStatus(strPNR);				// Verifying booking status
+			searchFlight(strPNR, "", "", "new");		// Search flight on MMB page
 			changeDate("",changertrnDt,"Returning");	// change date on both departure and return
 			selectClassOneleg(strBookingClass, tripType,"Returning");  	// Selecting class in new flight
 			selectSeat(SelectSeat, bookingtype);		// Selecting Seats in New flight
@@ -60,12 +60,15 @@ public class TC58_RTDomReturningLegMMBChangedateSeatsExtrasBaggageLounge extends
 			Select_lounge();							// Selecting Business lounge
 			clickContinueBtn();						
 			payonMMB(paymenttype);						// Payment on MMB
-			validate_ticketStatus("G6RWYP");				// Verifying booking status
+			validate_ticketStatus(strPNR);				// Verifying booking status
+			
+			updateStatus("IBE_UAT_Reg","TC58_RTDomReturningLegMMBChangedateSeatsExtrasBaggageLounge","Pass");
 			Reporter.SuccessReport("TC58_RTDomReturningLegMMBChangedateSeatsExtrasBaggageLounge", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC58_RTDomReturningLegMMBChangedateSeatsExtrasBaggageLounge","Fail");
 			Reporter.failureReport("TC58_RTDomReturningLegMMBChangedateSeatsExtrasBaggageLounge", "Failed");
 		}
 	}

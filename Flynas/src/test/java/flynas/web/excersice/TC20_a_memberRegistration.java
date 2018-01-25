@@ -19,7 +19,7 @@ import flynas.web.workflows.MyProfilePage;
 import flynas.web.workflows.projectUtilities;
 
 public class TC20_a_memberRegistration extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("Credentialsdata"),"UserCredentials");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("Credentialsdata"),"RegistrationData");
 	@SuppressWarnings("rawtypes")
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_20_memberRegistration(String Description) throws Throwable {
@@ -31,7 +31,7 @@ public class TC20_a_memberRegistration extends BookingPageFlow{
 			LoginPage LoginPg = new LoginPage();
 			MemberRegistrationPage memberRegisterPg = new MemberRegistrationPage();
 			
-			int row = xls.getRowCount("UserCredentials");
+			int row = xls.getRowCount("RegistrationData");
 		
 			for(int i=1;i<=row;i++){
 			String username = xls.getCellValue("credentials"+i, "userid");

@@ -39,13 +39,14 @@ public class TC26_anonymousRtDomestic4AdultBusinessTR extends BookingPageFlow{
 			System.out.println(strPNR);
 			validate_ticketStatus_TR(strPNR);
 			
-			
+			updateStatus("IBE_UAT_Reg","TC26_anonymousRtDomestic4AdultBusinessTR","Pass");
 			Reporter.SuccessReport("TC26_anonymousRtDomestic4AdultBusinessTR", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC26_anonymousRtDomestic4AdultBusinessTR","Fail");
 			Reporter.SuccessReport("TC26_anonymousRtDomestic4AdultBusinessTR", "Failed");
 		}
 	}

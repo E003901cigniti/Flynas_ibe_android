@@ -56,11 +56,13 @@ public class TC11_oneAdultoneChildoneInfantPartCodeShare extends BookingPageFlow
 			System.out.println("PNR**********"+PNR);
 			validate_ticketStatus(PNR);
 			
+			updateStatus("IBE_UAT_Reg","TC11_oneAdultoneChildoneInfantPartCodeShare","Pass");
 			Reporter.SuccessReport("TC_11_oneAdultoneChildoneInfantPartCodeShare", "Passed");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC11_oneAdultoneChildoneInfantPartCodeShare","Fail");
 			Reporter.failureReport("TC_11_oneAdultoneChildoneInfantPartCodeShare", "Failed");
 		}
 	}

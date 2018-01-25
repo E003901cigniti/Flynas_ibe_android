@@ -58,11 +58,13 @@ public class TC45_oneWayDomCancelverifyMMB extends BookingPageFlow{
 			searchFlight(strPNR, username, "", lastname);
 			verifyAlertPopup();
 			
+			updateStatus("IBE_UAT_Reg","TC45_oneWayDomCancelverifyMMB","Pass");
 			Reporter.SuccessReport("TC45_oneWayDomCancelverifyMMB", "Pass");
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC45_oneWayDomCancelverifyMMB","Fail");
 			Reporter.failureReport("TC45_oneWayDomCancelverifyMMB", "Failed");
 		}
 	}

@@ -57,10 +57,13 @@ public class TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat extends Bo
 					payment(strPaymentType, "");
 					String strPNR = getReferenceNumber().trim();
 					validate_ticketStatus(strPNR);
+					
+					updateStatus("IBE_UAT_Reg","TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat","Pass");
 					Reporter.SuccessReport("TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat", "Pass");
 					
 					}catch(Exception e){
 						e.printStackTrace();
+						updateStatus("IBE_UAT_Reg","TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat","Fail");
 						Reporter.failureReport("TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat", "Fail");
 						
 					}

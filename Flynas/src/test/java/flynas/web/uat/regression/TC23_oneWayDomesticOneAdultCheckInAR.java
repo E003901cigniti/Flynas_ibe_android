@@ -45,12 +45,14 @@ public class TC23_oneWayDomesticOneAdultCheckInAR extends BookingPageFlow{
 			performCheckin(SelectSeat,paymenttype,strTolPass);
 			validateCheckin();
 			
+			updateStatus("IBE_UAT_Reg","TC23_oneWayDomesticOneAdultCheckInAR","Pass");
 			Reporter.SuccessReport("TC23_oneWayDomesticOneAdultCheckInAR", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC23_oneWayDomesticOneAdultCheckInAR","Fail");
 			Reporter.SuccessReport("TC23_oneWayDomesticOneAdultCheckInAR", "Failed");
 		}
 	}

@@ -69,13 +69,14 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			performCheckin(seatSelect,paymentType,"");
 			validateCheckin();
 			
-			
+			updateStatus("IBE_UAT_Reg","TC17_RTChangeflightCheckIN","Pass");
 			Reporter.SuccessReport("TC17_RTChangeflightCheckIN", "Pass");
 			
 			}
 		
 	catch (Exception e) {
 			e.printStackTrace();
+			updateStatus("IBE_UAT_Reg","TC17_RTChangeflightCheckIN","Fail");
 			Reporter.failureReport("TC17_RTChangeflightCheckIN", "Failed");
 		}
 	}
