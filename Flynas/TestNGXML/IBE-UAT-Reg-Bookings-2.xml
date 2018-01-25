@@ -16,10 +16,10 @@
 						
 						
 						<class name="flynas.web.uat.regression.TC02_e_RTIntlBusiness1AdultCC"/>
-				<!-- 	<class name="flynas.web.uat.regression.TC02_f_RTDomExtra1Adult1ChildCC"/>
+					 	<class name="flynas.web.uat.regression.TC02_f_RTDomExtra1Adult1ChildCC"/>
 						<class name="flynas.web.uat.regression.TC02_g_oneWayDomesticSimpleSADAD"/>
 						
-					  	<class name="flynas.web.uat.regression.TC06_oneWay2InternationalEco"/> -->
+					  	<class name="flynas.web.uat.regression.TC06_oneWay2InternationalEco"/>
 						
 						
 		</classes>
