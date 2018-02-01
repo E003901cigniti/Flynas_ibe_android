@@ -3660,8 +3660,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			GoogleDriveAPI.getResponse(Sheetname, "B"+row, "B"+row);
 			GoogleDriveAPI.setValue(Sheetname, "B"+row, "B"+row, status);
 			String Exetime=ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE);
+			if(status.equalsIgnoreCase("Pass"))
 			GoogleDriveAPI.setValue(Sheetname, "C"+row, "C"+row, Exetime);
-			
+			else GoogleDriveAPI.setValue(Sheetname, "D"+row, "D"+row, Exetime);
 			
 //			ExcelReader xls = new ExcelReader(configProps.getProperty("ResultSheet"),Sheetname);
 //			int rowNum = xls.findRow(Sheetname, TCID);

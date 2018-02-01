@@ -14,7 +14,7 @@
 			<classes>	 	
 					<!-- ********************************Chrome*************************************************** -->
 						<class name="flynas.web.uat.regression.TC01_a_memberRegistration"/>
-						<class name="flynas.web.uat.regression.TC01_b_verifyRegistrationFailureWithExistingMailID"/>
+				<!-- 		<class name="flynas.web.uat.regression.TC01_b_verifyRegistrationFailureWithExistingMailID"/>
 						<class name="flynas.web.uat.regression.TC01_c_VerifyAlertChildRegistrationNBooking"/>
 						<class name="flynas.web.uat.regression.TC01_d_updatemyProfileOfMemberDetails"/>
 						<class name="flynas.web.uat.regression.TC01_e_VerifyAccLockOn10IncorrectPswdEntries"/>
@@ -81,7 +81,7 @@
 						<class name="flynas.web.uat.regression.TC57_RTDomDepartingLegMMBChangedateSeatsExtrasBaggageLounge"/>
 						<class name="flynas.web.uat.regression.TC58_RTDomReturningLegMMBChangedateSeatsExtrasBaggageLounge"/>
 						<class name="flynas.web.uat.regression.TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge"/>
-						<class name="flynas.web.uat.regression.TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge"/>								
+						<class name="flynas.web.uat.regression.TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge"/>		-->						
 		 
 		</classes>
 	</test>
