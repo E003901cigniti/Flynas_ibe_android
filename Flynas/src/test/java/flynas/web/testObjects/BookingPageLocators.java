@@ -16,6 +16,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By naSmileTaost = By.xpath("//iframe[@id='yief130002']");
 	public static By closetoast = By.xpath("//span[@id='close']");
 	public static By alertText = By.xpath("//div[@class='modal-body']/div");
+	public static By overlay = By.xpath("//class[contains(text(),'overlay')]");
 	
 	//login page
 	public static By email = By.xpath("//input[@name='iptid']");

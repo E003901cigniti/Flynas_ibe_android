@@ -3641,8 +3641,33 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			}
 		}
 		
+		public void closeOverlay() throws Throwable{
+			List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+			for(WebElement frame:frames){
+				System.out.println(frame.getAttribute("id"));
+				if(frame.getAttribute("id").equalsIgnoreCase("yief137528")){
+					driver.switchTo().frame("yief137528");
+					driver.manage().timeouts().implicitlyWait(5000,TimeUnit.MILLISECONDS);
+					if(isElementPresent(BookingPageLocators.closepopup)==true)
+					{
+						
+						click(BookingPageLocators.closepopup,"Submit Button");
+						
+						flag = true;
+						break;
+					}
+					}
+				}										
+			if(flag== false)
+			{
+			System.out.println("No POP up"); 
+			}
+		
+		}
+		
 		public void continueOnSeatSelection() throws Throwable{
 			waitforElement(BookingPageLocators.selectseattittle);
+			//closeOverlay();			
 			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)==true){
 				clickContinueBtn();
 				if(isElementDisplayedTemp(BookingPageLocators.ok)){
