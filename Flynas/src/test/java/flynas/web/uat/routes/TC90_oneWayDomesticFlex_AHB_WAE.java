@@ -19,7 +19,7 @@ public class TC90_oneWayDomesticFlex_AHB_WAE extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Flex"})
-	public  void TC_90_oneWayDomesticFlex_AHB_WAE( String bookingClass,
+	public  void TC_90_oneWayDomesticFlex_AHB_WAE( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -42,7 +42,9 @@ public class TC90_oneWayDomesticFlex_AHB_WAE extends BookingPageFlow{
 			
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -77,7 +79,8 @@ public class TC90_oneWayDomesticFlex_AHB_WAE extends BookingPageFlow{
 	    		{
 	    			
 		    		
-	    		xls.getCellValue("Booking Class", "Value2"),
+	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

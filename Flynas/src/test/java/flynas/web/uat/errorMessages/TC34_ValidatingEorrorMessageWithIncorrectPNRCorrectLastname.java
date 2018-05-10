@@ -13,10 +13,10 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC34_ValidatingEorrorMessageWithIncorrectPNRCorrectLastname extends BookingPageFlow {
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"Errors_On_PnrRetrieval");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"Errors_On_PnrRetrieval");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void ValidatingEorrorMessageOnPNRRetrievalWithWrongPNRValidLastname (String PNR, String Lastname,String ErrorMessage,String Description) throws Throwable {
+	public  void ValidatingEorrorMessageOnPNRRetrievalWithWrongPNRValidLastname (String PNR, String Lastname, String ErrorMessage, String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);

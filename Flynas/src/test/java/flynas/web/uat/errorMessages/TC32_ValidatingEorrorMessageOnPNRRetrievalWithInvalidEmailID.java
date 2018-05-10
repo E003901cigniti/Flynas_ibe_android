@@ -13,10 +13,10 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC32_ValidatingEorrorMessageOnPNRRetrievalWithInvalidEmailID extends BookingPageFlow{
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"Errors_On_PnrRetrieval");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"Errors_On_PnrRetrieval");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void validatingErrorMsgOnPnrRetrievalwithInvalidEmialId (String PNR, String Email,String ErrorMessage,String Description) throws Throwable {
+	public  void TC32_ValidatingEorrorMessageOnPNRRetrievalWithInvalidemailID ( String PNR, String email, String ErrorMessage, String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -26,7 +26,7 @@ public class TC32_ValidatingEorrorMessageOnPNRRetrievalWithInvalidEmailID extend
 			
 			waitforElement(BookingPageLocators.pnrinput);
 			type(BookingPageLocators.pnrinput, PNR, "PNR");
-			type(BookingPageLocators.emailinput, Email, "Email");
+			type(BookingPageLocators.emailinput, email, "email");
 			click(BookingPageLocators.btnFindBooking, "Find Booking");		
 			
 			
@@ -65,7 +65,7 @@ public class TC32_ValidatingEorrorMessageOnPNRRetrievalWithInvalidEmailID extend
 	    		xls.getCellValue("PNR", "Value1"),	    		
 	    		"flynasqa@gmailcom",
 	    		xls.getCellValue("ErrorMessage", "Value1"),
-	    		"Validate Error Message on PNR_Retrival with wrong EmailID"}};
+	    		"Validate Error Message on PNR_Retrival with wrong emailID"}};
 	}
 
 }

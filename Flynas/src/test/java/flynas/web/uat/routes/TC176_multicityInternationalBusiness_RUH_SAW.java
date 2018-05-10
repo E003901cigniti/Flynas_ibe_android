@@ -19,7 +19,7 @@ public class TC176_multicityInternationalBusiness_RUH_SAW extends BookingPageFlo
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Business"})
-	public  void TC_176_multicityInternationalBusiness_RUH_SAW( String bookingClass,
+	public  void TC_176_multicityInternationalBusiness_RUH_SAW( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -38,7 +38,9 @@ public class TC176_multicityInternationalBusiness_RUH_SAW extends BookingPageFlo
 
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -81,7 +83,8 @@ public class TC176_multicityInternationalBusiness_RUH_SAW extends BookingPageFlo
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
+	    		"",
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

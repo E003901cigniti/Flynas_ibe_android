@@ -64,61 +64,58 @@
 					<class name="flynas.web.uat.routes.TC48_roundTripInternationalEconomy_JED_ATZ"/>
 					<class name="flynas.web.uat.routes.TC49_roundTripInternationalEconomy_JED_AMM"/>
 					<class name="flynas.web.uat.routes.TC50_roundTripInternationalEconomy_RUH_AMM"/>                
-					<class name="flynas.web.uat.routes.TC62_roundTripDomesticEconomyAddExtra_RUH_AHB"/>
-						
-				<!--***************************************Flex*****************************************-->
-						
-					<!-- <class name="flynas.web.uat.routes.TC63_oneWayDomesticFlex_RUH_JED"/>  
-						<class name="flynas.web.uat.routes.TC64_oneWayDomesticFlex_RUH_DMM"/> 
-						<class name="flynas.web.uat.routes.TC65_oneWayDomesticFlex_RUH_GIZ"/> 
-						<class name="flynas.web.uat.routes.TC66_oneWayDomesticFex_RUH_MED"/> 
-						<class name="flynas.web.uat.routes.TC67_oneWayDomesticFlex_RUH_TIF"/> 
-						<class name="flynas.web.uat.routes.TC68_oneWayDomesticFlex_RUH_HAS"/> 
-						<class name="flynas.web.uat.routes.TC69_oneWayDomestiFlex_RUH_TUU"/> 
-						<class name="flynas.web.uat.routes.TC70_oneWayDomesticFlex_RUH_URY"/> 
-						<class name="flynas.web.uat.routes.TC71_oneWayDomesticFlex_RUH_AJF"/>  
-						<class name="flynas.web.uat.routes.TC72_oneWayDomesticFlex_RUH_ABT"/> 
-						<class name="flynas.web.uat.routes.TC73_roundTripDomesticFlex_JED_DMM"/> 
-						<class name="flynas.web.uat.routes.TC74_roundTripDomesticFlex_JED_GIZ"/> 
-						<class name="flynas.web.uat.routes.TC75_roundTripDomesticFlex_JED_MED"/>
-						<class name="flynas.web.uat.routes.TC76_roundTripDomesticFlex_JED_AHB"/>
-						<class name="flynas.web.uat.routes.TC77_roundTripDomesticFlex_JED_TUU"/>
-						<class name="flynas.web.uat.routes.TC78_roundTripDomesticFlex_JED_ELQ"/>
-						<class name="flynas.web.uat.routes.TC79_roundTripDomesticFlex_DMM_TIF"/>
-						<class name="flynas.web.uat.routes.TC80_roundTripDomesticFlex_DMM_AHB"/>
-						<class name="flynas.web.uat.routes.TC81_roundTripDomesticFlex_DMM_YNB"/> 
-						<class name="flynas.web.uat.routes.TC82_roundTripDomesticFlex_DMM_MED"/> 
-						<class name="flynas.web.uat.routes.TC83_roundTripDomesticFlex_DMM_GIZ"/> 
-						<class name="flynas.web.uat.routes.TC84_roundTripDomesticFlex_DMM_ELQ"/> 
-						<class name="flynas.web.uat.routes.TC85_roundTripDomesticFlex_DMM_HAS"/> 
-						<class name="flynas.web.uat.routes.TC86_roundTripDomesticFlex_DMM_TUU"/> 
-						<class name="flynas.web.uat.routes.TC87_roundTripDomesticFlex_DMM_ABT"/> 
-						<class name="flynas.web.uat.routes.TC88_oneWayDomesticFlexChangeDate_AHB_ABT"/>
-						<class name="flynas.web.uat.routes.TC89_oneWayDomesticFlexCheckIn_AHB_BHH"/>	
-						<class name="flynas.web.uat.routes.TC90_oneWayDomesticFlex_AHB_WAE"/>	
-						<class name="flynas.web.uat.routes.TC91_oneWayDomesticFlex_AHB_GIZ"/>	
-						<class name="flynas.web.uat.routes.TC92_oneWayDomesticFlex_AHB_SHW"/>	
-						<class name="flynas.web.uat.routes.TC93_oneWayInternationalFlex_JED_DXB"/>
-						<class name="flynas.web.uat.routes.TC94_oneWayInternationalFlex_RUH_DXB"/>
-						<class name="flynas.web.uat.routes.TC95_oneWayInternationalFlex_RUH_AUH"/>
-						<class name="flynas.web.uat.routes.TC96_oneWayInternationalFlex_JED_AUH"/>
-						<class name="flynas.web.uat.routes.TC97_oneWayInternationalFlex_JED_KWI"/>
-						<class name="flynas.web.uat.routes.TC98_oneWayInternationalFlex_RUH_KWI"/>
-						<class name="flynas.web.uat.routes.TC99_oneWayInternationalFlex_MED_KWI"/>
-						<class name="flynas.web.uat.routes.TC100_oneWayInternationalFlex_TIF_KWI"/>
-						<class name="flynas.web.uat.routes.TC101_oneWayInternationalFlex_JED_ASW"/>
-						<class name="flynas.web.uat.routes.TC102_oneWayInternationalFlex_JED_HBE"/>
-						<class name="flynas.web.uat.routes.TC103_oneWayInternationalFlex_JED_HMB"/>
-						<class name="flynas.web.uat.routes.TC104_oneWayInternationalFlex_RUH_HMB"/>
-						<class name="flynas.web.uat.routes.TC105_oneWayInternationalFlex_JED_LXR"/>
-						<class name="flynas.web.uat.routes.TC106_roundTripInternationalFlex_JED_SSH"/>
-						<class name="flynas.web.uat.routes.TC107_roundTripInternationalFlex_JED_CAI"/>
-						<class name="flynas.web.uat.routes.TC108_roundTripInternationalFlex_RUH_CAI"/>
-						<class name="flynas.web.uat.routes.TC109_roundTripInternationalFlex_RUH_ATZ"/>
-						<class name="flynas.web.uat.routes.TC110_roundTripInternationalFlex_JED_ATZ"/>
-						<class name="flynas.web.uat.routes.TC111_roundTripInternationalFlex_JED_AMM"/>
-						<class name="flynas.web.uat.routes.TC112_roundTripInternationalFlex_RUH_AMM"/>
-						<class name="flynas.web.uat.routes.TC124_roundTripDomesticFlexAddExtra_RUH_AHB"/> -->		
+					<class name="flynas.web.uat.routes.TC62_roundTripDomesticEconomyAddExtra_RUH_AHB"/>						
+					<class name="flynas.web.uat.routes.TC63_oneWayDomesticFlex_RUH_JED"/>  
+					<class name="flynas.web.uat.routes.TC64_oneWayDomesticFlex_RUH_DMM"/> 
+					<class name="flynas.web.uat.routes.TC65_oneWayDomesticFlex_RUH_GIZ"/> 
+					<class name="flynas.web.uat.routes.TC66_oneWayDomesticFex_RUH_MED"/> 
+					<class name="flynas.web.uat.routes.TC67_oneWayDomesticFlex_RUH_TIF"/> 
+					<class name="flynas.web.uat.routes.TC68_oneWayDomesticFlex_RUH_HAS"/> 
+					<class name="flynas.web.uat.routes.TC69_oneWayDomestiFlex_RUH_TUU"/> 
+					<class name="flynas.web.uat.routes.TC70_oneWayDomesticFlex_RUH_URY"/> 
+					<class name="flynas.web.uat.routes.TC71_oneWayDomesticFlex_RUH_AJF"/>  
+					<class name="flynas.web.uat.routes.TC72_oneWayDomesticFlex_RUH_ABT"/> 
+					<class name="flynas.web.uat.routes.TC73_roundTripDomesticFlex_JED_DMM"/> 
+					<class name="flynas.web.uat.routes.TC74_roundTripDomesticFlex_JED_GIZ"/> 
+					<class name="flynas.web.uat.routes.TC75_roundTripDomesticFlex_JED_MED"/>
+					<class name="flynas.web.uat.routes.TC76_roundTripDomesticFlex_JED_AHB"/>
+					<class name="flynas.web.uat.routes.TC77_roundTripDomesticFlex_JED_TUU"/>
+					<class name="flynas.web.uat.routes.TC78_roundTripDomesticFlex_JED_ELQ"/>
+					<class name="flynas.web.uat.routes.TC79_roundTripDomesticFlex_DMM_TIF"/>
+					<class name="flynas.web.uat.routes.TC80_roundTripDomesticFlex_DMM_AHB"/>
+					<class name="flynas.web.uat.routes.TC81_roundTripDomesticFlex_DMM_YNB"/> 
+					<class name="flynas.web.uat.routes.TC82_roundTripDomesticFlex_DMM_MED"/> 
+					<class name="flynas.web.uat.routes.TC83_roundTripDomesticFlex_DMM_GIZ"/> 
+					<class name="flynas.web.uat.routes.TC84_roundTripDomesticFlex_DMM_ELQ"/> 
+					<class name="flynas.web.uat.routes.TC85_roundTripDomesticFlex_DMM_HAS"/> 
+					<class name="flynas.web.uat.routes.TC86_roundTripDomesticFlex_DMM_TUU"/> 
+					<class name="flynas.web.uat.routes.TC87_roundTripDomesticFlex_DMM_ABT"/> 
+					<class name="flynas.web.uat.routes.TC88_oneWayDomesticFlexChangeDate_AHB_ABT"/>
+					<class name="flynas.web.uat.routes.TC89_oneWayDomesticFlexCheckIn_AHB_BHH"/>	
+					<class name="flynas.web.uat.routes.TC90_oneWayDomesticFlex_AHB_WAE"/>	
+					<class name="flynas.web.uat.routes.TC91_oneWayDomesticFlex_AHB_GIZ"/>	
+					<class name="flynas.web.uat.routes.TC92_oneWayDomesticFlex_AHB_SHW"/>	
+					<class name="flynas.web.uat.routes.TC93_oneWayInternationalFlex_JED_DXB"/>
+					<class name="flynas.web.uat.routes.TC94_oneWayInternationalFlex_RUH_DXB"/>
+					<class name="flynas.web.uat.routes.TC95_oneWayInternationalFlex_RUH_AUH"/>
+					<class name="flynas.web.uat.routes.TC96_oneWayInternationalFlex_JED_AUH"/>
+					<class name="flynas.web.uat.routes.TC97_oneWayInternationalFlex_JED_KWI"/>
+					<class name="flynas.web.uat.routes.TC98_oneWayInternationalFlex_RUH_KWI"/>
+					<class name="flynas.web.uat.routes.TC99_oneWayInternationalFlex_MED_KWI"/>
+					<class name="flynas.web.uat.routes.TC100_oneWayInternationalFlex_TIF_KWI"/>
+					<class name="flynas.web.uat.routes.TC101_oneWayInternationalFlex_JED_ASW"/>
+					<class name="flynas.web.uat.routes.TC102_oneWayInternationalFlex_JED_HBE"/>
+					<class name="flynas.web.uat.routes.TC103_oneWayInternationalFlex_JED_HMB"/>
+					<class name="flynas.web.uat.routes.TC104_oneWayInternationalFlex_RUH_HMB"/>
+					<class name="flynas.web.uat.routes.TC105_oneWayInternationalFlex_JED_LXR"/>
+					<class name="flynas.web.uat.routes.TC106_roundTripInternationalFlex_JED_SSH"/>
+					<class name="flynas.web.uat.routes.TC107_roundTripInternationalFlex_JED_CAI"/>
+					<class name="flynas.web.uat.routes.TC108_roundTripInternationalFlex_RUH_CAI"/>
+					<class name="flynas.web.uat.routes.TC109_roundTripInternationalFlex_RUH_ATZ"/>
+					<class name="flynas.web.uat.routes.TC110_roundTripInternationalFlex_JED_ATZ"/>
+					<class name="flynas.web.uat.routes.TC111_roundTripInternationalFlex_JED_AMM"/>
+					<class name="flynas.web.uat.routes.TC112_roundTripInternationalFlex_RUH_AMM"/>
+					<class name="flynas.web.uat.routes.TC124_roundTripDomesticFlexAddExtra_RUH_AHB"/>	
 		
 		<!-- ****************************************Business***************************************************** -->
 		
@@ -173,18 +170,11 @@
 						<class name="flynas.web.uat.routes.TC173_roundTripInternationalBusiness_JED_AMM"/>
 						<class name="flynas.web.uat.routes.TC174_roundTripInternationalBusiness_RUH_AMM"/>
 						<class name="flynas.web.uat.routes.TC186_roundTripDomesticBusinessAddExtra_RUH_AHB"/>  
-						<class name="flynas.web.uat.routes.TC187_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel"/>
-						<class name="flynas.web.uat.routes.TC188_EmpLoginStaffConfmedChangeDateCheckIn"/>
-						<class name="flynas.web.uat.routes.TC189_EmpLoginStaffConfmedCancelFlight"/>
-						<class name="flynas.web.uat.routes.TC190_corporateLoginRToneAdultCancelFlight"/>
-						<class name="flynas.web.uat.routes.TC191_corporateLoginRToneAdultCheckIN"/>
-						<class name="flynas.web.uat.routes.TC192_agencyLoginRToneAdultoneChildCancelFlight"/>
-						<class name="flynas.web.uat.routes.TC193_agencyLoginRToneAdultoneChildCheckIn"/>
-						<class name="flynas.web.uat.routes.TC194_BaggageValidation"/> -->		
-						
+											
 						
 						
 						<!-- **********MULTICITY  TEST CASES DO NOT UNCOMMENT*************-->
+						
 					<!-- <class name="flynas.web.uat.routes.TC51_multicityInternationalEconomy_JED_SAW"/>
 						<class name="flynas.web.uat.routes.TC52_multicityInternationalEconomy_RUH_SAW"/>
 						<class name="flynas.web.uat.routes.TC53_multicityInternationalEconomy_JED_HTY"/>

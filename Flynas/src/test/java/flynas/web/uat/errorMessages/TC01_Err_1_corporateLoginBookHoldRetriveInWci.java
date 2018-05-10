@@ -20,23 +20,27 @@ public class TC01_Err_1_corporateLoginBookHoldRetriveInWci extends BookingPageFl
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"ErrorMessages_1");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_01_Err_1_corporateLoginBookHoldRetriveInWci( String username,String password,String bookingClass,
-			String mobilenum,String paymentType,String newDate,String pickDate,String rtnDate,String origin,
-			String dest,String triptype,String adult,String child,String infant,String seatSelect,String domOrInt,
-			String totalPass,String nationality,String docNum,String docType,String Description) throws Throwable {
+	public  void TC_01_Err_1_corporateLoginBookHoldRetriveInWci(String bookingClass,
+			String mobilenum,String paymentType,String newDate,String deptDate,String rtnDate,String origin,
+			String destination,String tripType,String adult,String child,String infant,String seatSelect,String domOrInt,
+			String totalpsngrs,String nationality,String docNum,String docType,String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String deptdate = pickDate(pickDate);
+			deptDate = pickDate(deptDate);
 			
-			System.out.println(deptdate);
+			String[] Credentials = pickCredentials("CorporateCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			String lastname=Credentials[3];
 					
 			click(BookingPageLocators.corporatelogin_lnk, "Login");
 			switchtoChildWindow();
 			login(username,password);
-			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, "Economy");
-			inputPassengerDetails(domOrInt, totalPass, nationality,docType,docNum, "",mobilenum, username+"@gmail.com", "", "", "");;
+			inputBookingDetails(tripType,origin, destination, deptDate , "", "", rtnDate,adult, child, infant,"","","");
+			selectClass(bookingClass,tripType);
+			clickContinueBtn();
+			inputPassengerDetails(domOrInt, totalpsngrs, nationality,docType,docNum, "",mobilenum, username+"@gmail.com", "", "", "");;
 			waitforElement(BookingPageLocators.baggagetittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
@@ -44,7 +48,8 @@ public class TC01_Err_1_corporateLoginBookHoldRetriveInWci extends BookingPageFl
 				}else{
 					System.out.println("No Baggage Page");
 				}
-			waitForElementPresent(BookingPageLocators.selectseattittle, "SelectSeatTittle");
+			
+			waitForElementPresent(BookingPageLocators.selectseattittle, "selectseattittle");
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
 				clickContinueBtn();
@@ -81,16 +86,14 @@ public class TC01_Err_1_corporateLoginBookHoldRetriveInWci extends BookingPageFl
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("EmployeEmail", "Value"),
-	    		xls.getCellValue("Password", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
-	    		xls.getCellValue("Mobile", "Value"),
+	    		xls.getCellValue("mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
-	    		xls.getCellValue("Origin", "Value"),
-	    		xls.getCellValue("Destination", "Value"),
+	    		xls.getCellValue("origin", "Value"),
+	    		xls.getCellValue("destination", "Value"),
 	    		xls.getCellValue("Trip Type", "Value"),
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
@@ -98,7 +101,7 @@ public class TC01_Err_1_corporateLoginBookHoldRetriveInWci extends BookingPageFl
 	    		"Extra Leg Room",
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
-	    		xls.getCellValue("Nationality", "Value"),
+	    		xls.getCellValue("nationality", "Value"),
 	    		xls.getCellValue("Doc Number", "Value"),
 	    		xls.getCellValue("Document Type", "Value"),
 	    		"Validate Error Message Book A Hold PNR Try to Retrive in WCI"}};

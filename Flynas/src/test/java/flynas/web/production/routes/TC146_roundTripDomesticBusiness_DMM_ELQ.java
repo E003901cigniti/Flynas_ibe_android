@@ -37,7 +37,8 @@ public class TC146_roundTripDomesticBusiness_DMM_ELQ extends BookingPageFlow{
 				click(BookingPageLocators.login_lnk, "Login");				
 				login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, "");
+			clickContinueBtn();
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -63,9 +64,9 @@ public class TC146_roundTripDomesticBusiness_DMM_ELQ extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),

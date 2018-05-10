@@ -14,9 +14,12 @@ public class BookingPageLocators extends ActionEngine{
 	public static By body = By.xpath("//body[@block-ui='main']");
 	public static By closepopup = By.xpath("//button[@type='submit']");
 	public static By naSmileTaost = By.xpath("//iframe[@id='yief130002']");
+	public static By closeTst= By.xpath("//*[@id='yie-close-button-f2ccb518-bf80-582c-b7cc-23a3ba0d9675']");
+	public static By closeTstnew= By.xpath("//span[@id='yie-close-button-9dc52826-176b-5e44-8f1a-a46b1d5e9ee1']");	
 	public static By closetoast = By.xpath("//span[@id='close']");
 	public static By alertText = By.xpath("//div[@class='modal-body']/div");
 	public static By overlay = By.xpath("//class[contains(text(),'overlay')]");
+	public static By faresumrypls = By.xpath("//span[contains(Text(),'Extra')]/../span[2]/a");
 	
 	//login page
 	public static By email = By.xpath("//input[@name='iptid']");
@@ -25,12 +28,15 @@ public class BookingPageLocators extends ActionEngine{
 	public static By JoinNow = By.xpath("//a[contains(text(),'Join now')]");
 	public static By here = By.xpath("//a[contains(text(),' here')]");
 	
-	//booking page 
+	//booking page &Member dashboard
 	public static By manageMyBookings(String PNR){
 		return By.xpath("//span[text()='"+PNR+"']/following::a[1]");
 	}
 	public static By login_lnk = By.xpath("//a[@title='Login']");
 	public static By logout_lnk = By.xpath("//a[contains(text(),' Log out')]");
+	public static By logout_lnk_TR = By.xpath("//a[contains(text(),'Çıkış')]");
+	public static By logout_lnk_AR = By.xpath("//a[contains(text(),'تسجيل الخروج')]");
+	public static By friendscout = By.xpath("//a[contains(text(),'Friends')]/span");
 	public static By emplogin_lnk = By.xpath("//a[text()='Employee Login']");
 	public static By corporatelogin_lnk = By.xpath("//a[text()='Corporate Login']");
 	public static By agency_lnk = By.xpath("//a[text()='Agencies Login']");
@@ -83,15 +89,20 @@ public class BookingPageLocators extends ActionEngine{
 	public static By selectInfant = By.xpath("//div[@class='main_con']/div[2]//descendant::form/div[3]/div/div[3]/div/ul/li//descendant::div[@class='ui-select-choices-row']");
 	public static By payWithnaSmile = By.xpath("//input[@name='nasmiles']");
 	public static By promo = By.xpath("//div[@class='main_con']/div[2]//descendant::form/div[3]/div[2]/div[2]/input");
-	//public static By findFlights = By.xpath("//div[@class='main_con']/div[2]//descendant::form/div[3]/div[2]/div/button");
-	public static By findFlights = By.xpath("//button[@class='btn btn-primary']");
+	public static By bookforFriendschkbx = By.xpath("//input[@name='bookfriends']");
+	
 	public static By Currency_link = By.xpath("//b[contains(text(),'Currency')]");
 	public static By currencytyp(String Currency) {
 		return By.xpath("//div[contains(text(),'"+Currency+"')]");
 	}
+	
+	//public static By findFlights = By.xpath("//div[@class='main_con']/div[2]//descendant::form/div[3]/div[2]/div/button");
+	public static By findFlights = By.xpath("//button[@class='btn btn-primary']");
 	public static By myBookings = By.xpath("//span[contains(text(),'My Bookings')]");
 	
+	
 	//Class selection page
+	
 	//public static By economyOW = By.xpath("//div[@class='main_con']/div/div/div[2]/div/flight-select/div/form/div//descendant::table/tbody//descendant::td[5]/button");
 	//public static By economyOW = By.xpath("//div/button[@class='btn selectflightbtn col1']");
 	public static By selectflightsection = By.xpath("//h3[contains(text(),' Select your departing flight ') or ./text()=' Kalkis ucusunu sec '  or ./text()=' رحلة الذهاب ']");
@@ -105,8 +116,18 @@ public class BookingPageLocators extends ActionEngine{
 	public static By standstaff = By.xpath("//button[@class='btn selectflightbtn col2']");
 	public static By stafCnformed = By.xpath("//button[@class='btn selectflightbtn col3']");
 	public static By flighttable = By.xpath("//table[@class='table flight_table']");
+	public static By fee(String category) {
+		return By.xpath("//span[contains(text(),'"+category+"')]/../span[2]/b");
+	}
+	
+	public static By continueBundle =By.xpath("//a[contains(text(),'continue') or ./text()='استمر مع اختيارك الحالي']");
+	public static By upgradeBundle=By.xpath("//a[contains(text(),'ADD THIS BUNDLE') or ./text()='اضف هذه الباقة']");
+	
 	public static By priceBeforeChange = By.xpath("//b[contains(text(),'Price before change')]/following::span[1]");
 	public static By Totalprice = By.xpath("//span[@class='pull-right total']");
+	public static By hldFareBtn = By.xpath("//*[@class='pricelock_con']/table/tbody/tr/td[3]/div/button");
+	
+	
 	//Input Passenger Details
 	public static By passengerDetailsTittle = By.xpath("//h1[contains(text(), 'Passenger and Document Details') or ./text()='معلومات المسافر']");
 	public static String passType = "//div[@class='pass_tab']/div[#]/h3";
@@ -129,7 +150,8 @@ public class BookingPageLocators extends ActionEngine{
 	public static String travelDoc = "//booking-passengers/div/ng-form/div/div[#]/div/ng-form/div/div[2]/div[1]/div/div/div/span/span[2]/span";
 	//public static By selecttravelDoc = By.xpath("//div[@class='traveldocdropdown']/div/ul/li//descendant::div[@class='ui-select-choices-row']");
 	//public static String selecttravelDoc = "//booking-passengers/div/ng-form/div/div[#]/div/ng-form/div/div[2]/div[2]/input";
-	public static String inputDoc = "//booking-passengers/div/ng-form/div/div[#]/div/ng-form/div/div[2]/div[2]/input";
+	//public static String inputDoc = "//booking-passengers/div/ng-form/div/div[#]/div/ng-form/div/div[2]/div[2]/input";
+	public static String inputDoc = "//booking-passengers/div/ng-form/div/div[#]";
 	//public static By naSmiles = By.xpath("//input[@name='asiamiles']");
 	public static String naSmiles = "//booking-passengers/div/ng-form/div/div[#]/div/ng-form/div/div[2]/div[*]/div/input";
 	
@@ -204,7 +226,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By redeem = By.xpath("//span[contains(text(),'Redeem')]");
 	
 	//Summary Page
-	public static By summaryRefNumber = By.xpath("//div[text()='Booking Reference: ']/b[@class = 'col_pink']");
+	public static By summaryRefNumber = By.xpath("//div[text()='Booking Reference: 'or ./text()=' رقم الحجز: 'or ./text()='Reservasyon: ']/b[@class = 'col_pink']");
 	public static By summaryRefNumber_AR_uat = By.xpath("//div[text()=' رقم الحجز: ']/b");
 	public static By summaryRefNumber_TR_uat = By.xpath("//div[text()='Reservasyon: ']/b");
 	public static By summaryStatus = By.xpath("//div[text()='Status: ']/b");
@@ -291,7 +313,7 @@ public class BookingPageLocators extends ActionEngine{
 	public static By baggageInSummary = By.xpath("//h3[contains(text(),'Summary ')]/following::span[contains(text(),'Extra baggage')]");
 	//checkins
 	public static By checkinTitle = By.xpath("//h3[contains(text(),'Please select the passenger(s) you would like to check-in')]");
-	public static By checkInNow = By.xpath("//button[@type='submit' or ./text()='Check-in now']");
+	public static By checkInNow = By.xpath("//button[@type='submit' or ./text()='Check-in now'or ./text()='أصدر بطاقة صعود الطائرة' or ./text()='Şimdi Check-in Yap']");
 	public static By passengers_incheckin = By.xpath("//input[@name='passenger0']");
 	public static By passengers_checkterms = By.xpath("//a[text()='Terms and conditions' or ./text()='الشروط و الأحكام' or ./text()='Hüküm ve Koşullar']/preceding-sibling::i/preceding-sibling::input");
 	public static By checkinConformation = By.xpath("//h1/div[1]");

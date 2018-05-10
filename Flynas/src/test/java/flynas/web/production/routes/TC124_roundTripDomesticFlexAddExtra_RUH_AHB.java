@@ -19,7 +19,7 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataProdRoutes"),"Chrome_TestData");
 
 	@Test(dataProvider = "testData",groups={"Flex"})
-	public  void TC_124_roundTripDomesticFlexAddExtra_RUH_AHB( String bookingClass,
+	public  void TC_124_roundTripDomesticFlexAddExtra_RUH_AHB( String bookingClass, String bundle, 
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -36,7 +36,9 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 			String username =Credentials[0];
 								
 			inputBookingDetails(triptype,origin, dest, deptDate , "RUH", "AMM", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			inputPassengerDetails("Domestic", "2", "Afghanistan", "National ID Card", 
 					"F123456", "1234567890", mobilenum, username,"","","");
 			Baggage_Extra(triptype);
@@ -67,9 +69,10 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		
-	    		xls.getCellValue("Booking Class", "Value2"),
+	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value2"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
@@ -79,7 +82,7 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value2"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
+	    		xls.getCellValue("Select Seat", "Value"),
 	    		"Validate RoundTrip Domestic Flex AddExtra_RUH_AHB"}};
 	}
 

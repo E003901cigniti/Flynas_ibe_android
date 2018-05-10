@@ -19,18 +19,18 @@ public class TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge extends Book
 	public  void TC_56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
-			String strBookingClass,String FlightType,String totalpass, String nationality,
+			String strBookingClass, String bundle,String FlightType,String totalpass, String nationality,
 			String Doctypr,String docNumber,String naSmiles,String Mobile,
 			String email ,String SelectSeat,String paymenttype,String bookingtype, 
-			String charity,String Currency,String newDeptDt,String newRtrnDt, String Description
+			String charity,String Currency,String Description
 			) throws Throwable {
 		try {
 			//System.out.println(paymenttype);
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String	deptdate = pickDate(deptDate);
 			String	retrndate = pickDate(retdate);
-			String	changeDeptDt = pickDate(newDeptDt);
-			String	changertrnDt = pickDate(newRtrnDt);
+			String	changeDeptDt = nextDateof(deptdate);
+			String	changertrnDt = nextDateof(retrndate);
 			
 			//Pick credentials and login
 			String[] Credentials = pickCredentials("UserCredentials");
@@ -44,7 +44,9 @@ public class TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge extends Book
 			
 			//Input trip details
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 					
 			continueOnPassengerDetails(); 				//Clicking continue button on Passenger details page
 			coninueOnBaggage();							//Clicking continue button on Baggage details page
@@ -55,7 +57,9 @@ public class TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge extends Book
 			validate_ticketStatus(strPNR);				// Verifying booking status
 			searchFlight(strPNR, username, "", lastname);		// Search flight on MMB page
 			changeDate(changeDeptDt,changertrnDt,"All");	// change date on both departure and return
-			selectClass(strBookingClass, tripType);  	// Selecting class in new flight
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");  	// Selecting class in new flight
 			selectSeat(SelectSeat, bookingtype);		// Selecting Seats in New flight
 			modifyExtras();								// Adding Extras 
 			Baggage_Extra(tripType);					// Adding Baggage
@@ -92,7 +96,8 @@ public class TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge extends Book
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
-		    		xls.getCellValue("Flight Type", "Value"),
+		    		xls.getCellValue("Bundle", "Value2"),
+		       		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),
 		    		xls.getCellValue("Document Type", "Value"),
@@ -105,9 +110,7 @@ public class TC56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge extends Book
 		    		"",
 	    			xls.getCellValue("Charity Donation", "Value"),
 	    			xls.getCellValue("Currency", "Value"),
-	    			xls.getCellValue("New Departure Date", "Value"),
-	    			xls.getCellValue("New Return Date", "Value"),
-		    		"Verify Round trip Domestic booking and MMB - change date, modify extras, Select business lounge Select seat"
+	    			"Verify Round trip Domestic booking and MMB - change date, modify extras, Select business lounge Select seat"
     			}
 	    	};
 	}

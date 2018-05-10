@@ -19,7 +19,7 @@ public class TC04_e_oneWayBusinessIntlMutiPaxCheckinFail extends BookingPageFlow
 	public  void TC04e_oneWayBusinessIntlMutiPaxCheckinFail ( String tripType, 
 			String origin, String dest, String deptDate,String origin2,String departure2,
 			String retdate, String Adult,String Child,String infant, String promo, 
-			String strBookingClass, String FlightType,String totalpass,String nationality,
+			String strBookingClass, String bundle, String FlightType,String totalpass,String nationality,
 			String Doctype, String docNumber, String naSmiles,String Mobile,String SelectSeat,
 			String paymenttype, String bookingtype,String Charity, String Currency,
 			String Description) throws Throwable {
@@ -44,11 +44,12 @@ public class TC04_e_oneWayBusinessIntlMutiPaxCheckinFail extends BookingPageFlow
 			inputBookingDetails(tripType, origin, dest, depDate, origin2,departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
 			
 			//Selecting flight and traveling class
-			selectClass(strBookingClass, tripType);
-			
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+		
+ 			
 			//Clicking continue button on Passenger details page
-			inputPassengerDetails(FlightType, totalpass, nationality, Doctype, 
-					docNumber, naSmiles, Mobile, username,"","","");
+			inputPassengerDetails(FlightType, totalpass, nationality, Doctype, docNumber, naSmiles, Mobile, username,"","","");
 			
 			Baggage_Extra(tripType);
 			clickContinueBtn();
@@ -90,7 +91,8 @@ public class TC04_e_oneWayBusinessIntlMutiPaxCheckinFail extends BookingPageFlow
 		    		xls.getCellValue("Child Count", "Value2"),
 		    		xls.getCellValue("Infant Count", "Value2"),
 		    		xls.getCellValue("Promo", "Value"),
-		    		xls.getCellValue("Booking Class", "Value3"),
+		    		xls.getCellValue("Booking Class", "Value2"),
+		    		xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Flight Type", "Value2"),
 		    		xls.getCellValue("Total Passenger", "Value2"),
 		    		xls.getCellValue("Nationality", "Value"),

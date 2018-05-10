@@ -26,7 +26,7 @@ public class TC07_RTDom4adultBusinessCC extends BookingPageFlow {
 			String strFlightType, String strOrigin,String strDestination, String strDepatureDate,
 			String origin2,String departure2,String strReturnDate, String strTotalPessenger,
 			String strAdultCount, String strChildCount,String strInfantCount,String strPromo,
-			String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,
+			String strBookingClass, String bundle, String strNationality, String strDocumentType,	String strDocumentNum,
 			String strNaSmile,  String strMobile, String strEmail,String strSelectSeat,
 			String strPaymentType,String Currency)throws Throwable{
 				try{
@@ -50,7 +50,9 @@ public class TC07_RTDom4adultBusinessCC extends BookingPageFlow {
 					inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2,departure2, retrndate,
 							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
 					
-					selectClass(strBookingClass, strTripType);
+					selectClass(strBookingClass, bundle);
+					clickContinueBtn();
+					
 					
 					//Entering passenger details
 					inputPassengerDetails(strFlightType,strTotalPessenger,strNationality,strDocumentType,strDocumentNum, strNaSmile,strMobile,strEmail,"","","");
@@ -93,6 +95,7 @@ public class TC07_RTDom4adultBusinessCC extends BookingPageFlow {
 		    	xls.getCellValue("Infant Count", "Value"),
 		    	xls.getCellValue("Promo", "Value"),
 		    	xls.getCellValue("Booking Class", "Value"),
+		    	xls.getCellValue("Bundle", "Value"),
 		    	xls.getCellValue("Nationality", "Value"),
 		    	xls.getCellValue("Document Type", "Value"),
 		    	xls.getCellValue("Doc Number", "Value"),

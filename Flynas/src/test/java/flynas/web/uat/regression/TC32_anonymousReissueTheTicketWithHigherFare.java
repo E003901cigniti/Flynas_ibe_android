@@ -22,7 +22,7 @@ public static ConfiguratorSupport configProps=new ConfiguratorSupport("config.pr
 	public void TC_32_anonymousReissueTheTicketWithHigherFare(String strTripType, String strFlightType, String strOrigin,
 			String strDestination, String strDepatureDate, String origin2,String departure2,String strReturnDate, 
 			String strTotalPessenger,String strAdultCount, String strChildCount, String strInfantCount, String strPromo,
-			String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,String strNaSmile,
+			String strBookingClass, String bundle, String strNationality, String strDocumentType,	String strDocumentNum,String strNaSmile,
 			String strMobile, String strEmail, String strSelectSeat, String strPaymentType,String bookingtype,
 			String strNewDate, String charity,String Currency)throws Throwable{
 			try{
@@ -35,7 +35,8 @@ public static ConfiguratorSupport configProps=new ConfiguratorSupport("config.pr
 					inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2, departure2,strReturnDate,
 							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
 					
-					selectClass(bookingClass[0], strTripType);
+					selectClass(bookingClass[0], bundle);
+					clickContinueBtn();
 					String strLastName[] = inputPassengerDetails(strFlightType, strTotalPessenger, strNationality, strDocumentType, 
 							strDocumentNum, strNaSmile, strMobile, strEmail,"","","");
 					coninueOnBaggage();
@@ -80,6 +81,7 @@ public static ConfiguratorSupport configProps=new ConfiguratorSupport("config.pr
 		    	xls.getCellValue("Infant Count", "Value"),
 		    	xls.getCellValue("Promo", "Value"),
 		    	xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 		    	xls.getCellValue("Nationality", "Value"),
 		    	xls.getCellValue("Document Type", "Value"),
 		    	xls.getCellValue("Doc Number", "Value"),

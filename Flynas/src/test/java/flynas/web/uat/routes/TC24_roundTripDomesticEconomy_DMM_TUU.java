@@ -19,7 +19,7 @@ public class TC24_roundTripDomesticEconomy_DMM_TUU extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_24_roundTripDomesticEconomy_DMM_TUU( String bookingClass,
+	public  void TC_24_roundTripDomesticEconomy_DMM_TUU( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -40,7 +40,9 @@ public class TC24_roundTripDomesticEconomy_DMM_TUU extends BookingPageFlow{
 
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -74,6 +76,7 @@ public class TC24_roundTripDomesticEconomy_DMM_TUU extends BookingPageFlow{
 	    			
 		    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

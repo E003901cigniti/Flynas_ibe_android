@@ -19,7 +19,7 @@ public class TC46_roundTripInternationalEconomy_RUH_CAI extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_46_roundTripInternationalEconomy_RUH_CAI( String bookingClass,
+	public  void TC_46_roundTripInternationalEconomy_RUH_CAI( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -37,7 +37,9 @@ public class TC46_roundTripInternationalEconomy_RUH_CAI extends BookingPageFlow{
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -73,6 +75,7 @@ public class TC46_roundTripInternationalEconomy_RUH_CAI extends BookingPageFlow{
 	    			
 		    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

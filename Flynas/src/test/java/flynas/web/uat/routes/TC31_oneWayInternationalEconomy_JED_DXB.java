@@ -19,7 +19,7 @@ public class TC31_oneWayInternationalEconomy_JED_DXB extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_31_oneWayDomesticEconomy_JED_DXB( String bookingClass,
+	public  void TC_31_oneWayDomesticEconomy_JED_DXB( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -37,7 +37,9 @@ public class TC31_oneWayInternationalEconomy_JED_DXB extends BookingPageFlow{
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -70,6 +72,7 @@ public class TC31_oneWayInternationalEconomy_JED_DXB extends BookingPageFlow{
 	    			
 		    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

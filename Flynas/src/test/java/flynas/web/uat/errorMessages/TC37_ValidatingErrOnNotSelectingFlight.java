@@ -13,29 +13,29 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC37_ValidatingErrOnNotSelectingFlight extends BookingPageFlow {
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"Errors_On_PnrRetrieval");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"Errors_On_PnrRetrieval");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	
-	public  void ValidatingErrOnNotSelectingFlight (String strDepatureDate, String Username, String Password,
-					String strTripType, String strOrigin,String strDestination, String origin2, String departure2,
-					String strReturnDate, String strAdultCount,String strChildCount, String strInfantCount,
-					String strPromo, String Currency, String strPaymentType,String ErrorMessage,
-					String Description) throws Throwable
+	public  void ValidatingErrOnNotSelectingFlight ( String Username, String Password, String tripType,String origin, String destination,
+			String deptDate, String retDate,String adult,String child,String infant,String promo, String bookingClass,
+			String flightType,String totalpsngrs,String nationality,String docType,String docNumber,String naSmiles,String mobile,
+			String email ,String selectSeat,String paymentType,String bookingType,String charity,String currency, String payment2 ,
+			String ErrorMessage, String Description) throws Throwable
 	{
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			
-			String	deptdate = pickDate(strDepatureDate);
-			String	ReturnDate = pickDate(strReturnDate);
+			deptDate = pickDate(deptDate);
+			retDate = pickDate(retDate);
 			
 			click(BookingPageLocators.login_lnk, "Login");
 			switchtoChildWindow();
 			login(Username,Password);
 			
-			inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2, departure2,ReturnDate,
-					strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
+			inputBookingDetails(tripType, origin, destination, deptDate,"", "",retDate,
+					adult, child, infant, promo,currency,paymentType);
 			
 			clickContinueBtn();		
 			
@@ -69,19 +69,18 @@ public class TC37_ValidatingErrOnNotSelectingFlight extends BookingPageFlow {
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("Departure Date", "Value1"),	    		
+	    		   		
 	    		xls.getCellValue("username", "Value1"),
 	    		xls.getCellValue("password", "Value1"),
 	    		xls.getCellValue("Trip Type", "Value1"),
-	    		xls.getCellValue("Origin", "Value1"),
-	    		xls.getCellValue("Destination", "Value1"),
-	    		"",
-	    		"",
+	    		xls.getCellValue("origin", "Value1"),
+	    		xls.getCellValue("destination", "Value1"),
+	    		xls.getCellValue("Departure Date", "Value1"),	 
 	    		xls.getCellValue("Return Date", "Value1"),
 	    		xls.getCellValue("Adults Count", "Value1"),
 	    		xls.getCellValue("Child Count", "Value1"),
 	    		xls.getCellValue("Infant Count", "Value1"),
-	    		xls.getCellValue("Promo", "Value1"),
+	    		xls.getCellValue("promo", "Value1"),
 	    		"",
 	    		xls.getCellValue("Payment Type", "Value1"),
 	    		xls.getCellValue("ErrorMessage", "Value6"),

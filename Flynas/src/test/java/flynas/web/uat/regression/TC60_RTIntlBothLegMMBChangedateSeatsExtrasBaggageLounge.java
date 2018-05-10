@@ -16,10 +16,10 @@ public class TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge extends Boo
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_56");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_56_RTDomBothLegMMBChangedateSeatsExtrasBaggageLounge(String tripType, 
+	public  void TC_60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
-			String strBookingClass,String FlightType,String totalpass, String nationality,
+			String strBookingClass, String bundle,String FlightType,String totalpass, String nationality,
 			String Doctypr,String docNumber,String naSmiles,String Mobile,
 			String email ,String SelectSeat,String paymenttype,String bookingtype, 
 			String charity,String Currency,String newDeptDt,String newRtrnDt, String Description
@@ -29,8 +29,8 @@ public class TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge extends Boo
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String	deptdate = pickDate(deptDate);
 			String	retrndate = pickDate(retdate);
-			String	changeDeptDt = pickDate(newDeptDt);
-			String	changertrnDt = pickDate(newRtrnDt);
+			String	changeDeptDt = pickDate(deptdate);
+			String	changertrnDt = pickDate(retrndate);
 			
 			//Pick credentials and login
 			String[] Credentials = pickCredentials("UserCredentials");
@@ -44,8 +44,9 @@ public class TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge extends Boo
 			
 			//Input trip details
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
-					
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			
 			continueOnPassengerDetails(); 				//Clicking continue button on Passenger details page
 			coninueOnBaggage();							//Clicking continue button on Baggage details page
 			continueOnSeatSelection(); 					//Skipping seat selection
@@ -53,9 +54,10 @@ public class TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge extends Boo
 			String strPNR = getReferenceNumber();		//Capturing  PNR 
 			System.out.println(strPNR);
 			validate_ticketStatus(strPNR);				// Verifying booking status
-			searchFlight(strPNR, username, "", lastname);		// Search flight on MMB page
+			searchFlight(strPNR, username, "", lastname);	// Search flight on MMB page
 			changeDate(changeDeptDt,changertrnDt,"All");	// change date on both departure and return
-			selectClass(strBookingClass, tripType);  	// Selecting class in new flight
+			selectClass(strBookingClass, bundle);		// Selecting class in new flight
+			clickContinueBtn();				
 			selectSeat(SelectSeat, bookingtype);		// Selecting Seats in New flight
 			modifyExtras();								// Adding Extras 
 			Baggage_Extra(tripType);					// Adding Baggage
@@ -82,15 +84,16 @@ public class TC60_RTIntlBothLegMMBChangedateSeatsExtrasBaggageLounge extends Boo
 		    		xls.getCellValue("Trip Type", "Value2"),
 		    		xls.getCellValue("Origin", "Value2"),
 		    		xls.getCellValue("Destination", "Value2"),
-		    		xls.getCellValue("Departure Date", "Value"),
+		    		xls.getCellValue("Departure Date", "Value5"),
 		    		"",
 		    		"",
-		    		xls.getCellValue("Return Date", "Value"),
+		    		xls.getCellValue("Return Date", "Value5"),
 		    		xls.getCellValue("Adults Count", "Value"),
 		    		xls.getCellValue("Child Count", "Value"),
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Bundle", "Value3"),
 		    		xls.getCellValue("Flight Type", "Value2"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

@@ -19,7 +19,7 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Business"})
-	public  void TC_186_roundTripDomesticBusinessAddExtra_RUH_AHB( String bookingClass,
+	public  void TC_186_roundTripDomesticBusinessAddExtra_RUH_AHB( String bookingClass, String bundle,
 			String mobilenum,String paymentType,String newDate,String depDate,String rtnDate,	String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,
 			String Description) throws Throwable {
@@ -31,7 +31,9 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 			String deptDate = pickDate(depDate);
 			String retrnDate = pickDate(rtnDate);			
 			inputBookingDetails(triptype,origin, dest, deptDate , "RUH", "AMM", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			inputPassengerDetails("Domestic", "2", "Afghanistan", "National ID Card", 
 					"F123456", "1234567890", mobilenum, username,"","","");
 			Baggage_Extra(triptype);
@@ -61,7 +63,8 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
+	    		"",
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

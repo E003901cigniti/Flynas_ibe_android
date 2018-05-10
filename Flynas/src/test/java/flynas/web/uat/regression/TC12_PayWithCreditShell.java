@@ -18,7 +18,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 	public  void TC_12_PayWithCreditShell(
 			String tripType, String origin, String dest, String departureDate, String origin2,
 			String departure2, String retdate,String Adult,String Child,String infant, String promo, 
-			String strBookingClass,String FlightType,String totalpass,String nationality,String Doctypr,
+			String strBookingClass, String bundle,String FlightType,String totalpass,String nationality,String Doctypr,
 			String docNumber, String naSmiles,String Mobile,String email ,String SelectSeat,
 			String paymenttype,String bookingtype, String charity,String Currency, String payment2 ,
 			String Description) throws Throwable {
@@ -42,7 +42,9 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
 			
 			//Selecting travel class
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			
 			//entering passenger details
 			//String Passengername[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
@@ -74,7 +76,9 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retdate,Adult, Child, infant,promo,Currency,paymenttype);
 			
 			//Selecting class
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 						
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
@@ -124,6 +128,7 @@ public class TC12_PayWithCreditShell extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Bundle", "Value2"),
 		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -40,7 +41,9 @@ import io.appium.java_client.TouchAction;
 
 public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
-	
+	public void WaittillPageLoad() throws InterruptedException{
+		waitUtilElementhasAttribute(BookingPageLocators.body);		
+	}
 	
 	public void  login(String username,String password) throws Throwable
 	{
@@ -49,7 +52,12 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		type(BookingPageLocators.email, username, "Email");
 		type(BookingPageLocators.password, password, "Password");
-		click(BookingPageLocators.login_btn, "Login");				
+		click(BookingPageLocators.login_btn, "Login");	
+		if(isElementDisplayed(BookingPageLocators.logout_lnk)==true||isElementDisplayed(BookingPageLocators.logout_lnk_AR)==true||isElementDisplayed(BookingPageLocators.logout_lnk_TR)==true)
+			Reporter.SuccessReport("Verifing login: ", "User Log-in successful");
+		else
+			Reporter.failureReport("Verifing login: ", "User Log-in failed");
+		
 	}
 	
 	public void selectLanguage(String Language) throws Throwable{
@@ -190,7 +198,32 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		return true;
 	}
 	
-	public boolean selectClass(String bookingClass, String tripType) throws Throwable{
+	public void selectHoldfare() throws Throwable{
+		waitforElement(BookingPageLocators.body);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.hldFareBtn));
+		click(BookingPageLocators.hldFareBtn,"Hold fare button");
+	}
+	
+	public Float getfee(String category) throws Throwable{
+		WaittillPageLoad();
+		String[] fee = getText(BookingPageLocators.fee(category), category+" fare").split("\\s+");	
+		return Float.parseFloat(fee[1]);	
+	}
+	
+	public void verifyPLCK(String flightType ) throws Throwable{
+		WaittillPageLoad();
+		String feexpctd;
+		if(flightType.equalsIgnoreCase("Domestic"))
+		feexpctd = configProps.getProperty("Plckdom");
+		else feexpctd = configProps.getProperty("PlckIntl");
+		String feeaplied = Float.toString(getfee("Other Fees"));
+			if( feeaplied.equalsIgnoreCase(feexpctd))
+				Reporter.SuccessReport("Verifying Friends travel fee", "Friends travel fee "+getfee("Other Fees")+" as expected");
+			else
+				Reporter.failureReport("Verifying Friends travel fee", "Friends travel fee verification failed, expected - "+feexpctd+"Found - "+feeaplied);
+		}
+	
+	public boolean selectClass(String bookingClass, String bundle) throws Throwable{
 		boolean flag=false;
 		waitforElement(BookingPageLocators.selectflightsection);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
@@ -198,20 +231,20 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		List<WebElement> current = driver.findElements(By.xpath("//li[@class='current']"));
 		for(int j=0;j<flighttables.size();j++)
 		{	
-			List<WebElement> Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]/button"));
-			List<WebElement> Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-			List<WebElement> Flexcols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
+			List<WebElement> Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+			List<WebElement> Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
+			
+			System.out.println("E"+Ecocols.size()+"B"+Buscols.size());
 		
 			int li=1;
 			for(int count = 0;count<10;count++)
-				{if(Ecocols.size()==0	|| Buscols.size()==0 ||Flexcols.size()==0)
+				{if(Ecocols.size()==0 || Buscols.size()==0 )
 					{
 						flighttables.get(j).findElement(By.xpath("preceding::a[1]")).click();
 						current.get(j).findElement(By.xpath("following-sibling::li["+li+"]")).click();
 						waitUtilElementhasAttribute(BookingPageLocators.body);
-						Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-						Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]/button"));
-						Flexcols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
+						Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+						Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
 						li=li+1;					
 					}
 				else{
@@ -219,53 +252,75 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					}
 				}			
 		
-		
-			if(bookingClass.equalsIgnoreCase("Simple"))
+			boolean classfound = true;
+			if(bookingClass.equalsIgnoreCase("Economy"))
 			{
-				List<WebElement> ClassEco = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]/button"));
-				for(int i=0;i<ClassEco.size();i++){			
-					if(ClassEco.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||ClassEco.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||ClassEco.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
+				List<WebElement> ClassEco = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+				for(int i=1;i<=ClassEco.size();i++){			
+					List <WebElement> pricelables = ClassEco.get(i-1).findElements(By.xpath("div"));
+					String clsname =null;
+					if(pricelables.size()==1){
+						clsname = pricelables.get(0).getText();
+					}
+					else{
+						pricelables = ClassEco.get(i-1).findElements(By.xpath("button/div"));
+						clsname = pricelables.get(0).getText();
+					}
+					System.out.println("Class name : "+clsname);
+					if(clsname.equalsIgnoreCase("Sold out"))
+					{
 						System.out.println("Sold Out");
 						JavascriptExecutor jse = (JavascriptExecutor)driver;
 						jse.executeScript("window.scrollBy(0,50)", "");
+						classfound=false;
 					}
 					else{
-						ClassEco.get(i).click();
-						waitUtilElementhasAttribute(BookingPageLocators.body);
+						ClassEco.get(i-1).click();
+						if(bundle.equalsIgnoreCase("Light")){
+							List <WebElement> lightBtns = driver.findElements(By.xpath("//*[@class='table flight_table']/tbody["+i+"]/tr[2]/td/div/table/tbody[1]/tr/td[2]/div[2]/div[3]"));
+							lightBtns.get(j).click();
+						}
+						else if(bundle.equalsIgnoreCase("Plus")){
+							List <WebElement> PlusBtns = driver.findElements(By.xpath("//*[@class='table flight_table']/tbody["+i+"]/tr[2]/td/div/table/tbody[1]/tr/td[3]/div[2]/div[3]"));
+							PlusBtns.get(j).click();							
+						}
+						else if(bundle.equalsIgnoreCase("Premium")){	
+							List <WebElement> PremiumBtns = driver.findElements(By.xpath("//*[@class='table flight_table']/tbody["+i+"]/tr[2]/td/div/table/tbody[1]/tr/td[4]/div[2]/div[3]"));
+							System.out.println("PremiumBTns Size : "+PremiumBtns.size());
+							System.out.println("j = "+j);
+							PremiumBtns.get(j).click();		
+						}
+						classfound=true;
 						break;
 					}
 					
 				}
-			}
-			else if(bookingClass.equalsIgnoreCase("Extra")){
-				List<WebElement> ClassFlex = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
-				for(int i=0;i<ClassFlex.size();i++){
-					if(ClassFlex.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||ClassFlex.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||ClassFlex.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
-						System.out.println("Sold Out");
-						JavascriptExecutor jse = (JavascriptExecutor)driver;
-						jse.executeScript("window.scrollBy(0,50)", "");
-					}else{
-						ClassFlex.get(i).click();
-						waitUtilElementhasAttribute(BookingPageLocators.body);
-						break;
-					}
+				if(classfound==false){
+					Reporter.failureReport("Selecting class fare", "All the flights show the simple fare to be 'Sold out'");
 				}
 			}
+	
 			else if(bookingClass.equalsIgnoreCase("Business")){
-				List<WebElement> ClassBusines = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-				for(int i=0;i<ClassBusines.size();i++){
-					if(ClassBusines.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||ClassBusines.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||ClassBusines.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
+				List<WebElement> ClassBusines = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
+				for(int i=1;i<=ClassBusines.size();i++){
+					List <WebElement> pricelables = ClassBusines.get(i-1).findElements(By.xpath("div"));
+					String clsname =null;
+					if(pricelables.size()==1){
+						clsname = pricelables.get(0).getText();
+					}
+					else{
+						pricelables = ClassBusines.get(i-1).findElements(By.xpath("button/div"));
+						clsname = pricelables.get(0).getText();
+					}
+					System.out.println("Class name : "+clsname);
+					if(clsname.equalsIgnoreCase("Sold out"))
+					{
 						System.out.println("Sold Out");
 						JavascriptExecutor jse = (JavascriptExecutor)driver;
 						jse.executeScript("window.scrollBy(0,50)", "");
+						classfound=false;
 					}else{
-						ClassBusines.get(i).click();
+						ClassBusines.get(i-1).click();
 						waitUtilElementhasAttribute(BookingPageLocators.body);
 						break;
 					}
@@ -276,14 +331,31 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		
 		}
 		
-		clickContinueBtn();
-		waitUtilElementhasAttribute(BookingPageLocators.body);
+//		clickContinueBtn();
+//		waitUtilElementhasAttribute(BookingPageLocators.body);
 		flag=true;
 		return flag;
 	}
 	
+	//method to handle upsell pop-up. Consumes values(Continue,Upgrade)
+	public static void upSellPopUpAction(String action) throws Throwable {
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		try{	
+		if(action.equalsIgnoreCase("Continue")){
+			click(BookingPageLocators.continueBundle,"Conitnue with bundle");
+			//driver.findElement(By.xpath("//a[contains(text(),'continue')]")).click();
+			}
+		else if(action.equalsIgnoreCase("Upgrade")){
+			click(BookingPageLocators.upgradeBundle,"Conitnue with bundle");
+			//driver.findElement(By.xpath("//a[contains(text(),'ADD THIS BUNDLE')]")).click();
+			}
+		Reporter.SuccessReport("Handling pop-up", "Successfully clicked on "+action+" Button");
+		}catch(Exception e){
+			Reporter.failureReport("Handling pop-up", "Unable to  click on "+action+" Button");
+		}
+	}
 	
-	public boolean selectClassOneleg(String bookingClass, String tripType, String Flightleg) throws Throwable{
+	public boolean selectClassOneleg(String bookingClass, String bundle, String Flightleg) throws Throwable{
 		boolean flag=false;
 		waitforElement(BookingPageLocators.selectflightsection);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
@@ -293,20 +365,19 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		{	if(Flightleg.equalsIgnoreCase("Returning")==true){
 			j=1;
 			}
-			List<WebElement> Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]/button"));
-			List<WebElement> Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-			List<WebElement> Flexcols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
-		
+			List<WebElement> Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+			List<WebElement> Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
+			
 			int li=1;
 			for(int count = 0;count<10;count++)
-				{if(Ecocols.size()==0	|| Buscols.size()==0 ||Flexcols.size()==0)
+				{if(Ecocols.size()==0	|| Buscols.size()==0)
 					{
 						flighttables.get(j).findElement(By.xpath("preceding::a[1]")).click();
 						current.get(j).findElement(By.xpath("following-sibling::li["+li+"]")).click();
 						waitUtilElementhasAttribute(BookingPageLocators.body);
-						Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-						Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]/button"));
-						Flexcols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
+						Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+						Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
+						
 						li=li+1;					
 					}
 				else{
@@ -315,50 +386,63 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				}			
 		
 		
-			if(bookingClass.equalsIgnoreCase("Simple"))
+			if(bookingClass.equalsIgnoreCase("Economy"))
 			{
-				List<WebElement> ClassEco = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]/button"));
-				for(int i=0;i<ClassEco.size();i++){			
-					if(ClassEco.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||ClassEco.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||ClassEco.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
+				List<WebElement> ClassEco = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+				for(int i=1;i<=ClassEco.size();i++){			
+					List <WebElement> pricelables = ClassEco.get(i-1).findElements(By.xpath("div"));
+					String clsname =null;
+						if(pricelables.size()==1){
+							clsname = pricelables.get(0).getText();
+							}
+						else{
+							pricelables = ClassEco.get(i-1).findElements(By.xpath("button/div"));
+							clsname = pricelables.get(0).getText();
+						}
+					System.out.println("Class name : "+clsname);
+					if(clsname.equalsIgnoreCase("Sold out"))
+					{
 						System.out.println("Sold Out");
 						JavascriptExecutor jse = (JavascriptExecutor)driver;
-						jse.executeScript("window.scrollBy(0,50)", "");
+						jse.executeScript("window.scrollBy(0,50)", "");						
 					}
 					else{
-						ClassEco.get(i).click();
-						waitUtilElementhasAttribute(BookingPageLocators.body);
+						ClassEco.get(i-1).click();
+						if(bundle.equalsIgnoreCase("Light")){
+							List <WebElement> lightBtns = driver.findElements(By.xpath("//*[@class='table flight_table']/tbody["+i+"]/tr[2]/td/div/table/tbody[1]/tr/td[2]/div[2]/div[2]"));
+							lightBtns.get(j).click();
+						}
+						else if(bundle.equalsIgnoreCase("Plus")){
+							List <WebElement> PlusBtns = driver.findElements(By.xpath("//*[@class='table flight_table']/tbody["+i+"]/tr[2]/td/div/table/tbody[1]/tr/td[3]/div[2]/div[2]"));
+							PlusBtns.get(j).click();							
+						}
+						else if(bundle.equalsIgnoreCase("Premium")){	
+							List <WebElement> PremiumBtns = driver.findElements(By.xpath("//*[@class='table flight_table']/tbody["+i+"]/tr[2]/td/div/table/tbody[1]/tr/td[4]/div[2]/div[2]"));
+							PremiumBtns.get(j).click();		
+						}
 						break;
 					}
 					
 				}
 			}
-			else if(bookingClass.equalsIgnoreCase("Extra")){
-				List<WebElement> ClassFlex = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
-				for(int i=0;i<ClassFlex.size();i++){
-					if(ClassFlex.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||ClassFlex.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||ClassFlex.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
+		else if(bookingClass.equalsIgnoreCase("Business")){
+				List<WebElement> ClassBusines = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
+				for(int i=1;i<=ClassBusines.size();i++){
+					List <WebElement> pricelables = ClassBusines.get(i-1).findElements(By.xpath("div"));
+					String clsname =null;
+						if(pricelables.size()==1){
+							clsname = pricelables.get(0).getText();
+							}
+						else{
+							pricelables = ClassBusines.get(i-1).findElements(By.xpath("button/div"));
+							clsname = pricelables.get(0).getText();
+						}
+					System.out.println("Class name : "+clsname);
+					if(clsname.equalsIgnoreCase("Sold out"))
+					{
 						System.out.println("Sold Out");
 						JavascriptExecutor jse = (JavascriptExecutor)driver;
-						jse.executeScript("window.scrollBy(0,50)", "");
-					}else{
-						ClassFlex.get(i).click();
-						waitUtilElementhasAttribute(BookingPageLocators.body);
-						break;
-					}
-				}
-			}
-			else if(bookingClass.equalsIgnoreCase("Business")){
-				List<WebElement> ClassBusines = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-				for(int i=0;i<ClassBusines.size();i++){
-					if(ClassBusines.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||ClassBusines.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||ClassBusines.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
-						System.out.println("Sold Out");
-						JavascriptExecutor jse = (JavascriptExecutor)driver;
-						jse.executeScript("window.scrollBy(0,50)", "");
+						jse.executeScript("window.scrollBy(0,50)", "");						
 					}else{
 						ClassBusines.get(i).click();
 						waitUtilElementhasAttribute(BookingPageLocators.body);
@@ -378,8 +462,8 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	}
 	
 	
-	//public boolean inputPassengerDetails(String domOrInt, String totalPass, String nationality,
-	public String[] inputPassengerDetails(String domOrInt, String totalPass, String nationality,String travelDoc,
+	
+	public String[] inputPassengerDetails(String flightType, String totalPass, String nationality,String travelDoc,
 	String docNum, String naSmiles, String mobileNum, String emailId,String fname,String lname,String payment2) 
 					throws Throwable{
 		/*WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -391,7 +475,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		Integer min=0,max=0;
 		JavascriptExecutor executor = (JavascriptExecutor)driver;
 		try{
+			//iteration for each passenger
 			for(Integer count = 1; count<=Integer.valueOf(totalPass); count++){
+				//defining age selection range fro each passenger type(Adult,Child,infant)
 				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Adult")){
 					min = 14; max = 19;
 				} else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Child")){
@@ -400,139 +486,194 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					min = 1; max = 2;
 				}
 				
-				 				
-				click(By.xpath(BookingPageLocators.title.replace("#", String.valueOf(count))),"Title");
-				
-			
+				Thread.sleep(1000);
+				//Selecting salutation 				
+				click(By.xpath(BookingPageLocators.title.replace("#", String.valueOf(count))),"Title");			
 				click(By.xpath(BookingPageLocators.titleSelect.replace("#", String.valueOf(count))), "Title");
 			
-				if(payment2.equalsIgnoreCase("Nas"))
+				if(payment2.equalsIgnoreCase("Nas")||payment2.equalsIgnoreCase("naSmile"))
 				{
+					//Entering given first name and last name
 					type(By.xpath(BookingPageLocators.fName.replace("#", String.valueOf(count))), fname, "First Name");
-
-				}
-				else if(payment2.equalsIgnoreCase("naSmile"))
-				{
-						type(By.xpath(BookingPageLocators.fName.replace("#", String.valueOf(count))), fname, "First Name");
-				}
-				else
-				{
-				//Thread.sleep(1000);
-				firstname = randomString(8);
-				type(By.xpath(BookingPageLocators.fName.replace("#", String.valueOf(count))), firstname, "First Name");
-				}
-				if(payment2.equalsIgnoreCase("Nas"))
-				{
+					Thread.sleep(1000);
 					type(By.xpath(BookingPageLocators.lName.replace("#", String.valueOf(count))), lname, "Last Name");
 
 				}
-				else if(payment2.equalsIgnoreCase("naSmile"))
-				{
-					type(By.xpath(BookingPageLocators.lName.replace("#", String.valueOf(count))), lname, "Last Name");
-				}
 				else
 				{
-				lastname = randomString(5);
-				type(By.xpath(BookingPageLocators.lName.replace("#", String.valueOf(count))), lastname, "Last Name");
+				//Entering random first name, last name in passenger details
+					firstname = randomString(8);
+					lastname = randomString(5);
+					type(By.xpath(BookingPageLocators.fName.replace("#", String.valueOf(count))), firstname, "First Name");
+					Thread.sleep(1000);
+					type(By.xpath(BookingPageLocators.lName.replace("#", String.valueOf(count))), lastname, "Last Name");
 				}
 				
 				JavascriptExecutor jse = (JavascriptExecutor)driver;
 				jse.executeScript("window.scrollBy(0,225)", "");
 				
-				click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "DD");
+				String[] DOB = new String[3];
 				
-				click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+randomNumericString()+"]"), "MM");
-				
-				click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
-				//Thread.sleep(3000);
-				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant"))
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Adult"))
 				{
-					List<WebElement> year =driver.findElements(By.xpath(BookingPageLocators.selectyyinfant.replace("#", String.valueOf(count))));
-					year.get(1).click();
-				}
-				else
-				{
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+randomNumber(min,max)+"]")));
-					//click(By.xpath(BookingPageLocators.selectYYYY.replace("#", String.valueOf(count))+randomNumber(min,max)+"]"), "YYYY");
+					//fetching adult passenger's DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase("National ID card"))
+						DOB = getyakeenDOB("Adult","NidDOB");
+					else if (travelDoc.equalsIgnoreCase("Passport"))
+						DOB = getyakeenDOB("Adult","PsprtDOB");
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						DOB = getyakeenDOB("Adult","IqamaDOB");
+				
+					Thread.sleep(1000);
+					//Entering passeneger's Date of birth
+					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
+					Thread.sleep(1000);
+					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
+					
+					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
+					Thread.sleep(1000);
+					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
+				
+					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
+					Thread.sleep(1000);
+					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
 				}
 				
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Child"))
+				{
+					//fetching Child passenger's DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase("National ID card"))
+						DOB = getyakeenDOB("Child","NidDOB");
+					else if (travelDoc.equalsIgnoreCase("Passport"))
+						DOB = getyakeenDOB("Child","PsprtDOB");
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						DOB = getyakeenDOB("Child","IqamaDOB");
+					Thread.sleep(1000);
+					//Entering passeneger's Date of birth					
+					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
+					Thread.sleep(1000);
+					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
+					
+					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
+					Thread.sleep(1000);
+					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
+					
+					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
+					Thread.sleep(1000);
+					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
+				}
+				
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant"))
+				{
+					//fetching infant's  DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase("National ID card"))
+						DOB = getyakeenDOB("infant","NidDOB");
+					else if (travelDoc.equalsIgnoreCase("Passport"))
+						DOB = getyakeenDOB("infant","PsprtDOB");
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						DOB = getyakeenDOB("infant","IqamaDOB");
+					
+					Thread.sleep(1000);
+					//Entering infant's Date of birth					
+					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
+					Thread.sleep(1000);
+					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
+					Thread.sleep(1000);
+					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
+					Thread.sleep(1000);
+					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
+					Thread.sleep(1000);
+					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
+					Thread.sleep(1000);				
+					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
+									
+				}
+				
+				//Selecting nationality
 				click(By.xpath(BookingPageLocators.nation.replace("#", String.valueOf(count))), "Nationality");
 				//Thread.sleep(3000);
 				executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[text()='"+nationality+"']")));
-				//click(By.xpath("//div[text()='"+nationality+"']"), "Natioanlity");
-				//selectValueFromDropDown(By.xpath(BookingPageLocators.selectNation.replace("#", String.valueOf(count))), "Nationality", nationality);
 				
-				
-				if(domOrInt.equalsIgnoreCase("Domestic")){
-					//assertText(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))), "National ID Card");
-				}
-				else{
-					//assertText(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))), "Passport");
-				}
-				//click(BookingPageLocators.travelDoc,"Travel Document");
-				//click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
-				// - no need selectValueFromDropDown(BookingPageLocators.selecttravelDoc, "Travel Document", travelDoc);
-				//type(BookingPageLocators.inputDoc, docNum, "Document Number");
-				
-				if(travelDoc.equalsIgnoreCase("National ID Card"))
-				{
-					click(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))),"Travel Document");
-					click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
-					type(By.xpath(BookingPageLocators.inputDoc.replace("#", String.valueOf(count))), randomString(10), "Document Number");
-				}
-				else if (travelDoc.equalsIgnoreCase("Passport"))
+				//Selecting travel document Type and entering document number				
+				click(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))),"Travel Document");
+				click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
+				WebElement psngrDtlsRow = driver.findElement(By.xpath(BookingPageLocators.inputDoc.replace("#", String.valueOf(count))));
+				WebElement Documentnmbr = psngrDtlsRow.findElement(By.name("idnumber"));
+				Documentnmbr.clear();
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Adult"))
+					Documentnmbr.sendKeys( getyakeenDOC("Adult",travelDoc));
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Child"))
+					Documentnmbr.sendKeys(getyakeenDOC("Child",travelDoc));
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant"))
+					Documentnmbr.sendKeys(getyakeenDOC("Child",travelDoc));				
+		
+				//Entering Expire date  if travel document is a passport
+				if (travelDoc.equalsIgnoreCase("Passport"))
 				{	
-					click(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))),"Travel Document");
-					click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
-						
-					//Thread.sleep(3000);
-					click(By.xpath(BookingPageLocators.ppNumber.replace("#", String.valueOf(count))), "Passport text box");
-					type(By.xpath(BookingPageLocators.ppNumber.replace("#", String.valueOf(count))), randomString(10), "Passport Number");
-					
+			
 					click(By.xpath(BookingPageLocators.ppExpDD.replace("#", String.valueOf(count))), "DD");
-					//Thread.sleep(3000);
+					Thread.sleep(1000);
 					click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "DD");	
 					
 					click(By.xpath(BookingPageLocators.ppExpMM.replace("#", String.valueOf(count))), "MM");
-					//Thread.sleep(3000);
+					Thread.sleep(1000);
 					click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "MM");
 					
 					click(By.xpath(BookingPageLocators.ppExpYY.replace("#", String.valueOf(count))), "YYYY");
-				//	Thread.sleep(3000);
-				//	click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumber(min,max)+"]"), "YYYY");
-				//	click(By.xpath(BookingPageLocators.ppSelectDD+randomNumber(min,max)+"]"), "YYYY");
-					
+					Thread.sleep(1000);
 					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//ul/li/descendant::div[@class='ui-select-choices-row']["+randomNumber(min,max)+"]")));
 				}
 			
-				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").equalsIgnoreCase("Infant 1"))
+				//Entering nasmile account number
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant"))
 				{
 					System.out.println("No Smily for  "+ getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title"));
-					
 				}
 				else
 				{		System.out.println("nasmiles : "+naSmiles);
-						if(!naSmiles.equalsIgnoreCase("") && !naSmiles.equalsIgnoreCase("Value"))
-						type(By.xpath(BookingPageLocators.naSmiles.replace("#", String.valueOf(count))), naSmiles, "na Smiles");
+					//	if(!naSmiles.equalsIgnoreCase(""))
+					//	type(By.xpath(BookingPageLocators.naSmiles.replace("#", String.valueOf(count))), naSmiles, "na Smiles");
 				}
 			
 			}
-			type(BookingPageLocators.mobileNum, mobileNum, "Mobile Number");
-			type(BookingPageLocators.emailAdd, emailId, "Email Address");
+			
+			//Entering mobile number after filling all the passenger detail
+			if(mobileNum!="")
+				type(BookingPageLocators.mobileNum, mobileNum, "Mobile Number");
+			//Entering email ID
+			if(emailId!="")
+				type(BookingPageLocators.emailAdd, emailId, "Email Address");
+			
+			//Clicking on contninue button 
 			clickContinueBtn();
+			
+			//returning passenger first name and last name 
 			Passengername = new String[2];
 			Passengername[0] =firstname;
 			Passengername[1] =lastname;
-			 return Passengername;
+			return Passengername;
 		}catch(Exception e){
 			e.printStackTrace();
 			return Passengername;
 		}
 		
+	}
+	
+	public String[] getyakeenDOB(String psngrType, String travelDocType){
+		ExcelReader xls = new ExcelReader(configProps.getProperty("Miscellaneous"),"Yakeendata");
+		String[] DOB = xls.getCellValue(psngrType, travelDocType).split("-");
+		int year = Integer.parseInt(DOB[2]);
+		System.out.println(year);
+		String thisyear = Year.now().toString();
+		int yy = Integer.parseInt(thisyear)-year;
+		System.out.println(yy);
+		DOB [2] = String.valueOf(Integer.parseInt(thisyear)-year);
+		return DOB;		
+	}
+	public String getyakeenDOC(String psngrType, String travelDocType){
+		ExcelReader xls = new ExcelReader(configProps.getProperty("Miscellaneous"),"Yakeendata");
+		String DOC = xls.getCellValue(psngrType, travelDocType);	
+		return DOC;		
 	}
 	
 	public boolean inputExtras(String charity) throws Throwable{
@@ -593,7 +734,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			int loop=0;
 			for(int j=0;j<Flights.size();j++){
 				for(int i=0;i<Integer.parseInt(totalpass);i++){
-					if(seatSelect.equalsIgnoreCase("Extra Leg Room")){
+					if(seatSelect.equalsIgnoreCase("Spacious")){
 						if(Flights.get(j).getAttribute("class").contains("active")){
 							for(k=loop;k<extlegseats.size();k++)
 							{
@@ -667,6 +808,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			}
 		}
 	}
+	
 	public void removeallseats(String seatSelect,String totalpass,String triptype) throws Throwable{
 		List<WebElement> remove = driver.findElements(BookingPageLocators.Remove);
 		List<WebElement> flights = driver.findElements(BookingPageLocators.flightsInSeat);
@@ -714,9 +856,33 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			for(int i=0;i<Flights.size();i++)
 			{			
 				Thread.sleep(3000);
-				if(seatSelect.equalsIgnoreCase("Extra Leg Room"))
+				
+				if(seatSelect.equalsIgnoreCase("Spacious"))
+				{
+				//((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.selExLegSeat));
+				List<WebElement> seats = driver.findElements(BookingPageLocators.selExLegSeat);
+				try{
+					for(int k=1;k<seats.size();k++)
+					{
+						try{
+							seats.get(k).click();
+							System.out.println("Premium seat no " + k + "selected");
+							break;
+							}
+						catch(Exception e){
+						System.out.println("Premium seat no " + k + "is not available");
+						}
+					}
+				}
+				catch(Exception e){
+					System.out.println("Unable to click Premium seat ");
+					
+					}
+				}	
+				
+				else if(seatSelect.equalsIgnoreCase("Super Practical"))
 					{					
-					List<WebElement> seats = driver.findElements(BookingPageLocators.selExLegSeat);
+					List<WebElement> seats = driver.findElements(BookingPageLocators.selPremSeat);
 						try{
 							for(int k=1;k<seats.size();k++)
 							{
@@ -736,31 +902,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 							}
 					}
 					
-				else if(seatSelect.equalsIgnoreCase("Premium"))
-					{
-					((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElements(BookingPageLocators.selPremSeat));
-					List<WebElement> seats = driver.findElements(BookingPageLocators.selPremSeat);
-					try{
-						for(int k=1;k<seats.size();k++)
-						{
-							try{
-								seats.get(k).click();
-								System.out.println("Premium seat no " + k + "selected");
-								break;
-								}
-							catch(Exception e){
-							System.out.println("Premium seat no " + k + "is not available");
-							}
-						}
-					}
-					catch(Exception e){
-						System.out.println("Unable to click Premium seat ");
-						
-						}
-					}				
-				
-				
-				else if(seatSelect.equalsIgnoreCase("Upfront"))
+				else if(seatSelect.equalsIgnoreCase("Practical"))
 					{
 					((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElements(BookingPageLocators.selUpfrontSeat));
 					List<WebElement> seats = driver.findElements(BookingPageLocators.selUpfrontSeat);
@@ -784,7 +926,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					}
 					
 				
-				else if(seatSelect.equalsIgnoreCase("Standard"))
+				else if(seatSelect.equalsIgnoreCase("Simple"))
 					{
 					((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElements(BookingPageLocators.selStdSeat));
 					List<WebElement> seats = driver.findElements(BookingPageLocators.selStdSeat);
@@ -922,18 +1064,13 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		{
 			type(BookingPageLocators.pasword, "1234", "Password");
 			click(BookingPageLocators.ccSubmit,"Submit Button");
-			if(isElementDisplayedTemp(BookingPageLocators.ok)==true)
-			{
-				click(BookingPageLocators.ok, "OK");
-				
-			}
+			if(isElementDisplayedTemp(BookingPageLocators.ok)==true){
+				click(BookingPageLocators.ok, "OK");}
 			Reporter.SuccessReport("Entering 3D secure Pin ", "3D Secure Pin entered successfully");
 		}
-		else{
-			System.out.println("No Secure Page");
+		else{System.out.println("No Secure Page");
 			Reporter.SuccessReport("Entering 3D secure Pin ", "No Secure Pin Page Displayed");
-			}
-		
+			}		
 		}catch(Exception e){
 			Reporter.failureReport("Entering 3D secure Pin ", "3D Secure pin entry failed");
 		}
@@ -945,7 +1082,39 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		click(BookingPageLocators.paynow, "Pay Now");
 		selectPaymentType(PaymentType);
 		enterCardDetails("Visa");
-		submit3Dsecurepin();		
+		handleSecurePage();	
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+	}
+	
+	public void handleSecurePage() throws Throwable{
+
+		boolean flag = false;
+		Thread.sleep(5000);
+		List<WebElement> frames = driver.findElements(By.tagName("iframe"));
+		for(WebElement frame:frames){
+			System.out.println(frame.getAttribute("id"));
+			if(frame.getAttribute("id").equalsIgnoreCase("authWindow")){
+				driver.switchTo().frame("authWindow");
+				driver.manage().timeouts().implicitlyWait(5000,TimeUnit.MILLISECONDS);
+				if(isElementPresent(BookingPageLocators.pasword)==true)
+				{
+					//type(BookingPageLocators.pasword, "1234", "Password");
+					click(BookingPageLocators.ccSubmit,"Submit Button");
+					if(isElementDisplayedTemp(BookingPageLocators.ok)==true){
+						click(BookingPageLocators.ok, "OK");
+						//payment("Credit Card", "");								
+					}
+					flag = true;
+					break;
+				}
+				}
+			}										
+		if(flag== false)
+		{
+		System.out.println("No Secure Page");
+		}
+	
+
 	}
 	
 	
@@ -1081,15 +1250,19 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			
 		//Click continue on payment page
 		clickContinueBtn();
-		
+		Thread.sleep(2000); //Don't delete this thread. Solution for Sync issue on error pop-up
 		//handling error pop-up
 		if(isElementDisplayedTemp(BookingPageLocators.Error)==true && paymentType.equalsIgnoreCase("SADAD"))
 			{
-				click(BookingPageLocators.ok, "OK");
-				Reporter.SuccessReport("Verifing SADAD", "Payment through SADAD not posible");
-			
+			String env = driver.getCurrentUrl();
+			if(env.contains("develop_r41")||env.contains("uat")){
+				Reporter.SuccessReport("Verifing SADAD", "Payment through SADAD not posible");		
+				}
+			else{
+				Reporter.failureReport("Verifing SADAD", "Payment through SADAD not posible");
+				}
 			}
-			else
+		else
 			{
 				System.out.println("No Error Message");
 			}
@@ -1226,10 +1399,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	}
 	
 	public String getReferenceNumber() throws Throwable{
-		waitforElement(BookingPageLocators.summaryRefNumber);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
-		return getText(BookingPageLocators.summaryRefNumber, "Reference Number");		
-		
+		waitforElement(BookingPageLocators.summaryRefNumber);
+		return getText(BookingPageLocators.summaryRefNumber, "Reference Number");			
 	}
 	
 	public void closetoast() throws Throwable{		
@@ -1243,6 +1415,12 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			System.out.println("nasmile Toast appeared");
 			click(BookingPageLocators.closetoast, "nasmile Toast close button");
 			}
+	  	else if(isElementPresent(BookingPageLocators.closeTst)==true){
+	  		click(BookingPageLocators.closeTst, "nasmile Toast close button");
+	  	}
+	  	else if(isElementPresent(BookingPageLocators.closeTstnew)==true){
+	  		click(BookingPageLocators.closeTstnew, "nasmile Toast close button");
+	  	}
 		else{
 			System.out.println("No nasmile Toast");
 			}
@@ -1254,7 +1432,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	public void searchFlight(String referenceNum, String email, String mobile, String lastName) throws Throwable{
 		// add validation
-		driver.get(configProps.getProperty("URL_UAT_MMB"));
+		driver.get(mmburl);
 		waitforElement(BookingPageLocators.sfpbookingReference);
 		type(BookingPageLocators.sfpbookingReference, referenceNum, "Reference Number");
 		//type(BookingPageLocators.sfpEmail, email, "Email");
@@ -1268,7 +1446,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	public void searchFlightCheckin(String referenceNum, String email, String mobile, String lastName) throws Throwable{
 		// add validation
-		driver.get(configProps.getProperty("URL_Checkin"));
+		driver.get(chekinurl);
 		waitForElementPresent(BookingPageLocators.sfpbookingReference, "Reference Number");
 		type(BookingPageLocators.sfpbookingReference, referenceNum, "Reference Number");
 		//type(BookingPageLocators.sfpEmail, email, "Email");
@@ -1321,29 +1499,29 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		
 		if(bookingClass.equalsIgnoreCase("Economy"))
 		{
-			waitforElement(BookingPageLocators.economyOW);
+			selectClass(bookingClass, "Premium");
+			/*waitforElement(BookingPageLocators.economyOW);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.economyOW, "Economy New Flight");
+			click(BookingPageLocators.economyOW, "Economy New Flight");*/
 			
 		}
-		else
-			if(bookingClass.equalsIgnoreCase("Business"))
+		else if(bookingClass.equalsIgnoreCase("Business"))
 			{
-				waitforElement(BookingPageLocators.busOW);
+				selectClass(bookingClass, "");
+				/*waitforElement(BookingPageLocators.busOW);
 				waitUtilElementhasAttribute(BookingPageLocators.body);
-				click(BookingPageLocators.busOW, "Business New Flight");
+				click(BookingPageLocators.busOW, "Business New Flight");*/
 			}
-		else
-			if(bookingClass.equalsIgnoreCase("Flex"))
+		/*else if(bookingClass.equalsIgnoreCase("Flex"))
 			{
 				waitforElement(BookingPageLocators.flexOW);
 				waitUtilElementhasAttribute(BookingPageLocators.body);
 				click(BookingPageLocators.flexOW, "Flex New Flight");
-			}
-		else
-			if(bookingClass.equalsIgnoreCase("Staff Confirmed"))
+			}*/
+		else if(bookingClass.contains("Staff"))
 			{			
-				waitForElementPresent(By.xpath("//table[@class='table flight_table']"), "");
+				selectClassForStaff(bookingClass);
+			/*	waitForElementPresent(By.xpath("//table[@class='table flight_table']"), "");
 				List<WebElement> flighttables = driver.findElements(By.xpath("//table[@class='table flight_table']"));
 				List<WebElement> stafcnfdClass = flighttables.get(i).findElements(By.xpath("tbody/tr/td[7]"));
 				for(int j=0;j<stafcnfdClass.size();j++)
@@ -1358,12 +1536,12 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 						break;
 					}
 			
-				}
+				} */
 
 			}
 		else
 		{
-			waitForElementPresent(By.xpath("//table[@class='table flight_table']"), "");
+		/*	waitForElementPresent(By.xpath("//table[@class='table flight_table']"), "");
 			List<WebElement> flighttables = driver.findElements(By.xpath("//table[@class='table flight_table']"));
 			List<WebElement> stafstandClass = flighttables.get(i).findElements(By.xpath("tbody/tr/td[6]"));
 			for(int j=0;j<stafstandClass.size();j++)
@@ -1378,12 +1556,15 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					break;
 				}
 		
-			}
+			}*/
 		}
 		waitforElement(BookingPageLocators.continueBtn);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		clickContinueBtn();
-		selectSeat(selectSeat,bookingtype);
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		if(isElementPresent(BookingPageLocators.selectseattittle)==true){			
+			selectSeat(selectSeat,bookingtype);}
+		waitUtilElementhasAttribute(BookingPageLocators.body);
 		waitForElementPresent(BookingPageLocators.manageMyBookingTittle, "Manage My Booking");
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		if(isElementPresent(BookingPageLocators.paynow)==true)
@@ -1391,8 +1572,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			System.out.println("In paynow");
 			/*String balance= getText(BookingPageLocators.balance, "Balance");
 			String bal[] = balance.split("\\s");*/
-			click(BookingPageLocators.paynow, "PayNow");
-			
+			click(BookingPageLocators.paynow, "PayNow");			
 			payment("Credit Card", "");
 		}
 		else
@@ -1404,6 +1584,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				if(isElementPresent(BookingPageLocators.ok)==true)
 				{
 					click(BookingPageLocators.ok, "OK");
+					waitUtilElementhasAttribute(BookingPageLocators.body);
 					waitForElementPresent(BookingPageLocators.manageMyBookingTittle, "Manage My Bookings");
 					waitUtilElementhasAttribute(BookingPageLocators.body);
 				}
@@ -1415,9 +1596,13 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	public void performCheckin(String SelectSeat,String paymenttype, String strPassenger) throws Throwable
 	{
-		waitforElement(BookingPageLocators.checkinTitle);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
- 		List<WebElement> passengers = driver.findElements(BookingPageLocators.passengers_incheckin);
+		if(isElementDisplayedTemp(BookingPageLocators.Error)==true){
+			Reporter.SuccessReport("Performimg Checkin", "Departure time of the flight is with in 4 hrs or after 48 hours");
+		}
+		else{
+		waitforElement(BookingPageLocators.checkinTitle);
+		List<WebElement> passengers = driver.findElements(BookingPageLocators.passengers_incheckin);
 		System.out.println(passengers.size());
 		for(int i=0;i<passengers.size();i++)
 		{
@@ -1430,8 +1615,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		waitforElement(BookingPageLocators.emailAdd);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		String emailformat = getText(BookingPageLocators.emailAdd, "EmailAddress");
-		if(!emailformat.contains("@"))
+		if(emailformat.contains("@")==false)
 		{
+			driver.findElement(BookingPageLocators.emailAdd).clear();
 			type(BookingPageLocators.emailAdd, "flynasqa@gmail.com", "EmailAddress");
 		}
 		waitforElement(BookingPageLocators.continueBtn);
@@ -1455,7 +1641,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		{
 			System.out.println("No Payment is Available in CheckIn");
 		}
-		
+		}
 	}
 
 	public void Baggage(String bookingtype) throws Throwable
@@ -1542,7 +1728,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	{
 		waitforElement(BookingPageLocators.summaryStatus);
 		//waitUtilElementhasAttribute(BookingPageLocators.body);
-		if(getText(BookingPageLocators.summaryStatus,"Status").trim().equals("Confirmed")||getText(BookingPageLocators.summaryStatus,"Status").trim().equals("Pending"))
+		if(getText(BookingPageLocators.summaryStatus,"Status").trim().equals("Confirmed")
+				||getText(BookingPageLocators.summaryStatus,"Status").trim().equals("Pending")
+				||getText(BookingPageLocators.summaryStatus,"Status").trim().equals("Hold"))
 		{
 			String env = driver.getCurrentUrl();
 			if(env.contains("develop_r41")){writingPNR("IBE_NAV_PNR",pnr);}
@@ -1597,6 +1785,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	public void verifyPNRforSadad() throws Throwable{
 		waitforElement(BookingPageLocators.body);
+		Thread.sleep(15000);//Don't change this sleep. Prod response takes time in sadad payment
 		if(isElementPresent(BookingPageLocators.txtPNR, "Booking Reference")){
 			String Status= getText(BookingPageLocators.summaryStatus, "PNR Status");
 			if (Status.equalsIgnoreCase("Pending")){
@@ -1616,6 +1805,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		else{
 			Reporter.failureReport("Ticket Confirmation", "Payment failed");			
 		}	
+		closetoast();
 	}
 	
 	
@@ -1641,7 +1831,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM yyyy");
 		Calendar c = Calendar.getInstance();
 		c.setTime(new Date()); // Now use today date.
-		c.add(Calendar.DATE, Integer.parseInt(date[1])); // Adding 1 days
+		c.add(Calendar.DATE, Integer.parseInt(date[1]));
 		String newDate = sdf.format(c.getTime());
 		return newDate;		
 	}
@@ -1659,7 +1849,8 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		return dt;
 	}
 	
-	public void selectClasswithPartCodeshare(String bookingClass,String bookingtype) throws Throwable
+	
+	public void selectClasswithPartCodeshare(String bookingClass) throws Throwable
 	{
 		waitforElement(BookingPageLocators.selectflightsection);
 		//waitUtilElementhasAttribute(BookingPageLocators.body);
@@ -1676,25 +1867,26 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				
 				//taking all flight rows into a list
 				
-				List<WebElement> tbody = flighttables.get(i).findElements(By.tagName("tbody"));
-				List<WebElement> Flights_row = tbody.get(0).findElements(By.tagName("tr"));
-				System.out.println("Flight rows :"+Flights_row.size());
+				List<WebElement> Flights = flighttables.get(i).findElements(By.tagName("tbody"));
+				System.out.println("Flights :"+Flights.size());
 				//Below while loop executes to change the date of flight in case of no flights in current date selection	
-				while(Flights_row.size()<1 && j<7){						
+				while(Flights.size()<1 && j<7){						
 						current.get(i).findElement(By.xpath("following-sibling::li["+j+"]")).click();
-						Flights_row = flighttables.get(i).findElements(By.tagName("tr"));
+						Flights = flighttables.get(i).findElements(By.tagName("tbody"));
 						j++;
 					}
 				
 				//Below for loop iterates through each row of the flights table to checks for part-code share flights and
 				//select the class
-				for(int k=0;k<Flights_row.size();k++)
+				for(int k=1;k<=Flights.size();k++)
 					{ 
 					
 						count=0;
-						List<WebElement> Flights_td = Flights_row.get(k).findElements(By.tagName("td"));
-						System.out.println("COL COUNT"+ Flights_td.size());											
-						String stop =  Flights_row.get(k).findElement(By.xpath("td[2]/div/div/span")).getText();
+						List <WebElement> Flight_Rows = driver.findElements(By.xpath("//table[@class='table flight_table']/tbody["+k+"]/tr"));
+						System.out.println("Flight_Rows COUNT "+ Flight_Rows.size());
+						List<WebElement> Flights_td = Flight_Rows.get(i).findElements(By.tagName("td"));
+						System.out.println("COL COUNT "+ Flights_td.size());											
+						String stop =  Flights_td.get(1).findElement(By.xpath("div/div/span[1]")).getText();
 						if(stop.contains("1 Stop"))
 						{
 							WebElement Flightnumber_span =Flights_td.get(3).findElement(By.xpath("div/div/span"));
@@ -1707,24 +1899,54 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 								 System.out.println("Count : "+count);
 							 	 }
 							}
-						}
-						if((count==7) && bookingtype.equalsIgnoreCase("PartCodeShare"))
+						
+						if((count==7))
 						{
-							((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",Flights_row.get(k));
-							if(bookingClass.equalsIgnoreCase("Simple")){
-								if((Flights_td.get(4).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
-									System.out.println("Sold out");
-								}else{
+							((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",Flights.get(k-1));
+							if(bookingClass.equalsIgnoreCase("Economy")){
+//								if((Flights_td.get(4).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
+//									System.out.println("Sold out");
+//								}
+								
+								List <WebElement> pricelables = Flights_td.get(4).findElements(By.xpath("div"));
+								String clsname =null;
+								if(pricelables.size()==1){
+									clsname = pricelables.get(0).getText();
+								}
+								else{
+									pricelables = Flights_td.get(4).findElements(By.xpath("button/div"));
+									clsname = pricelables.get(0).getText();
+								}
+								System.out.println("Class name : "+clsname);
+								if(clsname.equalsIgnoreCase("Sold out"))
+								{
+									System.out.println("Sold Out");
+									JavascriptExecutor jse = (JavascriptExecutor)driver;
+									jse.executeScript("window.scrollBy(0,50)", "");
+								}
+								else{
 									Flights_td.get(4).findElement(By.tagName("button")).click();
 									Thread.sleep(2000);
 									flag=true;
-									break;
-									
+									break;									
 								}
 							}
-							if(bookingClass.equalsIgnoreCase("Extra")){
-								if((Flights_td.get(5).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
-									System.out.println("Sold out");
+							if(bookingClass.equalsIgnoreCase("Business")){
+								List <WebElement> pricelables = Flights_td.get(5).findElements(By.xpath("div"));
+								String clsname =null;
+								if(pricelables.size()==1){
+									clsname = pricelables.get(0).getText();
+								}
+								else{
+									pricelables = Flights_td.get(4).findElements(By.xpath("button/div"));
+									clsname = pricelables.get(0).getText();
+								}
+								System.out.println("Class name : "+clsname);
+								if(clsname.equalsIgnoreCase("Sold out"))
+								{
+									System.out.println("Sold Out");
+									JavascriptExecutor jse = (JavascriptExecutor)driver;
+									jse.executeScript("window.scrollBy(0,50)", "");
 								}else{
 									Flights_td.get(5).findElement(By.tagName("button")).click();
 									Thread.sleep(2000);
@@ -1733,13 +1955,14 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 									
 								}
 							}
-						}	
-						
+						}
+					 }
+												
 					}
 					
 				if(flag!=true)
 					{
-						Reporter.failureReport("Selecting class in a part code share flight", "Partcodeshare flight");
+						Reporter.failureReport("Selecting class in a part code share flight", "Partcodeshare flightis not listed in the page");
 					}
 			}
 			
@@ -1748,55 +1971,99 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	}
 	
 	
-	public void selectCodeshareConectflight(String bookingClass,String bookingtype) throws Throwable
+	public void selectCodeshareConectflight(String bookingClass) throws Throwable
 	{
 		waitforElement(BookingPageLocators.selectflightsection);
 		//waitUtilElementhasAttribute(BookingPageLocators.body);
-		boolean flag=false;
 		int count=0;
 		List<WebElement> flighttables = driver.findElements(By.xpath("//table[@class='table flight_table']"));
+		List<WebElement> current = driver.findElements(By.xpath("//li[@class='current']"));
+		int j = 1;
 		for(int i=0;i<flighttables.size();i++)
 			{
+				boolean flag=false;
+				//Below if condition will work only in round-trip journey. this is to change the return date if 
+				//there is any change in the onward journey date due to no flights.
+			
 				
-					List<WebElement> Flights_row = flighttables.get(i).findElements(By.tagName("tr"));
-					System.out.println("ROWS COUNT"+ Flights_row.size());
-					for(int j=1;j<Flights_row.size();j++)
+				//taking all flight rows into a list
+				
+				List<WebElement> Flights = flighttables.get(i).findElements(By.tagName("tbody"));
+				System.out.println("Flights :"+Flights.size());
+				//Below while loop executes to change the date of flight in case of no flights in current date selection	
+				while(Flights.size()<1 && j<7){						
+						current.get(i).findElement(By.xpath("following-sibling::li["+j+"]")).click();
+						Flights = flighttables.get(i).findElements(By.tagName("tbody"));
+						j++;
+					}
+				
+				//Below for loop iterates through each row of the flights table to checks for part-code share flights and
+				//select the class
+				for(int k=1;k<=Flights.size();k++)
 					{ 
+					
 						count=0;
-						List<WebElement> Flights_td = Flights_row.get(j).findElements(By.tagName("td"));
-						System.out.println("COL COUNT"+ Flights_td.size());
-						
-						String stop =  Flights_row.get(j).findElement(By.xpath("td[2]/div/div/span")).getText();
+						List <WebElement> Flight_Rows = driver.findElements(By.xpath("//table[@class='table flight_table']/tbody["+k+"]/tr"));
+						System.out.println("Flight_Rows COUNT "+ Flight_Rows.size());
+						List<WebElement> Flights_td = Flight_Rows.get(i).findElements(By.tagName("td"));
+						System.out.println("COL COUNT "+ Flights_td.size());											
+						String stop =  Flights_td.get(1).findElement(By.xpath("div/div/span[1]")).getText();
 						if(stop.contains("1 Stop"))
 						{
 							WebElement Flightnumber_span =Flights_td.get(3).findElement(By.xpath("div/div/span"));
 							String Flightnumber = Flightnumber_span.getText();
 							System.out.println(Flightnumber);
-							for(int k=0;k<Flightnumber.length();k++){
-							 char result = Flightnumber.charAt(k);
+							for(int l=0;l<Flightnumber.length();l++){
+							 char result = Flightnumber.charAt(l);
 							 	 if(Character.isDigit(result)) {
 								 count++;
 								 System.out.println("Count : "+count);
 							 	 }
 							}
-						}
-						if((count==8 ||count==4) && bookingtype.equalsIgnoreCase("CodeShare"))
+						
+						if((count == 4 || count == 8 ))
 						{
-							((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",Flights_row.get(j));
-							if(bookingClass.equalsIgnoreCase("Simple")){
-								if((Flights_td.get(4).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
-									System.out.println("Sold out");
-								}else{
+							((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);",Flights.get(k-1));
+							if(bookingClass.equalsIgnoreCase("Economy")){
+								List <WebElement> pricelables = Flights_td.get(4).findElements(By.xpath("div"));
+								String clsname =null;
+								if(pricelables.size()==1){
+									clsname = pricelables.get(0).getText();
+								}
+								else{
+									pricelables = Flights_td.get(4).findElements(By.xpath("button/div"));
+									clsname = pricelables.get(0).getText();
+								}
+								System.out.println("Class name : "+clsname);
+								if(clsname.equalsIgnoreCase("Sold out"))
+								{
+									System.out.println("Sold Out");
+									JavascriptExecutor jse = (JavascriptExecutor)driver;
+									jse.executeScript("window.scrollBy(0,50)", "");
+								}
+								else{
 									Flights_td.get(4).findElement(By.tagName("button")).click();
 									Thread.sleep(2000);
 									flag=true;
-									break;
-									
+									break;									
 								}
 							}
-							if(bookingClass.equalsIgnoreCase("Extra")){
-								if((Flights_td.get(5).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
-									System.out.println("Sold out");
+							if(bookingClass.equalsIgnoreCase("Business")){
+								List <WebElement> pricelables = Flights_td.get(5).findElements(By.xpath("div"));
+								String clsname =null;
+								if(pricelables.size()==1){
+									clsname = pricelables.get(0).getText();
+								}
+								else{
+									pricelables = Flights_td.get(4).findElements(By.xpath("button/div"));
+									clsname = pricelables.get(0).getText();
+								}
+								System.out.println("Class name : "+clsname);
+								if(clsname.equalsIgnoreCase("Sold out"))
+								{
+									System.out.println("Sold Out");
+									JavascriptExecutor jse = (JavascriptExecutor)driver;
+									jse.executeScript("window.scrollBy(0,50)", "");
 								}else{
 									Flights_td.get(5).findElement(By.tagName("button")).click();
 									Thread.sleep(2000);
@@ -1805,23 +2072,14 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 									
 								}
 							}
-							if(bookingClass.equalsIgnoreCase("Business")){
-								if((Flights_td.get(6).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
-									System.out.println("Sold out");
-								}else{
-									Flights_td.get(6).findElement(By.tagName("button")).click();
-									Thread.sleep(2000);
-									flag=true;
-									break;
-									
-								}
-							}
-						}		
+						}
+					 }
+												
 					}
 					
-					if(flag!=true)
+				if(flag!=true)
 					{
-						Reporter.failureReport("Selecting class in a part code share flight", "Could not select flight");
+						Reporter.failureReport("Selecting class in a part code share flight", "Partcodeshare flightis not listed in the page");
 					}
 			}
 			
@@ -1957,12 +2215,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		}
 		//clickContinueBtn();
 	}
+	
 	public  void cancelFlight(String flightway) throws Throwable
 	{
 		waitforElement(BookingPageLocators.manageMyBookingTittle);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
-		String priceBeforeChange = getText(BookingPageLocators.Totalprice, "PriceBeforeChange");
-		String[] pricebefore = priceBeforeChange.split("\\s");
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.summaryCancelFlight));
 		click(BookingPageLocators.summaryCancelFlight, "CancelFlight");
 		List<WebElement> cancelflights = driver.findElements(BookingPageLocators.selectFlightstoCancel);
@@ -1979,18 +2236,21 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		click(BookingPageLocators.cancelflightBtn, "CancelFlight");
 		waitUtilElementhasAttribute(BookingPageLocators.body);
+		String priceBeforChange = null;
 		String[] price=null;
 		if(isElementPresent(BookingPageLocators.priceBeforeChange)==true){
-			String priceBeforChange = getText(BookingPageLocators.priceBeforeChange, "PriceBeforeChange");
+			priceBeforChange = getText(BookingPageLocators.priceBeforeChange, "PriceBeforeChange");
 			price = priceBeforChange.split("\\s");
+			System.out.println(price[1]);
 			waitforElement(BookingPageLocators.priceBeforeChange);
 			}
 		click(BookingPageLocators.conformCharges, "Conform Charges");
 		if(isElementDisplayedTemp(BookingPageLocators.ok)){
 		click(BookingPageLocators.ok, "ok");
 		}
-		verifyCancellation(flightway,pricebefore[1]);	
-		
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		if(price!=null){
+		verifyCancellation(flightway,price[1]);}		
 	}
 	
 	public  String agentcancelFlight(String flightway) throws Throwable
@@ -2012,16 +2272,20 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		click(BookingPageLocators.cancelflightBtn, "CancelFlight");
 		waitUtilElementhasAttribute(BookingPageLocators.body);
-		String priceBeforChange = getText(BookingPageLocators.priceBeforeChange, "PriceBeforeChange");
-		String[] price = priceBeforChange.split("\\s");
-		waitforElement(BookingPageLocators.priceBeforeChange);
+		String priceBeforChange = null;
+		String[] price=null;
+		if(isElementPresent(BookingPageLocators.priceBeforeChange)==true){
+			priceBeforChange = getText(BookingPageLocators.priceBeforeChange, "PriceBeforeChange");
+			price = priceBeforChange.split("\\s");
+			waitforElement(BookingPageLocators.priceBeforeChange);
+			}
 		click(BookingPageLocators.conformCharges, "Conform Charges");
-		if(isElementDisplayedTemp(BookingPageLocators.ok)){
+		Thread.sleep(2000);
+		if(isElementDisplayedTemp(BookingPageLocators.ok)){			
 		click(BookingPageLocators.ok, "ok");
 		}
 		//Thread.sleep(5000);
 		verifyCancellation(flightway,price[1]);
-		
 		return price[1];
 		
 	}
@@ -2037,8 +2301,8 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			Reporter.failureReport("Verifing cancellation status", "Cancellation not confirmed");
 			}
 		}else{
-			String priceBeforChange = getText(BookingPageLocators.Totalprice, "priceAfterChange");
-			String[] priceAfter = priceBeforChange.split("\\s");
+			String priceAfterChange = getText(BookingPageLocators.Totalprice, "price After Change");
+			String[] priceAfter = priceAfterChange.split("\\s");
 			if(!priceBefore.equalsIgnoreCase(priceAfter[1])){
 				Reporter.SuccessReport("Verifing cancellation status", "Successfully Verified "+Flightway+" flight cancellation");
 				}else{
@@ -2046,6 +2310,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				}
 		}
 	}
+	
 	public void Baggage_Extra(String Triptype) throws Throwable
 	{
 		waitforElement(BookingPageLocators.baggagetittle);
@@ -2209,92 +2474,109 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	public void selectClassForStaff(String bookingClass) throws Throwable
 	{
+		boolean flag=false;
 		waitforElement(BookingPageLocators.selectflightsection);
-		waitUtilElementhasAttribute(BookingPageLocators.body); 
-		List<WebElement> flighttables = driver.findElements(By.xpath("//table[@class='table flight_table']"));
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		List<WebElement> flighttables = driver.findElements(By.xpath("//table[contains(@class,'table flight_table')]"));
 		List<WebElement> current = driver.findElements(By.xpath("//li[@class='current']"));
-		for(int j=0;j<current.size();j++)
-		{
-			List<WebElement> flightstatus = driver.findElements(By.xpath("//li[@class='current']/a/span[2]"));
-			List<WebElement> standByClass = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
-			List<WebElement> stafcnfdClass = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
+		for(int j=0;j<flighttables.size();j++)
+		{	
+			List<WebElement> Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+			List<WebElement> Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
+			
+			System.out.println("E"+Ecocols.size()+"B"+Buscols.size());
 		
 			int li=1;
 			for(int count = 0;count<10;count++)
-				{if(standByClass.size()==0	|| stafcnfdClass.size()==0)
+				{if(Ecocols.size()==0 || Buscols.size()==0 )
 					{
 						flighttables.get(j).findElement(By.xpath("preceding::a[1]")).click();
 						current.get(j).findElement(By.xpath("following-sibling::li["+li+"]")).click();
 						waitUtilElementhasAttribute(BookingPageLocators.body);
-						standByClass = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
-						stafcnfdClass = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-						li=li+1;
-					
+						Ecocols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+						Buscols = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
+						li=li+1;					
 					}
 				else{
 					break;
 					}
-				}				
+				}			
 		
-		
+			boolean classfound = true;
 			if(bookingClass.equalsIgnoreCase("Staff Stand By"))
 			{
-				standByClass = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]/button"));
-				for(int i=0;i<standByClass.size();i++){			
-					if(standByClass.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||standByClass.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||standByClass.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
-						System.out.println("Sold Out");
+				List<WebElement> ClassEco = flighttables.get(j).findElements(By.xpath("tbody/tr/td[5]"));
+				for(int i=1;i<=ClassEco.size();i++){			
+//					if(ClassEco.get(i-1).findElement(By.className("price")).getText().equalsIgnoreCase("Sold out")
+//							||ClassEco.get(i-1).findElement(By.className("price")).getText().contains("لا تتوفر مقاعد")
+//							||ClassEco.get(i-1).findElement(By.className("price")).getText().equalsIgnoreCase("Tükendi"))
+					List <WebElement> pricelables = ClassEco.get(i-1).findElements(By.xpath("div"));
+					String clsname =null;
+					if(pricelables.size()==1){
+						clsname = pricelables.get(0).getText();
 					}
 					else{
-						
-						standByClass.get(i).click();
-						waitUtilElementhasAttribute(BookingPageLocators.body);
-						break;
+						pricelables = ClassEco.get(i-1).findElements(By.xpath("button/div"));
+						clsname = pricelables.get(0).getText();
 					}
-					
-				}
-			}
-			else if(bookingClass.equalsIgnoreCase("Staff Confirmed")){
-				stafcnfdClass = flighttables.get(j).findElements(By.xpath("tbody/tr/td[7]/button"));
-				for(int i=0;i<stafcnfdClass.size();i++){
-					if(stafcnfdClass.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out")
-							||stafcnfdClass.get(i).findElement(By.tagName("div")).getText().contains("لا تتوفر مقاعد")
-							||stafcnfdClass.get(i).findElement(By.tagName("div")).getText().equalsIgnoreCase("Tükendi")){
+					System.out.println("Class name : "+clsname);
+					if(clsname.equalsIgnoreCase("Sold out"))
+					{
 						System.out.println("Sold Out");
+						JavascriptExecutor jse = (JavascriptExecutor)driver;
+						jse.executeScript("window.scrollBy(0,50)", "");
+						classfound=false;
+					}
+					else{
+						ClassEco.get(i-1).click();
+						classfound=true;
+						break;
+					}
+					
+				}
+				if(classfound==false){
+					Reporter.failureReport("Selecting class fare", "All the flights show the simple fare to be 'Sold out'");
+				}
+			}
+		else if(bookingClass.equalsIgnoreCase("Staff Confirmed")){
+				List<WebElement> ClassBusines = flighttables.get(j).findElements(By.xpath("tbody/tr/td[6]"));
+				for(int i=1;i<ClassBusines.size();i++){
+					List <WebElement> pricelables = ClassBusines.get(i-1).findElements(By.xpath("div"));
+					String clsname =null;
+					if(pricelables.size()==1){
+						clsname = pricelables.get(0).getText();
+					}
+					else{
+						pricelables = ClassBusines.get(i-1).findElements(By.xpath("button/div"));
+						clsname = pricelables.get(0).getText();
+					}
+					System.out.println("Class name : "+clsname);
+					if(clsname.equalsIgnoreCase("Sold out"))
+					{
+						System.out.println("Sold Out");
+						JavascriptExecutor jse = (JavascriptExecutor)driver;
+						jse.executeScript("window.scrollBy(0,50)", "");
+						classfound=false;					
 					}else{
-						stafcnfdClass.get(i).click();
+						ClassBusines.get(i-1).click();
 						waitUtilElementhasAttribute(BookingPageLocators.body);
 						break;
 					}
 					
 				}
-			}
-			
-			
-			
+				
+			}		
 		
 		}
 		
 		clickContinueBtn();
 		waitUtilElementhasAttribute(BookingPageLocators.body);
-			
+		
+		
 	}
 	
 	
 	
-	public void VerifingPNR_AgentPOrtal(String pnr) throws Throwable
-	{
-		String bookingReference = getText(BookingPageLocators.BookingRef, "Booking Reference");
-		if(pnr.equalsIgnoreCase(bookingReference))
-		{
-			Reporter.SuccessReport("Verifing PNR", "PNR is Successfully Generated");
-		}
-		else
-		{
-			Reporter.SuccessReport("Verifing PNR", "PNR is not Generated");
-		}
-	}
 	public String memberRegistration(String pwd,String natinality,String doctype,String docnum,String mobile,String emailadd) throws Throwable
 	{
 		waitforElement(BookingPageLocators.userEmail);
@@ -2381,40 +2663,6 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		return count;
 	}
 	
-	public boolean verifingFile()
-	{
-		boolean flag=false;
-		File f=new File("C:\\Users\\E002693\\Downloads");
-		File[] files=f.listFiles();
-		System.out.println(files.length);
-		
-		 File lastModifiedFile = files[0];
-		 
-		    for (int i = 1; i < files.length; i++) {
-		       if (lastModifiedFile.lastModified() < files[i].lastModified()) {
-		           lastModifiedFile = files[i];
-		          // break;
-		          }
-		    }	
-		    
-		    if(lastModifiedFile.getName().contains("download")||lastModifiedFile.getName().contains("bp")||lastModifiedFile.getName().contains("NFO9pOA9"))
-		    {
-		    	flag=true;
-		    }
-		   
-		   /* String str = lastModifiedFile.toString();
-		    String[] file = str.split("\\\\");
-		    System.out.println(lastModifiedFile);
-		    System.out.println(file[6]);
-		    
-		    PdfReader p =new PdfReader("C:\\Users\\E002693\\Documents\\CLEDownloads\\Download\\"+file[6]);
-		    String data = PdfTextExtractor.getTextFromPage(p,1);
-		    return data;*/
-		 //   System.out.println(data);
-	
-		return flag;
-	}
-
 	public void validateFare(String fare) throws Throwable
 	{
 		
@@ -2619,11 +2867,12 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	
 	
-	public String[] inputPassengerDetails_Arabic(String domOrInt, String totalPass, String nationality, 
-			String travelDoc, String docNum, String naSmiles, String mobileNum, String emailId,String fname,String lname,String payment2) 
-					throws Throwable{
-			waitforElement(By.xpath(BookingPageLocators.title.replace("#", String.valueOf(1))));
-			waitUtilElementhasAttribute(BookingPageLocators.body);
+	public String[] inputPassengerDetails_Arabic(String domOrInt, String totalPass, String nationality,
+			String travelDoc, String docNum, String naSmiles, String mobileNum, String emailId,String fname,
+				String lname,String payment2) throws Throwable
+	{
+		waitforElement(By.xpath(BookingPageLocators.title.replace("#", String.valueOf(1))));
+		waitUtilElementhasAttribute(BookingPageLocators.body);
 		
 		String lastname = null,firstname=null;
 		String[] FirstLastName = null;
@@ -2635,7 +2884,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					min = 14; max = 19;
 				} else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("طفل")){
 					min = 5; max = 9;
-				} else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant")){
+				} else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("رضيع")){
 					min = 1; max = 2;
 				}
 				
@@ -2646,111 +2895,151 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				//Thread.sleep(3000);
 				click(By.xpath(BookingPageLocators.titleSelect.replace("#", String.valueOf(count))), "Title");
 			
-				if(payment2.equalsIgnoreCase("Nas"))
+				if(payment2.equalsIgnoreCase("Nas")||payment2.equalsIgnoreCase("naSmile"))
 				{
 					type(By.xpath(BookingPageLocators.fName.replace("#", String.valueOf(count))), fname, "First Name");
-
-				}
-				else
-				{
-				//Thread.sleep(1000);
-				firstname = randomString(8);
-				type(By.xpath(BookingPageLocators.fName.replace("#", String.valueOf(count))), firstname, "First Name");
-				}
-				if(payment2.equalsIgnoreCase("Nas"))
-				{
+					Thread.sleep(1000);
 					type(By.xpath(BookingPageLocators.lName.replace("#", String.valueOf(count))), lname, "Last Name");
-
 				}
 				else
 				{
-				lastname = randomString(5);
-				type(By.xpath(BookingPageLocators.lName.replace("#", String.valueOf(count))), lastname, "Last Name");
+					//Thread.sleep(1000);
+					firstname = randomString(8);
+					lastname = randomString(5);
+					type(By.xpath(BookingPageLocators.fName.replace("#", String.valueOf(count))), firstname, "First Name");
+					Thread.sleep(1000);
+					type(By.xpath(BookingPageLocators.lName.replace("#", String.valueOf(count))), lastname, "Last Name");
 				}
 				
 				
 				jse.executeScript("window.scrollBy(0,200)", "");
 				
-				click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "DD");
+				String[] DOB = new String[3];
 				
-				click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+randomNumericString()+"]"), "MM");
-				
-				click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
-				//Thread.sleep(3000);
-				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant"))
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("بالغ"))
 				{
-					List<WebElement> year =driver.findElements(By.xpath(BookingPageLocators.selectyyinfant.replace("#", String.valueOf(count))));
-					year.get(1).click();
-				}
-				else
-				{
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+randomNumber(min,max)+"]")));
-					//click(By.xpath(BookingPageLocators.selectYYYY.replace("#", String.valueOf(count))+randomNumber(min,max)+"]"), "YYYY");
+					//fetching adult passenger's DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
+						DOB = getyakeenDOB("Adult","NidDOB");
+					else if (travelDoc.equalsIgnoreCase(" جواز سفر "))
+						DOB = getyakeenDOB("Adult","PsprtDOB");
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						DOB = getyakeenDOB("Adult","IqamaDOB");
+				
+					//Entering passeneger's Date of birth
+					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
+					
+					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
+					
+					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
+					//Thread.sleep(3000);
+					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
 				}
 				
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("طفل"))
+				{
+					//fetching Child passenger's DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
+						DOB = getyakeenDOB("Child","NidDOB");
+					else if (travelDoc.equalsIgnoreCase(" جواز سفر "))
+						DOB = getyakeenDOB("Child","PsprtDOB");
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						DOB = getyakeenDOB("Child","IqamaDOB");
+					
+					//Entering passeneger's Date of birth					
+					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
+					
+					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
+					
+					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
+					//Thread.sleep(3000);
+					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
+				}
+				
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("رضيع"))
+				{
+					//fetching infant's  DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
+						DOB = getyakeenDOB("infant","NidDOB");
+					else if (travelDoc.equalsIgnoreCase(" جواز سفر "))
+						DOB = getyakeenDOB("infant","PsprtDOB");
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						DOB = getyakeenDOB("infant","IqamaDOB");
+					
+					//Entering infant's Date of birth
+					
+					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
+					
+					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
+					
+					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
+					//Thread.sleep(3000);				
+					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
+									
+				}
+				
+				
+				//Selecting nationality
 				click(By.xpath(BookingPageLocators.nation.replace("#", String.valueOf(count))), "Nationality");
 				//Thread.sleep(3000);
-				click(By.xpath("//div[text()='"+nationality.trim()+"']"), "Natioanlity");
-				//selectValueFromDropDown(By.xpath(BookingPageLocators.selectNation.replace("#", String.valueOf(count))), "Nationality", nationality);
+				executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[text()='"+nationality+"']")));
 				
-				
-				if(domOrInt.equalsIgnoreCase("Domestic")){
-					assertText(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))), " الهوية الوطنية ");
-				}
-				else{
-					assertText(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))), " جواز سفر ");
-				}
-				//click(BookingPageLocators.travelDoc,"Travel Document");
-				//click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
-				// - no need selectValueFromDropDown(BookingPageLocators.selecttravelDoc, "Travel Document", travelDoc);
-				//type(BookingPageLocators.inputDoc, docNum, "Document Number");
-				
-				if(travelDoc.equalsIgnoreCase("الهوية الوطنية"))
-				{
-					click(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))),"Travel Document");
-					click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
-					type(By.xpath(BookingPageLocators.inputDoc.replace("#", String.valueOf(count))), docNum, "Document Number");
-				}
-				else if (travelDoc.equalsIgnoreCase("Passport"))
-				
+				//Selecting travel document Type and entering document number				
+				click(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))),"Travel Document");
+				click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
+				WebElement psngrDtlsRow = driver.findElement(By.xpath(BookingPageLocators.inputDoc.replace("#", String.valueOf(count))));
+				WebElement Documentnmbr = psngrDtlsRow.findElement(By.name("idnumber"));
+				Documentnmbr.clear();
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("بالغ"))
+					Documentnmbr.sendKeys( getyakeenDOC("Adult",travelDoc));
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("طفل"))
+					Documentnmbr.sendKeys(getyakeenDOC("Child",travelDoc));
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("رضيع"))
+					Documentnmbr.sendKeys(getyakeenDOC("Child",travelDoc));				
+		
+				//Entering Expire date  if travel document is a passport
+				if (travelDoc.equalsIgnoreCase("Passport"))
 				{	
+			
+					click(By.xpath(BookingPageLocators.ppExpDD.replace("#", String.valueOf(count))), "DD");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "DD");	
 					
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.ppNumber.replace("#", String.valueOf(count))), "Passport text box");
-				type(By.xpath(BookingPageLocators.ppNumber.replace("#", String.valueOf(count))), randomString(10), "Passport Number");
-				
-				click(By.xpath(BookingPageLocators.ppExpDD.replace("#", String.valueOf(count))), "DD");
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "DD");	
-				
-				click(By.xpath(BookingPageLocators.ppExpMM.replace("#", String.valueOf(count))), "MM");
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "MM");
-				
-				click(By.xpath(BookingPageLocators.ppExpYY.replace("#", String.valueOf(count))), "YYYY");
-			//	Thread.sleep(3000);
-			//	click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumber(min,max)+"]"), "YYYY");
-			//	click(By.xpath(BookingPageLocators.ppSelectDD+randomNumber(min,max)+"]"), "YYYY");
-				
-				executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//ul/li/descendant::div[@class='ui-select-choices-row']["+randomNumber(min,max)+"]")));
+					click(By.xpath(BookingPageLocators.ppExpMM.replace("#", String.valueOf(count))), "MM");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "MM");
+					
+					click(By.xpath(BookingPageLocators.ppExpYY.replace("#", String.valueOf(count))), "YYYY");
+					//	Thread.sleep(3000);
+					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//ul/li/descendant::div[@class='ui-select-choices-row']["+randomNumber(min,max)+"]")));
 				}
 			
-				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").equalsIgnoreCase("Infant 1"))
+		
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("رضيع"))
 				{
 					System.out.println("No Smily for  "+ getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title"));
 					
 				}
 				else
 				{
-						if(!naSmiles.equalsIgnoreCase("") && !naSmiles.equalsIgnoreCase("Value"))
-						type(By.xpath(BookingPageLocators.naSmiles.replace("#", String.valueOf(count))), naSmiles, "na Smiles");
+					//	if(!naSmiles.equalsIgnoreCase("") && !naSmiles.equalsIgnoreCase("Value"))
+					//	type(By.xpath(BookingPageLocators.naSmiles.replace("#", String.valueOf(count))), naSmiles, "na Smiles");
 				}
 			
 			}
+			
 			type(BookingPageLocators.mobileNum, mobileNum, "Mobile Number");
 			type(BookingPageLocators.emailAdd, emailId, "Email Address");
 			clickContinueBtn();
@@ -2764,6 +3053,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		}
 		
 }
+	
 	public void payment_Production_Arabic(String paymentType) throws Throwable
 	{
 		System.out.println(paymentType);
@@ -2891,6 +3181,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	public void verifyPNRforSadad_Arabic() throws Throwable{
 		waitforElement(BookingPageLocators.body);
+		Thread.sleep(15000);
 		if(isElementPresent(BookingPageLocators.summaryRefNumber_AR_uat, "Booking Reference")){
 		String Status= getText(BookingPageLocators.summaryStatus_AR, "PNR Status");
 		if (Status.equalsIgnoreCase("قيد الانتظار")){
@@ -2908,6 +3199,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		}else{
 			Reporter.failureReport("Ticket Confirmation", "Payment failed");			
 		}	
+		closetoast();
 
 	}
 	
@@ -3213,6 +3505,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	public void verifyPNRforSadad_Tarkish() throws Throwable{
 		waitforElement(BookingPageLocators.body);
+		Thread.sleep(15000);
 		if(isElementPresent(BookingPageLocators.summaryRefNumber_TR, "Booking Reference")){
 			String Status= getText(BookingPageLocators.summaryStatus_TR, "PNR Status");
 			if (Status.equalsIgnoreCase("Beklemede")){
@@ -3232,6 +3525,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		{
 			Reporter.SuccessReport("Ticket Confiramation", "Payment failed");
 		}	
+		closetoast();
 	}
 	
 	
@@ -3294,6 +3588,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		familyMembrs.get(1).click();
 		click(BookingPageLocators.seletcBtn, "Select");
 	}
+	
 	public void selectallSeatstoremove(String seatSelect,String totalpass,String triptype) throws Throwable {
 		waitforElement(BookingPageLocators.selectseattittle);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
@@ -3386,7 +3681,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			}
 		}
 	}
-	public void selectClassWithConnectionFlight(String bookingClass, String tripType) throws Throwable{
+	public void selectClassWithConnectionFlight(String bookingClass, String bundle) throws Throwable{
 		waitforElement(BookingPageLocators.selectflightsection);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		boolean flag=false;
@@ -3410,13 +3705,19 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 									System.out.println("Sold out");
 								}else{
 									Flights_td.get(4).findElement(By.tagName("button")).click();
-									Thread.sleep(2000);
-									flag=true;
-									break;
-									
+									if(bundle.equalsIgnoreCase("Light")){
+										driver.findElement(By.xpath("//table[@class='bundle-table']["+(i+1)+"]/tbody[1]/tr/td[2]/div[2]/div[2]")).click();
+									}
+									else if(bundle.equalsIgnoreCase("Plus")){
+										driver.findElement(By.xpath("//table[@class='bundle-table']["+(i+1)+"]/tbody[1]/tr/td[3]/div[2]/div[2]")).click();
+									}
+									else if(bundle.equalsIgnoreCase("Premium")){								
+										driver.findElement(By.xpath("//table[@class='bundle-table']["+(i+1)+"]/tbody[1]/tr/td[4]/div[2]/div[2]")).click();
+									}
+									break;									
 								}
 							}
-							if(bookingClass.equalsIgnoreCase("Extra")){
+							if(bookingClass.equalsIgnoreCase("Business")){
 								if((Flights_td.get(5).findElement(By.tagName("div")).getText().equalsIgnoreCase("Sold out"))){
 									System.out.println("Sold out");
 								}else{
@@ -3429,7 +3730,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 							}
 						}
 					
-						}		
+					}		
 			}
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -3498,6 +3799,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	public void clickContinueBtn() throws Throwable{
 		waitUtilElementhasAttribute(BookingPageLocators.body);	
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.continueBtn));
+		Thread.sleep(1000);
 		click(BookingPageLocators.continueBtn, "Continue");
 	}
 	
@@ -3580,7 +3882,26 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	public void modifyExtras() throws Throwable{
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.modifyExtras));
+		Thread.sleep(2000);
 		click(BookingPageLocators.modifyExtras, "Modify Extras");
+	}
+	
+	public static void clickModifySeats() throws Throwable{	
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.modifySeat));
+		Thread.sleep(2000);
+		click(BookingPageLocators.modifySeat, "Seat Selection");
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+	}
+	
+	public static void clickPayNowBtn() throws Throwable{
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		if( isElementPresent(BookingPageLocators.paynow)==true){
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.paynow));
+		Thread.sleep(2000);
+		click(BookingPageLocators.paynow, "Pay Now");
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		}
 	}
 	
 	//*******************************Utilities*******************************
@@ -3677,6 +3998,42 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				System.out.println("No Seat Page");
 			}
 		}
+		
+		public void navigateToHome() throws Throwable{
+			// add validation
+			if(isElementDisplayedTemp(BookingPageLocators.Home)){
+				click(BookingPageLocators.Home, "Home");
+				Reporter.SuccessReport("Click Home tab", "Home Tab Clicked");
+			}
+			else{
+				System.out.println("No Seat Page");		
+				Reporter.failureReport("Click Home tab", "Hometab could not be clicked");
+			}
+		}
+		
+		public void clickDownloadBoardingpasses() throws Throwable{
+			waitUtilElementhasAttribute(BookingPageLocators.body);
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.downloadAllBoardingPasses));
+			click(BookingPageLocators.downloadAllBoardingPasses, "Download All Boarding Passes");	
+		}
+		
+		public void isFileDownloaded(String fileName) throws Throwable {
+			  File dir = new File("C:/Users/E003901/Downloads");
+			  File[] dirContents = dir.listFiles();
+			  flag = false;			
+			  for (int i = 0; i < dirContents.length; i++) {
+			      if (dirContents[i].getName().equals(fileName)) {
+			          // File has been found, it can now be deleted:
+			          dirContents[i].delete();
+			          flag = true;
+			          Reporter.SuccessReport("Verifying file download", "File successfully Downloaded");
+			          break;
+			          }
+			      }
+			   if(flag== false){
+				  Reporter.failureReport("Verifying file download", "File not found in download path");
+			  }			     
+		}
 			
 		
 		public void updateStatus(String Sheetname, String TCID, String status ) throws IOException{
@@ -3684,10 +4041,10 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			int row = GoogleDriveAPI.fnGetRowNo(Sheetname, TCID);
 			GoogleDriveAPI.getResponse(Sheetname, "B"+row, "B"+row);
 			GoogleDriveAPI.setValue(Sheetname, "B"+row, "B"+row, status);
-			String Exetime=ZonedDateTime.now().format(DateTimeFormatter.ISO_DATE);
+			String Exetime=DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(new Date());
 			if(status.equalsIgnoreCase("Pass"))
-			GoogleDriveAPI.setValue(Sheetname, "C"+row, "C"+row, Exetime);
-			else GoogleDriveAPI.setValue(Sheetname, "D"+row, "D"+row, Exetime);
+			GoogleDriveAPI.setValue(Sheetname, "C"+row, "C"+row, Exetime+" IST");
+			else GoogleDriveAPI.setValue(Sheetname, "D"+row, "D"+row, Exetime+" IST");
 			
 //			ExcelReader xls = new ExcelReader(configProps.getProperty("ResultSheet"),Sheetname);
 //			int rowNum = xls.findRow(Sheetname, TCID);
@@ -3713,10 +4070,12 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			
 		}
 		
-	}
+	
+		
+}
 		
 		
 	
 
-//}
+
 

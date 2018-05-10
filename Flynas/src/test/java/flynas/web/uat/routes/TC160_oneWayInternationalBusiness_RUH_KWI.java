@@ -19,7 +19,7 @@ public class TC160_oneWayInternationalBusiness_RUH_KWI extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Business"})
-	public  void TC_160_oneWayInternationalBusiness_RUH_KWI( String bookingClass,
+	public  void TC_160_oneWayInternationalBusiness_RUH_KWI( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -38,7 +38,9 @@ public class TC160_oneWayInternationalBusiness_RUH_KWI extends BookingPageFlow{
 
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", rtnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -82,7 +84,8 @@ public class TC160_oneWayInternationalBusiness_RUH_KWI extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
+	    		"",
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

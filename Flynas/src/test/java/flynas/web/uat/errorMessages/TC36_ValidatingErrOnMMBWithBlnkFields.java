@@ -39,7 +39,7 @@ public class TC36_ValidatingErrOnMMBWithBlnkFields extends BookingPageFlow {
 		
 	catch (Exception e) {
 			e.printStackTrace();
-			Reporter.failureReport("TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectEmailID", "Failed");
+			Reporter.failureReport("TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectemailID", "Failed");
 			driver.close();
 			}
 	}

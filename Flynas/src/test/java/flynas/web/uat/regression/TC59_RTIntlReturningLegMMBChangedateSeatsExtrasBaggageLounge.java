@@ -19,7 +19,7 @@ public class TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge extend
 	public  void TC_59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
-			String strBookingClass,String FlightType,String totalpass, String nationality,
+			String strBookingClass, String bundle,String FlightType,String totalpass, String nationality,
 			String Doctypr,String docNumber,String naSmiles,String Mobile,
 			String email ,String SelectSeat,String paymenttype,String bookingtype, 
 			String charity,String Currency,String newRtrnDt, String Description
@@ -29,7 +29,7 @@ public class TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge extend
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String	deptdate = pickDate(deptDate);
 			String	retrndate = pickDate(retdate);
-			String	changertrnDt = pickDate(newRtrnDt);
+			String	changertrnDt = nextDateof(retrndate);
 			
 			//Pick credentials and login
 			String[] Credentials = pickCredentials("UserCredentials");
@@ -43,7 +43,9 @@ public class TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge extend
 			
 			//Input trip details
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 					
 			continueOnPassengerDetails(); 				//Clicking continue button on Passenger details page
 			coninueOnBaggage();							//Clicking continue button on Baggage details page
@@ -54,7 +56,8 @@ public class TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge extend
 			validate_ticketStatus(strPNR);				// Verifying booking status
 			searchFlight(strPNR, username, "", lastname);		// Search flight on MMB page
 			changeDate("",changertrnDt,"Returning");	// change date on both departure and return
-			selectClassOneleg(strBookingClass, tripType,"Returning");  	// Selecting class in new flight
+			selectClassOneleg(strBookingClass, bundle,"Returning");  	// Selecting class in new flight
+			upSellPopUpAction("Continue");
 			selectSeat(SelectSeat, bookingtype);		// Selecting Seats in New flight
 			modifyExtras();								// Adding Extras 
 			Baggage_Extra(tripType);					// Adding Baggage
@@ -82,15 +85,16 @@ public class TC59_RTIntlReturningLegMMBChangedateSeatsExtrasBaggageLounge extend
 		    		xls.getCellValue("Trip Type", "Value2"),
 		    		xls.getCellValue("Origin", "Value2"),
 		    		xls.getCellValue("Destination", "Value2"),
-		    		xls.getCellValue("Departure Date", "Value"),
+		    		xls.getCellValue("Departure Date", "Value4"),
 		    		"",
 		    		"",
-		    		xls.getCellValue("Return Date", "Value"),
+		    		xls.getCellValue("Return Date", "Value4"),
 		    		xls.getCellValue("Adults Count", "Value"),
 		    		xls.getCellValue("Child Count", "Value"),
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Bundle", "Value2"),
 		    		xls.getCellValue("Flight Type", "Value2"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

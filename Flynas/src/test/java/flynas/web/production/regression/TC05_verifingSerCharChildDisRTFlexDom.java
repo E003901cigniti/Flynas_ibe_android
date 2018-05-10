@@ -15,7 +15,7 @@ public class TC05_verifingSerCharChildDisRTFlexDom  extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEProdReg"),"TC05");
 
 	@Test(dataProvider = "testData",groups={"Production"})
-	public  void TC_05_verifingSerCharChildDisRTFlexDom( String username,String password,String bookingClass,String mobilenum,
+	public  void TC_05_verifingSerCharChildDisRTFlexDom( String bookingClass, String bundle,String mobilenum,
 			String paymentType,String newDate,String departuredate,String rtnDate,String origin,String dest,String triptype,String adult,
 			String child,String totalpass,String infant,String seatSelect,String nationality,String docNum,String flightType,String Doctype,
 			String Description) throws Throwable {
@@ -24,9 +24,13 @@ public class TC05_verifingSerCharChildDisRTFlexDom  extends BookingPageFlow{
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String deptDate = pickDate(departuredate);
 			String retrnDate = pickDate(rtnDate);
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
 			
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, "");
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			inputPassengerDetails(flightType, totalpass, nationality, Doctype,docNum,"", mobilenum, username, "", "", "");
 			waitforElement(BookingPageLocators.baggagetittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
@@ -54,9 +58,9 @@ public class TC05_verifingSerCharChildDisRTFlexDom  extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("User Name", "Value"),
-		    		xls.getCellValue("Password", "Value"),
+
 		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		"",

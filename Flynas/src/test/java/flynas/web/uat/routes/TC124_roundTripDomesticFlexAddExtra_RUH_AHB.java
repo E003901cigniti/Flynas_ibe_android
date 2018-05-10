@@ -21,7 +21,7 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 	@Test(dataProvider = "testData",groups={"Flex"})
 	public  void TC_124_roundTripDomesticFlexAddExtra_RUH_AHB( 
 			String depDate,String rtnDate,String origin,String dest,String triptype,String adult,
-			String child,String infant,String flightType,String bookingClass, String seatSelect,
+			String child,String infant,String flightType,String bookingClass, String bundle, String seatSelect,
 			String totalPassenger,String nationality,String documentType, String docNumber,String nasmiles,
 			String mobilenum,String paymentType,String newDate, String Description) throws Throwable {
 		try {
@@ -32,7 +32,9 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 			String deptDate = pickDate(depDate);
 			String retrnDate = pickDate(rtnDate);			
 			inputBookingDetails(triptype,origin, dest, deptDate , "RUH", "AMM", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			inputPassengerDetails(flightType, totalPassenger, nationality, documentType,
 					docNumber, nasmiles, mobilenum, username,"","","");
 			Baggage_Extra(triptype);
@@ -73,7 +75,8 @@ public class TC124_roundTripDomesticFlexAddExtra_RUH_AHB extends BookingPageFlow
 	    		xls.getCellValue("Child Count", "Value2"),
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		xls.getCellValue("Flight Type", "Value"),    		
-	    		xls.getCellValue("Booking Class", "Value2"),
+	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Select Seat", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
 	    		xls.getCellValue("Nationality", "Value"),

@@ -19,7 +19,7 @@ public class TC51_multicityInternationalEconomy_JED_SAW extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataProdRoutes"),"Chrome_TestData");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_51_multicityInternationalEconomy_JED_SAW( String bookingClass,
+	public  void TC_51_multicityInternationalEconomy_JED_SAW( String bookingClass, String bundle, 
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -38,7 +38,9 @@ public class TC51_multicityInternationalEconomy_JED_SAW extends BookingPageFlow{
 				click(BookingPageLocators.login_lnk, "Login");				
 				login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -64,6 +66,7 @@ public class TC51_multicityInternationalEconomy_JED_SAW extends BookingPageFlow{
 	    		{
 	    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
@@ -75,7 +78,7 @@ public class TC51_multicityInternationalEconomy_JED_SAW extends BookingPageFlow{
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
+	    		xls.getCellValue("Select Seat", "Value"),
 	    		"Validate MultiCity International Economy_JED_SAW"}};
 	}
 

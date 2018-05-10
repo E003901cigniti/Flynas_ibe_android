@@ -20,7 +20,7 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_19");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_19_agencyLoginRToneAdultoneChild(String bookingClass,String mobilenum,String paymentType,
+	public  void TC_19_agencyLoginRToneAdultoneChild(String BookingClass, String bundle,String mobilenum,String paymentType,
 			String newDate,String departurDate,String rtnDate,String origin,String dest,String triptype,String adult,String child,String infant,
 			String totalPass,String smiles,String nationality,String doctype,String docNum,String emailId,String domOrInt,String Description) throws Throwable {
 		try {
@@ -38,13 +38,15 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate, "", "", rtrndate,adult, child, infant,"","","");
-			selectClass(bookingClass, "");
-			inputPassengerDetails(domOrInt, totalPass, nationality, doctype, docNum, smiles, mobilenum, emailId, "", "", "");
+			selectClass(BookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
+			inputPassengerDetails(domOrInt, totalPass, nationality, doctype, docNum, "", mobilenum, emailId, "", "", "");
 			coninueOnBaggage();
 			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strPNR = getReferenceNumber().trim();
-			System.out.println(strPNR);
+			validate_ticketStatus(strPNR);
 			click(BookingPageLocators.passenger_header, "Passenger");
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			driver.navigate().refresh();
@@ -100,6 +102,7 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 	    		{
 	    	
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value2"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
@@ -112,7 +115,7 @@ public class TC19_agencyLoginRToneAdultoneChild extends BookingPageFlow {
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
-	    		xls.getCellValue("na Smiles", "Value"),
+	    		xls.getCellValue("na Smiles", ""),
 	    		xls.getCellValue("Nationality", "Value"),
 	    		xls.getCellValue("Document Type", "Value"),
 	    		xls.getCellValue("Doc Number", "Value"),

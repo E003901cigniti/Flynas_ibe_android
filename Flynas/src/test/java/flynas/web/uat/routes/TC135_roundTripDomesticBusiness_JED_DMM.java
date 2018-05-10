@@ -19,7 +19,7 @@ public class TC135_roundTripDomesticBusiness_JED_DMM  extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Business"})
-	public  void TC_135_roundTripDomesticBusiness_JED_DMM( String bookingClass,
+	public  void TC_135_roundTripDomesticBusiness_JED_DMM( String bookingClass, String bundle,
 			String mobilenum, String paymentType, String newDate,String depDate,String rtnDate,
 			String origin,String dest,String triptype,String adult,String child,String infant,
 			String seatSelect, String Description) throws Throwable {
@@ -37,7 +37,9 @@ public class TC135_roundTripDomesticBusiness_JED_DMM  extends BookingPageFlow{
 			
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", rtrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -72,7 +74,8 @@ public class TC135_roundTripDomesticBusiness_JED_DMM  extends BookingPageFlow{
 			{
 				
 				
-				xls.getCellValue("Booking Class", "Value3"),
+				xls.getCellValue("Booking Class", "Value2"),
+				"",
 				xls.getCellValue("Mobile", "Value"),
 				xls.getCellValue("Payment Type", "Value"),
 				xls.getCellValue("NewDate", "Value"),

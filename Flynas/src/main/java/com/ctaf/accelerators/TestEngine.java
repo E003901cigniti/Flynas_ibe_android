@@ -77,6 +77,9 @@ public class TestEngine extends HtmlReportSupport {
 	public static Map<String, String> testDescription = new LinkedHashMap<String, String>();
 	public static Map<String, String> testResults = new LinkedHashMap<String, String>();
 	public static String url=null;
+	public static String mmburl=null;
+	public static String chekinurl=null;
+	public static String loginurl=null;
 	static ExcelReader xlsrdr = new ExcelReader(configProps.getProperty("SettingsWB"),configProps.getProperty("sheetName0"));
 	public DesiredCapabilities capabilities;
 	//***************************************************************************************************
@@ -141,10 +144,15 @@ public class TestEngine extends HtmlReportSupport {
 				if(ctx.getName().contains("IBE-PROD"))
 				 {
 					 url = (configProps.getProperty("URL_PRODUCTION"));
+					 mmburl = (configProps.getProperty("URL_PROD_MMB"));
+					 loginurl = (configProps.getProperty("URL_PROD_Login"));
 				 }
 				 else if(ctx.getName().contains("IBE-UAT"))
 				 {
 					 url = (configProps.getProperty("URL_UAT"));
+					 mmburl = (configProps.getProperty("URL_UAT_MMB"));
+					 loginurl = (configProps.getProperty("URL_UAT_Login"));
+					 chekinurl = (configProps.getProperty("URL_Checkin"));
 				 }
 				 else if(ctx.getName().contains("UAT_PnrRetrievalErrors"))
 				 {
@@ -156,7 +164,16 @@ public class TestEngine extends HtmlReportSupport {
 				 }
 				 else
 				 {
+//					 url = (configProps.getProperty("URL_PRODUCTION"));
+//					 mmburl = (configProps.getProperty("URL_PROD_MMB"));
+//					 loginurl = (configProps.getProperty("URL_PROD_Login"));
+					 
+//		********* Comment the above lines and uncomment below lines while running scripts individually to test on UAT
+					 
 					 url = (configProps.getProperty("URL_UAT"));
+					 mmburl = (configProps.getProperty("URL_UAT_MMB"));
+					 loginurl = (configProps.getProperty("URL_UAT_Login"));
+					 chekinurl = (configProps.getProperty("URL_Checkin"));
 				 }
 			
 				Reporter.reportCreater();

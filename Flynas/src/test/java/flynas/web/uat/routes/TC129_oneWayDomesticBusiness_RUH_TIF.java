@@ -19,7 +19,7 @@ public class TC129_oneWayDomesticBusiness_RUH_TIF  extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Business"})
-	public  void TC_129_oneWayDomesticBusiness_RUH_TIF( String bookingClass,String mobilenum,String paymentType,
+	public  void TC_129_oneWayDomesticBusiness_RUH_TIF( String bookingClass, String bundle,String mobilenum,String paymentType,
 			String newDate,String depDate,String rtnDate,String origin,String dest,String triptype,
 			String adult,String child,String infant,String seatSelect,String Description) throws Throwable {
 		
@@ -34,7 +34,9 @@ public class TC129_oneWayDomesticBusiness_RUH_TIF  extends BookingPageFlow{
 		
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -66,7 +68,8 @@ public class TC129_oneWayDomesticBusiness_RUH_TIF  extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
+	    		"",
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

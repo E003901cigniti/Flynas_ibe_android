@@ -21,7 +21,7 @@ public class TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat extends Bo
 	@Test(dataProvider = "testData",groups={"Economy"})
 	public void TC_35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat(String strTripType,String strFlightType,String strOrigin,String strDestination,
 			String strDepatureDate,String origin2,String departure2,String strReturnDate,String strTotalPessenger,String strAdultCount,
-			String strChildCount,String strInfantCount,String strPromo,String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,
+			String strChildCount,String strInfantCount,String strPromo,String strBookingClass, String bundle, String strNationality, String strDocumentType,	String strDocumentNum,
 			String strNaSmile,  String strMobile, String strEmail, String strSelectSeat, String strPaymentType,String bookingtype,
 			String strNewDate, String charity,String Currency,String description)throws Throwable{
 				try{
@@ -31,7 +31,9 @@ public class TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat extends Bo
 					String	rtrndate = pickDate(strReturnDate);
 					inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2,departure2, rtrndate,
 							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
-					selectClass(strBookingClass, strTripType);
+					selectClass(strBookingClass, bundle);
+					clickContinueBtn();
+					upSellPopUpAction("Continue");
 					String LastName[] = inputPassengerDetails(strFlightType, strTotalPessenger, strNationality, strDocumentType, 
 							strDocumentNum, strNaSmile, strMobile, strEmail,"","","");
 					coninueOnBaggage();
@@ -86,6 +88,7 @@ public class TC35_AnonymousOneWayDomesticEconomy_MMB_ModifyExtrasSeat extends Bo
 		    	xls.getCellValue("Infant Count", "Value"),
 		    	xls.getCellValue("Promo", "Value"),
 		    	xls.getCellValue("Booking Class", "Value"),
+		   		xls.getCellValue("Bundle", "Value"),
 		    	xls.getCellValue("Nationality", "Value"),
 		    	xls.getCellValue("Document Type", "Value"),
 		    	xls.getCellValue("Doc Number", "Value"),

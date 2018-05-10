@@ -19,7 +19,7 @@ public class TC26_oneWayDomesticEconomyChangeDate_AHB_ABT extends BookingPageFlo
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_26_oneWayDomesticEconomyChangeDate_AHB_ABT( String bookingClass,
+	public  void TC_26_oneWayDomesticEconomyChangeDate_AHB_ABT( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -40,7 +40,9 @@ public class TC26_oneWayDomesticEconomyChangeDate_AHB_ABT extends BookingPageFlo
 
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -87,6 +89,7 @@ public class TC26_oneWayDomesticEconomyChangeDate_AHB_ABT extends BookingPageFlo
 	    			
 		    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

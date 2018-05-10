@@ -19,7 +19,7 @@ public class TC62_roundTripDomesticEconomyAddExtra_RUH_AHB extends BookingPageFl
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataProdRoutes"),"Chrome_TestData");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_62_roundTripDomesticEconomyAddExtra_RUH_AHB( String bookingClass,
+	public  void TC_62_roundTripDomesticEconomyAddExtra_RUH_AHB( String bookingClass, String bundle, 
 			String mobilenum,String paymentType,String newDate,String Departuredate,String rtnDate,String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,
 			String Description) throws Throwable {
@@ -34,7 +34,9 @@ public class TC62_roundTripDomesticEconomyAddExtra_RUH_AHB extends BookingPageFl
 			click(BookingPageLocators.login_lnk, "Login");				
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "RUH", "AMM", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
@@ -66,6 +68,7 @@ public class TC62_roundTripDomesticEconomyAddExtra_RUH_AHB extends BookingPageFl
 	    		{
 	    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
@@ -77,7 +80,7 @@ public class TC62_roundTripDomesticEconomyAddExtra_RUH_AHB extends BookingPageFl
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
+	    		xls.getCellValue("Select Seat", "Value"),
 	    		"Validate RoundTrip Domestic Economy AddExtra_RUH_AHB"}};
 	}
 

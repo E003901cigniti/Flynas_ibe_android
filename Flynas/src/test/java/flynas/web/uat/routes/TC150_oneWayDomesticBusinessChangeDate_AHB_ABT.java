@@ -19,7 +19,7 @@ public class TC150_oneWayDomesticBusinessChangeDate_AHB_ABT extends BookingPageF
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Business"})
-	public  void TC_150_oneWayDomesticBusinessChangeDate_AHB_ABT( String bookingClass,String mobilenum,
+	public  void TC_150_oneWayDomesticBusinessChangeDate_AHB_ABT( String bookingClass, String bundle,String mobilenum,
 			String paymentType,String newDate,
 			String depDate,String rtnDate,
 			String origin,
@@ -36,7 +36,9 @@ public class TC150_oneWayDomesticBusinessChangeDate_AHB_ABT extends BookingPageF
 
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -79,7 +81,8 @@ public class TC150_oneWayDomesticBusinessChangeDate_AHB_ABT extends BookingPageF
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
+	    		"",
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

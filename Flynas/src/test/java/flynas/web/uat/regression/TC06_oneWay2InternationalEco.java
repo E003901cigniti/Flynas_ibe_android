@@ -28,7 +28,7 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 			String strDepatureDate,	String strFlightType, String strTotalPessenger,
 			String strNationality,String strDocumentType,String strDocumentNum,String strNaSmile,
 			String strMobile, String strEmail, String strAdultCount, String strChildCount, 
-			String strInfantCount, String strPromo,String strBookingClass,String strSelectSeat,
+			String strInfantCount, String strPromo,String strBookingClass, String bundle,String strSelectSeat,
 			String strPaymentType, String Currency)throws Throwable{
 		
 		try{
@@ -52,7 +52,9 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 					"", strAdultCount, strChildCount, strInfantCount, strPromo,Currency,
 					strPaymentType);
 			
-			selectClass(strBookingClass, strTripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			
 			
 			//Entering passenger details
@@ -99,6 +101,7 @@ public class TC06_oneWay2InternationalEco extends BookingPageFlow {
 			xls.getCellValue("Infant Count", "Value"),
 			xls.getCellValue("Promo", "Value"),
 			xls.getCellValue("Booking Class", "Value"),
+		    xls.getCellValue("Bundle", "Value"),
 			xls.getCellValue("Select Seat", "Value"),
 			"Credit Card",
 			""}};

@@ -19,7 +19,7 @@ public class TC28_oneWayDomesticEconomy_AHB_WAE extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_28_oneWayDomesticEconomy_AHB_WAE( String bookingClass,
+	public  void TC_28_oneWayDomesticEconomy_AHB_WAE( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -36,7 +36,9 @@ public class TC28_oneWayDomesticEconomy_AHB_WAE extends BookingPageFlow{
 			String deptDate = pickDate(depDate);		
 			
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", rtnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			inputPassengerDetails(domOrInt, strTolPass, "Afghanistan", "National ID Card", 
 					"F123456", "1234567890", mobilenum, "flynasqa@gmail.com","","","");
 			waitforElement(BookingPageLocators.baggagetittle);
@@ -73,6 +75,7 @@ public class TC28_oneWayDomesticEconomy_AHB_WAE extends BookingPageFlow{
 	    			
 		    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

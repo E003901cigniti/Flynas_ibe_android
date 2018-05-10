@@ -17,7 +17,7 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_16");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_16_EmpLoginStaffConfmedChangeDateCheckIn(String bookingClass,
+	public  void TC_16_EmpLoginStaffConfmedChangeDateCheckIn(String BookingClass,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -42,7 +42,7 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate, "", "", rtrndate,adult, child, infant,"","",paymentType);
-			selectClassForStaff(bookingClass);
+			selectClassForStaff(BookingClass);
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -51,16 +51,16 @@ public class TC16_EmpLoginStaffConfmedChangeDateCheckIn extends BookingPageFlow{
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			
-			String newdate = pickDate(newDate);
-			String strPNRChangeDate = changeDate(strPNR, username, mobilenum,lastname, newdate, selectseat,"",bookingClass,1);
+			String newdate = nextDateof(deptdate);
+			String strPNRChangeDate = changeDate("G3R1VY", username, mobilenum,lastname, newdate, selectseat,"",BookingClass,0);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			System.out.println(strPNRChangeDate);
-			if(strPNRChangeDate.trim().equalsIgnoreCase(strPNR)){
+			if(strPNRChangeDate.trim().equalsIgnoreCase("G3R1VY")){
 				Reporter.SuccessReport("Change Flight Date", "Flight Date has changed successfully");
 			}else{
 				Reporter.SuccessReport("Change Flight Date", "Flight Date has NOT changed successfully");
 			}
-			searchFlightCheckin(strPNR, username, "", "");
+			searchFlightCheckin("G3R1VY", username, "", lastname);
 			performCheckin("","","");
 			validateCheckin();
 			

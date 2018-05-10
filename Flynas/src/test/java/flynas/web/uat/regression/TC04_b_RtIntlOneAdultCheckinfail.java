@@ -18,7 +18,7 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC04b_RtIntlOneAdultCheckinFail ( String tripType, 
 			String origin, String dest, String deptDate,String origin2,String departure2, String retdate,
-			String Adult,String Child,String infant, String promo, String strBookingClass, String FlightType,String totalpass,String nationality,String Doctypr,
+			String Adult,String Child,String infant, String promo, String strBookingClass, String bundle, String FlightType,String totalpass,String nationality,String Doctypr,
 			String docNumber, String naSmiles,String Mobile,String SelectSeat,
 			String paymenttype, String bookingtype,String Charity, 
 			String Currency,String Description) throws Throwable {
@@ -43,7 +43,9 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 			inputBookingDetails(tripType, origin, dest, depDate, origin2,departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
 			
 			//Selecting flight and traveling class
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
@@ -89,6 +91,8 @@ public class TC04_b_RtIntlOneAdultCheckinfail extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
+
+		    		xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Flight Type", "Value2"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

@@ -19,7 +19,7 @@ public class TC90_oneWayDomesticFlex_AHB_WAE extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataProdRoutes"),"Chrome_TestData");
 
 	@Test(dataProvider = "testData",groups={"Flex"})
-	public  void TC_90_oneWayDomesticFlex_AHB_WAE( String bookingClass,
+	public  void TC_90_oneWayDomesticFlex_AHB_WAE( String bookingClass, String bundle, 
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -38,7 +38,9 @@ public class TC90_oneWayDomesticFlex_AHB_WAE extends BookingPageFlow{
 			
 			
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			inputPassengerDetails(domOrInt, strTolPass, "Afghanistan", "National ID Card", 
 					"F123456", "1234567890", mobilenum, "flynasqa@gmail.com","","","");
 			coninueOnBaggage();
@@ -66,9 +68,10 @@ public class TC90_oneWayDomesticFlex_AHB_WAE extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		
-	    		xls.getCellValue("Booking Class", "Value2"),
+	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value2"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
@@ -78,8 +81,8 @@ public class TC90_oneWayDomesticFlex_AHB_WAE extends BookingPageFlow{
 	    		xls.getCellValue("Adults Count", "Value2"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
-	    		"01-April 2017",
+	    		xls.getCellValue("Select Seat", "Value"),
+	    		xls.getCellValue("newDate", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value2"),
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		"Validate oneWay Domestic Flex_ABH_WAE"}};

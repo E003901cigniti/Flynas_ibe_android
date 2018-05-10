@@ -123,7 +123,19 @@ public class MemberRegistrationPage<RenderedWebElement> extends BookingPageLocat
 		}
 		else
 		{
-			Reporter.failureReport("Verifing Member Registratin", "Member is not Successfully Registered");
+			Reporter.failureReport("Verifing Member Registratin", "Member is not Registered");
+		}
+	}
+	public void verifingMemberRegistrationFailure() throws Throwable
+	{
+		waitforElement(BookingPageLocators.registerConformation);
+		if(isElementPresent(BookingPageLocators.registerConformation)==true)
+		{
+			Reporter.failureReport("Verifing Member Registratin", "Member is Registered");			
+		}
+		else
+		{
+			Reporter.SuccessReport("Verifing Member Registratin", "Member is not Registered");
 		}
 	}
 

@@ -15,7 +15,7 @@ public class TC15_verifingServiceChargeRTSingleBusDomesticAR extends BookingPage
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEProdReg"),"TC15");
 
 	@Test(dataProvider = "testData",groups={"Production"})
-	public  void TC_15_verifingServiceChargeRTSingleBusDomesticAR( String username,String password,String bookingClass,
+	public  void TC_15_verifingServiceChargeRTSingleBusDomesticAR( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,String naSmile,
 			String departuredate,String rtnDate,
@@ -28,10 +28,15 @@ public class TC15_verifingServiceChargeRTSingleBusDomesticAR extends BookingPage
 			String deptDate = pickDate(departuredate);		
 			String rtrnDate = pickDate(rtnDate);
 			click(BookingPageLocators.Arabic_pdctn_AR("العربية"), "Arabic Language");
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails_Arabic(triptype,origin, dest, deptDate , "", "", rtrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass,triptype);
+			selectClass(bookingClass, "");
+			clickContinueBtn();
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -53,9 +58,9 @@ public class TC15_verifingServiceChargeRTSingleBusDomesticAR extends BookingPage
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("User Name", "Value"),
-		    		xls.getCellValue("Password", "Value"),
+
 		    		xls.getCellValue("Booking Class", "Value"),
+	    			xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		xls.getCellValue("na Smiles", "Value"),

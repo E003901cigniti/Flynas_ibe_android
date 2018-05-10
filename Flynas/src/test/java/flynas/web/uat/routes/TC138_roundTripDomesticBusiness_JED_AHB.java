@@ -19,7 +19,7 @@ public class TC138_roundTripDomesticBusiness_JED_AHB extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Business"})
-	public  void TC_138_roundTripDomesticBusiness_JED_AHB( String bookingClass,
+	public  void TC_138_roundTripDomesticBusiness_JED_AHB( String bookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -40,7 +40,9 @@ public class TC138_roundTripDomesticBusiness_JED_AHB extends BookingPageFlow{
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", rtrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -75,7 +77,8 @@ public class TC138_roundTripDomesticBusiness_JED_AHB extends BookingPageFlow{
 			{
 				
 				
-				xls.getCellValue("Booking Class", "Value3"),
+				xls.getCellValue("Booking Class", "Value2"),
+				"",
 				xls.getCellValue("Mobile", "Value"),
 				xls.getCellValue("Payment Type", "Value"),
 				xls.getCellValue("NewDate", "Value"),

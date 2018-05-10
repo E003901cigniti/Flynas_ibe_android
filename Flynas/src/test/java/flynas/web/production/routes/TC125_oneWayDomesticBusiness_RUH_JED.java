@@ -34,13 +34,14 @@ public class TC125_oneWayDomesticBusiness_RUH_JED extends BookingPageFlow{
 			String retrnDate = pickDate(rtnDate);
 			
 			String[] Credentials = pickCredentials("UserCredentials");
-				String username =Credentials[0];
-				String password =Credentials[1];					
+			String username =Credentials[0];
+			String password =Credentials[1];					
 				
-				click(BookingPageLocators.login_lnk, "Login");				
-				login(username,password);
+			click(BookingPageLocators.login_lnk, "Login");				
+			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, "");
+			clickContinueBtn();
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -66,9 +67,9 @@ public class TC125_oneWayDomesticBusiness_RUH_JED extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),

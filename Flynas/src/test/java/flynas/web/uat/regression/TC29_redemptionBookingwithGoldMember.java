@@ -16,7 +16,8 @@ public class TC29_redemptionBookingwithGoldMember extends BookingPageFlow{
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_29_redemptionBookingwithGoldMember(String tripType, String origin, String dest, 
-			String deptDate, String origin2,String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
+			String deptDate, String origin2,String departure2, String retdate,String Adult,String Child,
+			String infant, String promo, String strBookingClass, String bundle,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
 			String naSmiles,String Mobile,String SelectSeat,String paymenttype,String bookingtype, 
 			String charity,String Currency, String accType,String Description
@@ -34,7 +35,9 @@ public class TC29_redemptionBookingwithGoldMember extends BookingPageFlow{
 			login(username,password);
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retdate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -61,7 +64,7 @@ public class TC29_redemptionBookingwithGoldMember extends BookingPageFlow{
 	    			xls.getCellValue("Trip Type", "Value"),
 		    		xls.getCellValue("Origin", "Value2"),
 		    		xls.getCellValue("Destination", "Value2"),
-		    		xls.getCellValue("Departure Date", "Value"),
+		    		xls.getCellValue("Departure Date", "Value4"),
 		    		"",
 		    		"",
 		    		xls.getCellValue("Return Date", "Value"),
@@ -70,6 +73,7 @@ public class TC29_redemptionBookingwithGoldMember extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Flight Type", "Value2"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

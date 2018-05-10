@@ -25,7 +25,7 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_15");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras(String bookingClass,String mobilenum,
+	public  void TC_36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras(String BookingClass, String bundle,String mobilenum,
 			String paymentType,String newDate,String pickDate,String origin,String dest,String triptype,String adult,String child,
 			String infant,String strSelectSeat,String Description) throws Throwable {
 		try {
@@ -43,7 +43,7 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, depdat, "", "", "",adult, child, infant,"","",paymentType);
-			selectClassForStaff(bookingClass);
+			selectClassForStaff(BookingClass);
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -56,11 +56,7 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 			//Select_A_Meal();
 			Select_lounge();
 			inputExtras("12");
-			waitforElement(BookingPageLocators.manageMyBookingTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.modifySeat, "Seat Selection");
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
+			clickModifySeats();
 			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
 				selectallSeats(strSelectSeat, "1", triptype);
 			}else{
@@ -91,6 +87,8 @@ public class TC36_EmpLoginOnewayOneAdultStaffStandByModifyEXtras extends Booking
 	    		{
 	    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
+
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

@@ -21,7 +21,7 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_18");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_38_corporateLoginRoundTripModifyExtras( String bookingClass,
+	public  void TC_38_corporateLoginRoundTripModifyExtras( String BookingClass, String bundle,
 			String mobilenum,String paymentType,String newDate,String strDeptDate,String rtnDate,String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,String domOrInt,
 			String totalPass,String nationality,String docNum,String docType,String email, String Description) throws Throwable {
@@ -40,7 +40,9 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
-			selectClass(bookingClass, "Economy");
+			selectClass(BookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			String[] lastname = inputPassengerDetails(domOrInt, totalPass, nationality, docType, docNum, "", mobilenum, email, "", "", "");
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -88,6 +90,7 @@ public class TC38_corporateLoginRoundTripModifyExtras extends BookingPageFlow{
 	    		{
 	    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

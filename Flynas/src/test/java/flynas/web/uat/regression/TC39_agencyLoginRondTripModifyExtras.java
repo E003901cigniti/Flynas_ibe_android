@@ -21,7 +21,7 @@ public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_19");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_39_agencyLoginRondTripModifyExtras( String bookingClass,String mobilenum,
+	public  void TC_39_agencyLoginRondTripModifyExtras( String BookingClass, String bundle,String mobilenum,
 			String paymentType,String newDate,String pickDate,String rtnDate,String origin,String dest,String triptype,String adult,
 			String child,String infant,String totalPass,String smiles,String nationality,String doctype,String docNum,String emailId,
 			String domOrInt,String seatSelect,String Description) throws Throwable {
@@ -40,36 +40,28 @@ public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate, "", "", rtrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, "");
+			selectClass(BookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			String[] lastname =inputPassengerDetails(domOrInt, totalPass, nationality, doctype, docNum, smiles, mobilenum, emailId, "", "", "");
 			coninueOnBaggage();
 			continueOnSeatSelection();
 			payment(paymentType, "");
 			String strPNR = getReferenceNumber().trim();
-			searchFlight(strPNR, username+"@gmail.com", "",lastname[1]);
+			validate_ticketStatus(strPNR);
+			searchFlight(strPNR, username, "",lastname[1]);
 			modifyExtras();
 			Baggage_Extra(triptype);
 			addSportsEqpmnt(triptype);
 			//Select_A_Meal();
 			Select_lounge();
 			inputExtras("12");
-			waitforElement(BookingPageLocators.manageMyBookingTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.modifySeat, "Seat Selection");
-			waitforElement(BookingPageLocators.selectseattittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
-				selectallSeats(seatSelect, "1", triptype);
-			}else{
-				System.out.println("No seat Select Page");
-			}
-			waitforElement(BookingPageLocators.paynow);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.paynow, "Pay Now");
+			clickModifySeats();
+			selectallSeats(seatSelect, "1", triptype);			
+			clickPayNowBtn();
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber().trim();
-			validate_ticketStatus(strpnr);
-			
+			getReferenceNumber();
+						
 			updateStatus("IBE_UAT_Reg","TC39_agencyLoginRondTripModifyExtras","Pass");
 			Reporter.SuccessReport("TC39_agencyLoginRondTripModifyExtras", "Pass");
 			
@@ -88,6 +80,7 @@ public class TC39_agencyLoginRondTripModifyExtras extends BookingPageFlow {
 	    		{
 	    	
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

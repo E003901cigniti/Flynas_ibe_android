@@ -17,7 +17,7 @@ public class TC26_anonymousRtDomestic4AdultBusinessTR extends BookingPageFlow{
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_26_anonymousRtDomestic4AdultBusinessTR(String tripType, String origin, String dest,String deptDate,String origin2,
-			String departure2,String retdate, String strTolPass, String Adult,String Child,String infant, String promo, String strBookingClass,
+			String departure2,String retdate, String strTolPass, String Adult,String Child,String infant, String promo, String strBookingClass, String bundle,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,String naSmiles,String Mobile,String email ,String SelectSeat,String paymenttype, String bookingtype,String Charity, 
 			String Currency,String Description
 			)  throws Throwable {
@@ -29,12 +29,13 @@ public class TC26_anonymousRtDomestic4AdultBusinessTR extends BookingPageFlow{
 			
 			click(BookingPageLocators.Arabic_pdctn_AR("Türkçe"), "Tarkish Language");
 			inputBookingDetails_Tarkish(tripType,origin, dest, deptdate , origin2, departure2, rtrndate,Adult, Child, infant,"","");
-			selectClass(strBookingClass,tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
 			inputPassengerDetails_Tarkish(FlightType, totalpass, nationality, Doctypr,docNumber,"", Mobile, email, "", "", "");
 			coninueOnBaggage();
 			continueOnSeatSelection();
-			payment(paymenttype, "");
-			String strpnr = getText(BookingPageLocators.summaryRefNumber_TR_uat,"PNR");
+				payment(paymenttype, "");
+			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			validate_ticketStatus_TR(strPNR);
@@ -68,6 +69,8 @@ public class TC26_anonymousRtDomestic4AdultBusinessTR extends BookingPageFlow{
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		xls.getCellValue("Promo", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
+
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
 	    		xls.getCellValue("Nationality", "Value"),

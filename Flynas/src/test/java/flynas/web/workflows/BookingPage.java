@@ -2,6 +2,7 @@ package flynas.web.workflows;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -19,6 +20,17 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 	public void clickLogin() throws Throwable{
 		waitforpageload();
 		click(BookingPageLocators.login_lnk, "Login");
+	}
+	
+	public int getFriendsCount() throws Throwable{
+		WebElement elm = driver.findElement(BookingPageLocators.friendscout);
+		String count = elm.getText();
+		if(count!=null){
+		Reporter.SuccessReport("Capturing friends limit", "Friends limit : "+count );
+		return Integer.parseInt(count);}
+		else
+			{Reporter.failureReport("Capturing friends limit", "Friends limit : null");
+		return (Integer) null;}
 	}
 	
 	public void changeCurrencyto(String Currency) throws Throwable{
@@ -111,28 +123,27 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 		 if(adultcount+childCount <= 9) {
 			 if(adultcount>1){
 				 click(BookingPageLocators.adult, "Adult");
-				 System.out.println("Adults: "+adults);
 				 JavascriptExecutor executor = (JavascriptExecutor)driver;
 				 executor.executeScript("arguments[0].click()", driver.findElement(By.xpath("//div[text()='"+adults+"']")));
-				 //driver.findElement(By.xpath("//div[text()='"+adults+"']")).click();
-				 //selectValueFromDropDown(BookingPageLocators.selectAdult, "Adult", adults);
+				 
 			 	}
 			 if(childCount>=1){
 				 click(BookingPageLocators.child, "Child");
-				 driver.findElement(By.xpath("//div[text()='"+child+"']")).click();
-				 //selectValueFromDropDown(BookingPageLocators.selectChild, "Child", child);
+				 JavascriptExecutor executor = (JavascriptExecutor)driver;
+				 executor.executeScript("arguments[0].click()", driver.findElement(By.xpath("//div[text()='"+Children+"']")));
+				
 			 	}
-			 if(infatCount>=Integer.valueOf(infants))
-				 { if(Integer.valueOf(infants)>=1){
-					 click(BookingPageLocators.infant, "Infant");
-					 driver.findElement(By.xpath("//div[text()='"+infant+"']")).click();
-					 //selectValueFromDropDown(BookingPageLocators.selectInfant, "Infant", infant);
-				 }
-			}
-			 else {
-				 Reporter.failureReport("Entering ifant Count", "Infant count cant be greater than adult count");
+			 if(infatCount>=1){
+				 if(infatCount<adultcount){
+					 click(BookingPageLocators.infant, "infant");
+					 JavascriptExecutor executor = (JavascriptExecutor)driver;
+					 executor.executeScript("arguments[0].click()", driver.findElement(By.xpath("//div[text()='"+infants+"']")));
 				 }
 		
+			 else {
+				 Reporter.failureReport("Entering infant Count", "Infant count cant be greater than adult count");
+				 }
+			 }
 		 }
 		 else{
 			 Reporter.failureReport("Entering Passenger count", "Total passenger count should not be greater than 9");
@@ -151,12 +162,19 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 		type(BookingPageLocators.promo, promo, "Promo");
 	}
 	
+	public void selectBookforfriends() throws Throwable{
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.bookforFriendschkbx));			
+		click(BookingPageLocators.bookforFriendschkbx,"Book for friends");
+		
+	}	
 	
 	public void clickSearchFlights() throws Throwable{
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.findFlights));			
 		click(BookingPageLocators.findFlights,"Find Flights");
 		explicityWait(BookingPageLocators.selectflightsection, "Select your Departing Flight");
 	}
+	
+	
 	
 	public void clickEmployeeLogin() throws Throwable{
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
@@ -190,6 +208,98 @@ public class BookingPage<RenderedWebElement> extends BookingPageLocators {
 	public void clickWebCheckIn() throws Throwable{
 		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.emplogin_lnk));
 		click(BookingPageLocators.WebCheckIn_lnk, "Web Check In");
+	}
+	
+	
+	public boolean inputBookingDetails_Tarkish(String tripType, String origin, String dest, String deptDate,
+			String origin2, String departure2, String retDate, String adults, String child, String infant, String promo,String Currency) throws Throwable
+	{
+		waitforElement(BookingPageLocators.oneWay_pdctn_TR);
+		waitUtilElementhasAttribute(BookingPageLocators.body);
+		//scrolling to find Trip type button
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.roundTrip_pdctn_TR));			
+		//Selecting Trip type		
+		String atrib;
+		if(tripType.equalsIgnoreCase("Round Trip")){
+			atrib = driver.findElement(BookingPageLocators.roundTrip_pdctn_TR).getAttribute("class");
+			if(!atrib.contains("active"))
+			click(BookingPageLocators.roundTrip_pdctn_TR, "Round Trip");
+		} else if(tripType.equalsIgnoreCase("One Way")){
+			atrib = driver.findElement(BookingPageLocators.oneWay_pdctn_TR).getAttribute("class");
+			if(!atrib.contains("active"))
+			click(BookingPageLocators.oneWay_pdctn_TR, "One Way");
+		} else if(tripType.equalsIgnoreCase("Multi City")){
+			atrib = driver.findElement(BookingPageLocators.multiCity_pdctn_TR).getAttribute("class");
+			if(!atrib.contains("active"))
+			click(BookingPageLocators.multiCity_pdctn_TR, "Multi City");
+		}
+		
+		//scrolling to find Origin field
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.origin));			
+		// Selecting origin		
+		click(BookingPageLocators.origin, "Origin");
+		selectCity(BookingPageLocators.selectOrigin, "Origin", origin);
+		click(BookingPageLocators.dest, "Destination");
+		selectCity(BookingPageLocators.selectDest, "Destination", dest);
+		/*click(BookingPageLocators.dest, "Destination");
+		selectCity(BookingPageLocators.selectDest, "Destination", dest);*/
+		
+		//scrolling to find Departure date field
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.dpDate_pdctn_TR));			
+			
+		click(BookingPageLocators.dpDate_pdctn_TR,"Departure Date");
+		selectDate(BookingPageLocators.selectDate,"Departure Date",deptDate);
+		
+		if(tripType.equalsIgnoreCase("Round Trip")){
+		//	click(BookingPageLocators.rtDate,"Return Date");
+			selectDate(BookingPageLocators.selectDate,"Return Date",retDate);
+		}
+		if(tripType.equalsIgnoreCase("Multi City")){
+			//scrolling to find Second origin field
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.secOrigin));			
+			//Selecting second Origin
+			click(BookingPageLocators.secOrigin, "Origin");
+			selectCity(BookingPageLocators.selectOrigin, "Origin", origin2);
+			selectCity(BookingPageLocators.selectDest, "Destination", departure2);
+			//scrolling to find Second Departure date field
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.rtnDate_pdctn_TR));			
+			//Selecting second Departure date
+			click(BookingPageLocators.rtnDate_pdctn_TR,"Return Date");
+			selectDate(BookingPageLocators.selectDate,"Return Date",retDate);
+		}
+		
+		//scrolling to find passenger count fields
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.adult));			
+		//Entering passenger count
+		if(Integer.valueOf(adults)>1){
+			click(BookingPageLocators.adult, "Adult");
+			System.out.println("Adults: "+adults);
+			JavascriptExecutor executor = (JavascriptExecutor)driver;
+			executor.executeScript("arguments[0].click()", driver.findElement(By.xpath("//div[text()='"+adults+"']")));
+			//driver.findElement(By.xpath("//div[text()='"+adults+"']")).click();
+			//selectValueFromDropDown(BookingPageLocators.selectAdult, "Adult", adults);
+		}
+		if(Integer.valueOf(child)>=1){
+			click(BookingPageLocators.child_pdctn_TR, "Child");
+			driver.findElement(By.xpath("//div[text()='"+child+"']")).click();
+			//selectValueFromDropDown(BookingPageLocators.selectChild, "Child", child);
+		}
+		if(Integer.valueOf(infant)>=1){
+			click(BookingPageLocators.infant, "Infant");
+			driver.findElement(By.xpath("//div[text()='"+child+"']")).click();
+			//selectValueFromDropDown(BookingPageLocators.selectInfant, "Infant", infant);
+		}
+		
+		//scrolling to find promo fields
+
+		if(!promo.equalsIgnoreCase("")){
+			type(BookingPageLocators.promo, promo, "Promo");
+		}
+		
+		//scrolling to find Find Flights button
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", driver.findElement(BookingPageLocators.findFlights_pdctn_TR));			
+		click(BookingPageLocators.findFlights_pdctn_TR,"Find Flights");
+		return true;
 	}
 	
 }

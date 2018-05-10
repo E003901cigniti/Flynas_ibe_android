@@ -12,10 +12,10 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectEmailID extends BookingPageFlow {
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"Errors_On_PnrRetrieval");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"Errors_On_PnrRetrieval");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void ValidatingEorrorMessageWithIncorrectPnrValidEmail (String PNR, String Email,String ErrorMessage,String Description) throws Throwable {
+	public  void ValidatingEorrorMessageWithIncorrectPnrValidemail ( String PNR, String email, String ErrorMessage, String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
@@ -25,7 +25,7 @@ public class TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectEmailID extends 
 			
 			waitforElement(BookingPageLocators.pnrinput);
 			type(BookingPageLocators.pnrinput, PNR, "PNR");
-			type(BookingPageLocators.lastnameinput, Email, "Last name");
+			type(BookingPageLocators.emailinput, email, "Last name");
 			click(BookingPageLocators.btnFindBooking, "Find Booking");		
 			
 			
@@ -34,18 +34,18 @@ public class TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectEmailID extends 
 				String ErrorMsg = getText(BookingPageLocators.ErrorMsg1, "Error Message");
 				if(ErrorMsg.contains(ErrorMessage))
 				{
-					Reporter.SuccessReport("Validating EorrorMessage With Incorrect Pnr Valid Email", "Successfully verified the error message :"+ ErrorMsg);
+					Reporter.SuccessReport("Validating EorrorMessage With Incorrect Pnr Valid email", "Successfully verified the error message :"+ ErrorMsg);
 					driver.close();
 				}
 				else
 				{
-					Reporter.failureReport("Validating EorrorMessage With Incorrect Pnr Valid Email", "Error Message is not as expected");
+					Reporter.failureReport("Validating EorrorMessage With Incorrect Pnr Valid email", "Error Message is not as expected");
 					driver.close();
 				}				
 			}
 			else
 			{
-				Reporter.failureReport("Validating EorrorMessage With Incorrect Pnr Valid Email", "Error Prompt not found");
+				Reporter.failureReport("Validating EorrorMessage With Incorrect Pnr Valid email", "Error Prompt not found");
 				driver.close();
 			}	
 			
@@ -54,7 +54,7 @@ public class TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectEmailID extends 
 	catch (Exception e)
 		{
 			e.printStackTrace();
-			Reporter.failureReport("TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectEmailID", "Failed");
+			Reporter.failureReport("TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectemailID", "Failed");
 			driver.close();
 		}
 	}
@@ -66,7 +66,7 @@ public class TC35_ValidatingEorrorMessageWithIncorrectPNRCorrectEmailID extends 
 	    		xls.getCellValue("PNR", "Value5"),	    		
 	    		xls.getCellValue("username", "Value1"),
 	    		xls.getCellValue("ErrorMessage", "Value1"),
-	    		"Validating Error Message on Pnr search with Wrong PNR Valid Email"}};
+	    		"Validating Error Message on Pnr search with Wrong PNR Valid email"}};
 	}
 
 }

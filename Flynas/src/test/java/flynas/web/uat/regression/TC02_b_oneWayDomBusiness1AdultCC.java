@@ -17,7 +17,7 @@ public class TC02_b_oneWayDomBusiness1AdultCC extends BookingPageFlow{
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_02_b_oneWayDomBusiness1AdultCC(String tripType, String origin, String dest,String deptDate,String origin2,
-			String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
+			String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass, String bundle,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,String naSmiles,
 			String Mobile,String email ,String SelectSeat,String paymenttype,String bookingtype,String charity,
 			String Currency,String Description
@@ -39,8 +39,10 @@ public class TC02_b_oneWayDomBusiness1AdultCC extends BookingPageFlow{
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2,departure2,retrndate,Adult, Child, infant,promo,Currency,paymenttype);
 			
 			//Selecting a fare class
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
 			
+					
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
 					
@@ -76,15 +78,16 @@ public class TC02_b_oneWayDomBusiness1AdultCC extends BookingPageFlow{
 	    			xls.getCellValue("Trip Type", "Value"),
 	    			xls.getCellValue("Origin", "Value"),
 		    		xls.getCellValue("Destination", "Value"),
-		    		xls.getCellValue("Departure Date", "Value"),
+		    		xls.getCellValue("Departure Date", "Value2"),
 		    		"",
 		    		"",
-		    		xls.getCellValue("Return Date", "Value"),
+		    		xls.getCellValue("Return Date", "Value2"),
 		    		xls.getCellValue("Adults Count", "Value"),
 		    		xls.getCellValue("Child Count", "Value"),
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
-		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Booking Class", "Value2"),
+		    		xls.getCellValue("Bundle", "Value2"),
 		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

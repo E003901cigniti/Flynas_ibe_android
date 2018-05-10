@@ -13,20 +13,22 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC12_Err_5_OneAdultOneChildCordshareMT extends BookingPageFlow{
 
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"ErrorMessage_5");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"ErrorMessage_5");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_12_Err_5_OneAdultOneChildCordshareMT (String tripType, String origin, String dest, String deptDate,String origin2,String departure2,String retdate,String Audalt,String Child,String infant, 
-			String promo,String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,String naSmiles,String Mobile,String email ,String SelectSeat,
-			String paymenttype,String Bookingtype,String bookingclass,String Currency,String Description) throws Throwable {
+	public  void TC_12_Err_5_OneAdultOneChildCordshareMT ( String tripType,String origin, String destination,
+			String deptDate, String retDate,String adult,String child,String infant,String promo, String bookingClass,
+			String flightType,String totalpsngrs,String nationality,String docType,String docNumber,String naSmiles,String mobile,
+			String email ,String selectSeat,String paymentType,String bookingType,String charity,String currency, String payment2 ,
+			String ErrorMessage, String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String	deptdate = pickDate(deptDate);
-			String trip = tripType.split("/")[1];
-			inputBookingDetails(trip, origin, dest, deptdate,origin2, departure2,retdate,Audalt, Child, infant,promo,Currency,paymenttype);
-			selectCodeshareConectflight(bookingclass,Bookingtype);
-			inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
+			deptDate = pickDate(deptDate);
+			
+			inputBookingDetails(tripType, origin, destination, deptDate,"", "",retDate,adult, child, infant,promo,currency,paymentType);
+			selectCodeshareConectflight(bookingClass);
+			inputPassengerDetails(flightType,totalpsngrs,nationality,docType,docNumber, naSmiles,mobile,email,"","","");
 			waitforElement(BookingPageLocators.baggagetittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)==true){
@@ -44,7 +46,7 @@ public class TC12_Err_5_OneAdultOneChildCordshareMT extends BookingPageFlow{
 			}else{
 				System.out.println("No Seat Page");
 			}
-			payment(paymenttype,"");
+			payment(paymentType,"");
 			String strpnr = getReferenceNumber().trim();
 			searchFlightCheckin(strpnr, email, "", "");
 			if(isElementDisplayedTemp(BookingPageLocators.ErrorMsg1)){
@@ -70,13 +72,13 @@ public class TC12_Err_5_OneAdultOneChildCordshareMT extends BookingPageFlow{
 	@DataProvider(name="testData")
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
-	    		{xls.getCellValue("Trip Type", "Value"),
-	    		xls.getCellValue("Origin", "Value"),xls.getCellValue("Destination", "Value"),xls.getCellValue("Departure Date", "Value"),
-	    		xls.getCellValue("Origin2", "Value"),xls.getCellValue("Destination2", "Value"),xls.getCellValue("Return Date", "Value"),
+	    		{xls.getCellValue("Trip Type", "Value2"),
+	    		xls.getCellValue("origin", "Value"),xls.getCellValue("destination", "Value"),xls.getCellValue("Departure Date", "Value"),
+	    		xls.getCellValue("Return Date", "Value"),
 	    		xls.getCellValue("Adults Count", "Value"),xls.getCellValue("Child Count", "Value2"),xls.getCellValue("Infant Count", "Value"),
-	    		xls.getCellValue("Promo", "Value"),xls.getCellValue("Flight Type", "Value"),xls.getCellValue("total pass", "Value2"),
-	    		xls.getCellValue("Nationality", "Value"),xls.getCellValue("Document Type", "Value"),xls.getCellValue("Doc Number", "Value"),
-	    		xls.getCellValue("na Smiles", "Value"),xls.getCellValue("Mobile", "Value"),xls.getCellValue("Email Address", "Value"),
+	    		xls.getCellValue("promo", "Value"),xls.getCellValue("Flight Type", "Value"),xls.getCellValue("total pass", "Value2"),
+	    		xls.getCellValue("nationality", "Value"),xls.getCellValue("Document Type", "Value"),xls.getCellValue("Doc Number", "Value"),
+	    		xls.getCellValue("na Smiles", "Value"),xls.getCellValue("mobile", "Value"),xls.getCellValue("email Address", "Value"),
 	    		xls.getCellValue("Select Seat", "Value"),"Credit Card",xls.getCellValue("Booking type", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),"",
 	    		"Validate Error Message For One Adult One Child Cordshare MT CheckIn" }

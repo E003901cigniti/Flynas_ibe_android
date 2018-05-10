@@ -28,7 +28,7 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 			String strFlightType, String strOrigin,String strDestination, String strDepatureDate,
 			String strAdultCount, String strChildCount, String strInfantCount, String strPromo,  String strTotalPessenger,
 			String strNationality,String strDocumentType,String strDocumentNum,String strNaSmile,String strMobile,
-			String strBookingClass, String strSelectSeat, String strPaymentType,
+			String strBookingClass, String bundle, String strSelectSeat, String strPaymentType,
 			String Currency)throws Throwable{
 				
 		try{
@@ -53,7 +53,9 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
 					
 					//Selecting flight and traveling class
-					selectClass(strBookingClass, strTripType);
+					selectClass(strBookingClass, bundle);
+					clickContinueBtn();
+					upSellPopUpAction("Continue");
 					
 					//Entering passenger details
 					inputPassengerDetails(strFlightType,strTotalPessenger,strNationality,strDocumentType,strDocumentNum, strNaSmile,strMobile,username,"","","");
@@ -102,6 +104,8 @@ public class TC05_onewaydomestic8adultsBookingCheckin extends BookingPageFlow {
 		    	xls.getCellValue("Mobile", "Value"),
 		    	xls.getCellValue("Email Address", "Value"),		    	
 		    	xls.getCellValue("Booking Class", "Value"),
+		    	xls.getCellValue("Bundle", "Value"),
+
 		    	xls.getCellValue("Select Seat", "Value"),
     			"Credit Card",
     			""}};

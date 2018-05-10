@@ -12,21 +12,22 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC02_ConformBookingCancelPNR extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"FL_WEB_12");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_12");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_02_ConformBookingCancelPNR(String tripType,String origin, String dest,String deptDate,String origin2,
-			String departure2, String retdate,String Audalt,String Child,String infant,String promo, String strBookingClass,
-			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,String naSmiles,String Mobile,
-			String email ,String SelectSeat,String paymenttype,String bookingtype,String charity,String Currency, String payment2 ,
+	public  void TC_02_ConformBookingCancelPNR(String tripType,String origin, String destination,String deptDate,
+			String retDate,String adult,String child,String infant,String promo, String bookingClass,
+			String flightType,String totalpsngrs,String nationality,String docType,String docNumber,String naSmiles,String mobile,
+			String email ,String selectSeat,String paymentType,String bookingType,String charity,String currency, String payment2 ,
 			String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String	deptdate = pickDate(deptDate);
-			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retdate,Audalt, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
-			String FirstLastname[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
+			deptDate = pickDate(deptDate);			
+			inputBookingDetails(tripType, origin, destination, deptDate, "", "", retDate,adult, child, infant,promo,currency,paymentType);
+			selectClass(bookingClass, tripType);
+			clickContinueBtn();
+			String FirstLastname[]=inputPassengerDetails(flightType,totalpsngrs,nationality,docType,docNumber, naSmiles,mobile,email,"","","");
 			System.out.println(FirstLastname[0]);	
 			System.out.println(FirstLastname[1]);
 			waitforElement(BookingPageLocators.baggagetittle);
@@ -36,7 +37,7 @@ public class TC02_ConformBookingCancelPNR extends BookingPageFlow{
 			}else{
 				System.out.println("No Baggage Page");
 			}		
-			waitForElementPresent(BookingPageLocators.selectseattittle, "SelectSeatTittle");
+			waitForElementPresent(BookingPageLocators.selectseattittle, "selectseattittle");
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
 				clickContinueBtn();
@@ -46,7 +47,7 @@ public class TC02_ConformBookingCancelPNR extends BookingPageFlow{
 			}else{
 					System.out.println("No Seat Page");
 			}
-			payment(paymenttype,"");
+			payment(paymentType,"");
 			String strpnr = getReferenceNumber().trim();
 			System.out.println(strpnr);				
 			searchFlight(strpnr, email, "", "");
@@ -74,8 +75,8 @@ public class TC02_ConformBookingCancelPNR extends BookingPageFlow{
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{xls.getCellValue("Trip Type", "Value"),
-	    		xls.getCellValue("Origin", "Value"),
-	    		xls.getCellValue("Destination", "Value"),
+	    		xls.getCellValue("origin", "Value"),
+	    		xls.getCellValue("destination", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		"",
 	    		"",
@@ -83,21 +84,21 @@ public class TC02_ConformBookingCancelPNR extends BookingPageFlow{
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		xls.getCellValue("Promo", "Value"),
+	    		xls.getCellValue("promo", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
-	    		xls.getCellValue("Nationality", "Value"),
+	    		xls.getCellValue("nationality", "Value"),
 	    		xls.getCellValue("Document Type", "Value"),
 	    		xls.getCellValue("Doc Number", "Value"),
 	    		"1234567890",
-	    		xls.getCellValue("Mobile", "Value"),
-	    		xls.getCellValue("Email Address", "Value"),
+	    		xls.getCellValue("mobile", "Value"),
+	    		xls.getCellValue("email Address", "Value"),
 	    		xls.getCellValue("Select Seat", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		"",
     			xls.getCellValue("Charity Donation", "Value"),
-    			xls.getCellValue("Currency", "Value"),
+    			xls.getCellValue("currency", "Value"),
     			xls.getCellValue("Payment Type2", "Value"),
 	    		"Validate Error Message After Cancel PNR "}};
 	}

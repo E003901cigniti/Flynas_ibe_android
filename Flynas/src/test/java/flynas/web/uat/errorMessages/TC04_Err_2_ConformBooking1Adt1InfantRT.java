@@ -12,25 +12,26 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC04_Err_2_ConformBooking1Adt1InfantRT extends BookingPageFlow{
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"ErrorMessage_2");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"ErrorMessage_2");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public void TC_04_Err_2_ConformBooking1Adt1InfantRT(String strTripType,String strFlightType,String strOrigin,String strDestination,
-			String strDepatureDate,String origin2,String departure2, String strReturnDate, String strTotalPessenger,String strAdultCount,
-			String strChildCount,String strInfantCount,String strPromo,String strBookingClass,String strNationality,String strDocumentType,
-			String strDocumentNum,String strNaSmile,String strMobile,String strEmail,String strSelectSeat,String strPaymentType,String bookingtype,
-			String strNewDate, String charity,String Currency,String description)throws Throwable{
+	public void TC_04_Err_2_ConformBooking1Adt1InfantRT( String tripType,String origin, String destination,
+			String deptDate, String retDate,String adult,String child,String infant,String promo, String bookingClass,
+			String flightType,String totalpsngrs,String nationality,String docType,String docNumber,String naSmiles,String mobile,
+			String email ,String selectSeat,String paymentType,String bookingType,String charity,String currency, String payment2 ,
+			String ErrorMessage, String Description)throws Throwable{
 				try{
 					
 					
-					TestEngine.testDescription.put(HtmlReportSupport.tc_name, description);
-					String	deptdate = pickDate(strDepatureDate);
-					String[] trip = strTripType.split("/");
-					inputBookingDetails(trip[2], strOrigin, strDestination, deptdate,origin2,departure2, strReturnDate,
-							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
-					selectClass(strBookingClass, strTripType);
-					inputPassengerDetails(strFlightType, strTotalPessenger, strNationality, strDocumentType, 
-							strDocumentNum, strNaSmile, strMobile, strEmail,"","","");
+					TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
+					deptDate = pickDate(deptDate);
+					retDate = pickDate(retDate);
+					inputBookingDetails(tripType, origin, destination, deptDate,"","", retDate,
+							adult, child, infant, promo,currency,paymentType);
+					selectClass(bookingClass, tripType);
+					clickContinueBtn();
+					inputPassengerDetails(flightType, totalpsngrs, nationality, docType, 
+							docNumber, naSmiles, mobile, email,"","","");
 					waitforElement(BookingPageLocators.baggagetittle);
 					waitUtilElementhasAttribute(BookingPageLocators.body);
 					if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
@@ -46,10 +47,10 @@ public class TC04_Err_2_ConformBooking1Adt1InfantRT extends BookingPageFlow{
 							click(BookingPageLocators.ok, "OK");
 						}
 					}
-					payment(strPaymentType,"");
-					String strPNR = getReferenceNumber();
+					payment(paymentType,"");
+					String PNR = getReferenceNumber();
 							
-					searchFlightCheckin(strPNR, strEmail, "", "");
+					searchFlightCheckin(PNR, email, "", "");
 					if(isElementDisplayedTemp(BookingPageLocators.ErrorMsg1)){
 						String ErrorMsg = getText(BookingPageLocators.ErrorMsg1, "Error Message");
 						if(ErrorMsg.contains("Bookings with Infants are not eligible for online check-in. Please check-in at the airport.")){
@@ -74,24 +75,24 @@ public class TC04_Err_2_ConformBooking1Adt1InfantRT extends BookingPageFlow{
 		@DataProvider(name="testData")
 		public Object[][] createdata1() {
 		    return (Object[][]) new Object[][] {{
-		    	xls.getCellValue("Trip Type", "Value"),
+		    	xls.getCellValue("Trip Type", "Value3"),
 		    	xls.getCellValue("Flight Type", "Value"),
-		    	xls.getCellValue("Origin", "Value"),
-		    	xls.getCellValue("Destination", "Value"),
+		    	xls.getCellValue("origin", "Value"),
+		    	xls.getCellValue("destination", "Value"),
 		    	xls.getCellValue("Departure Date", "Value"),"","",
 		    	xls.getCellValue("Return Date", "Value"),
 		    	xls.getCellValue("Total Passenger", "Value"),
 		    	xls.getCellValue("Adults Count", "Value"),
 		    	xls.getCellValue("Child Count", "Value"),
 		    	xls.getCellValue("Infant Count", "Value"),
-		    	xls.getCellValue("Promo", "Value"),
+		    	xls.getCellValue("promo", "Value"),
 		    	xls.getCellValue("Booking Class", "Value"),
-		    	xls.getCellValue("Nationality", "Value"),
+		    	xls.getCellValue("nationality", "Value"),
 		    	xls.getCellValue("Document Type", "Value"),
 		    	xls.getCellValue("Doc Number", "Value"),
 		    	"1234567890",
-    			xls.getCellValue("Mobile", "Value"),
-    			xls.getCellValue("Email Address", "Value"),
+    			xls.getCellValue("mobile", "Value"),
+    			xls.getCellValue("email Address", "Value"),
     			xls.getCellValue("Select Seat", "Value"),
     			"Credit Card","",
     			xls.getCellValue("New Date", "Value"),

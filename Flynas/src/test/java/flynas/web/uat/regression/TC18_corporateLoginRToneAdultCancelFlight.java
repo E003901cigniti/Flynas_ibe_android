@@ -20,7 +20,7 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_18");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_18_corporateLoginRToneAdultCancelFlight(String bookingClass,
+	public  void TC_18_corporateLoginRToneAdultCancelFlight(String BookingClass, String bundle,
 			String mobilenum,String paymentType,String newDate,String departurDate,String rtnDate,String origin,
 			String dest,String triptype,String adult,String child,String infant,String seatSelect,String domOrInt,
 			String totalPass,String nationality,String docNum,String docType,String email, String Description) throws Throwable {
@@ -39,15 +39,18 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
-			selectClass(bookingClass, "");
+			selectClass(BookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			String[] Passengername = inputPassengerDetails(domOrInt, totalPass, nationality, docType, docNum, "", mobilenum, email, "", "", "");
 			coninueOnBaggage();
 			selectSeat(seatSelect, "");	
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();
-			System.out.println(strPNR);
+			validate_ticketStatus(strPNR);
 			searchFlight(strPNR, username, "", Passengername[1]);
+//			searchFlight("FETI8R", "", "", "wMIRH");
 			cancelFlight("All");
 				
 			updateStatus("IBE_UAT_Reg","TC18_corporateLoginRToneAdultCancelFlight","Pass");
@@ -68,6 +71,7 @@ public class TC18_corporateLoginRToneAdultCancelFlight extends BookingPageFlow{
 	    		{
 	    			
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value2"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

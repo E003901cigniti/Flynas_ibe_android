@@ -19,7 +19,7 @@ public class TC35_oneWayInternationalEconomy_JED_KWI extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataProdRoutes"),"Chrome_TestData");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_35_oneWayInternationalEconomy_JED_KWI( String bookingClass,
+	public  void TC_35_oneWayInternationalEconomy_JED_KWI( String bookingClass, String bundle, 
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -38,7 +38,9 @@ public class TC35_oneWayInternationalEconomy_JED_KWI extends BookingPageFlow{
 				click(BookingPageLocators.login_lnk, "Login");				
 				login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -65,6 +67,7 @@ public class TC35_oneWayInternationalEconomy_JED_KWI extends BookingPageFlow{
 	    		{
 	    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
@@ -76,8 +79,8 @@ public class TC35_oneWayInternationalEconomy_JED_KWI extends BookingPageFlow{
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
-	    		"01-April 2017",
+	    		xls.getCellValue("Select Seat", "Value"),
+	    		xls.getCellValue("newDate", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		"Validate oneWay International Economy_JED_KWI"}};

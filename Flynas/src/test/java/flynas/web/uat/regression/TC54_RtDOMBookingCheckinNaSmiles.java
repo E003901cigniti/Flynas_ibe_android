@@ -16,7 +16,7 @@ public class TC54_RtDOMBookingCheckinNaSmiles extends BookingPageFlow{
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_54_RtDOMBookingCheckinNaSmiles(String tripType, String origin, String dest, 
-			String deptDate, String origin2,String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
+			String deptDate, String origin2,String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass, String bundle,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
 			String naSmiles,String Mobile,String SelectSeat,String paymenttype,String paymenttype2,String bookingtype, 
 			String charity,String Currency, String accType,String Description
@@ -36,7 +36,9 @@ public class TC54_RtDOMBookingCheckinNaSmiles extends BookingPageFlow{
 			login(username,password);
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, rtrndate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			
 			continueOnPassengerDetails();
 			
@@ -82,6 +84,7 @@ public class TC54_RtDOMBookingCheckinNaSmiles extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value2"),
+		    		xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

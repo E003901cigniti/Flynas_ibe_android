@@ -19,7 +19,7 @@ public class TC03_oneWayDomesticEconomy_RUH_GIZ extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataProdRoutes"),"Chrome_TestData");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_03_oneWayDomesticEconomy_RUH_GIZ( String bookingClass,String mobilenum,
+	public  void TC_03_oneWayDomesticEconomy_RUH_GIZ( String bookingClass, String bundle, String mobilenum,
 			String paymentType,
 			String newDate,
 			String Departuredate,String rtnDate,
@@ -39,7 +39,9 @@ public class TC03_oneWayDomesticEconomy_RUH_GIZ extends BookingPageFlow {
 			click(BookingPageLocators.login_lnk, "Login");				
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			waitforElement(BookingPageLocators.baggagetittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
@@ -72,8 +74,9 @@ public class TC03_oneWayDomesticEconomy_RUH_GIZ extends BookingPageFlow {
 	    		
 			    
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
@@ -83,7 +86,7 @@ public class TC03_oneWayDomesticEconomy_RUH_GIZ extends BookingPageFlow {
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
+	    		xls.getCellValue("Select Seat", "Value"),
 	    		"Validate OneWay Domestic Economy_RUH_GIZ"}};
 	}
 

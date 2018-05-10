@@ -18,7 +18,7 @@ public class TC37_EmpLoginStaffConfirmedModifyExtras extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_16");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_37_EmpLoginStaffConfirmedModifyExtras(String bookingClass,String mobilenum,
+	public  void TC_37_EmpLoginStaffConfirmedModifyExtras(String BookingClass, String bundle,String mobilenum,
 			String paymentType,String newDate,String pickDate,String rtndate,String origin,String dest,String triptype,
 			String adult,String child,String infant,String selectseat,String Description) throws Throwable {
 		try {
@@ -35,7 +35,7 @@ public class TC37_EmpLoginStaffConfirmedModifyExtras extends BookingPageFlow{
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate, "", "", rtrndate,adult, child, infant,"","",paymentType);
-			selectClassForStaff(bookingClass);
+			selectClassForStaff(BookingClass);
 			waitforElement(BookingPageLocators.mobileNum);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			continueOnPassengerDetails();
@@ -84,6 +84,8 @@ public class TC37_EmpLoginStaffConfirmedModifyExtras extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
+
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value2"),

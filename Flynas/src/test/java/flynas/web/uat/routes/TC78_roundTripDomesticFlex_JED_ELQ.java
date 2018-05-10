@@ -19,7 +19,7 @@ public class TC78_roundTripDomesticFlex_JED_ELQ extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUATRoutes"),"AllRoutes");
 
 	@Test(dataProvider = "testData",groups={"Flex"})
-	public  void TC_78_roundTripDomesticFlex_JED_ELQ( String bookingClass,String mobilenum,String paymentType,
+	public  void TC_78_roundTripDomesticFlex_JED_ELQ( String bookingClass, String bundle,String mobilenum,String paymentType,
 			String newDate,String depDate,String rtnDate,String origin,String dest,String triptype,String adult,String child,
 			String infant,String seatSelect,String Description) throws Throwable {
 		try {
@@ -33,7 +33,9 @@ public class TC78_roundTripDomesticFlex_JED_ELQ extends BookingPageFlow {
 			
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
@@ -66,6 +68,7 @@ public class TC78_roundTripDomesticFlex_JED_ELQ extends BookingPageFlow {
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

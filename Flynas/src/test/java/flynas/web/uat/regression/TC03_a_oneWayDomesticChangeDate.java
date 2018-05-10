@@ -21,10 +21,10 @@ public class TC03_a_oneWayDomesticChangeDate extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_03_oneWayDomesticChangeDate");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public void TC_03_oneWayDomesticChangeDate(String strTripType, String strFlightType, String strOrigin,
+	public void TC03a_oneWayDomesticChangeDate(String strTripType, String strFlightType, String strOrigin,
 			String strDestination, String strDepatureDate, String origin2,String departure2,String strReturnDate,
 			String strTotalPessenger,String strAdultCount, String strChildCount, String strInfantCount, String strPromo, 
-			String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,String strNaSmile, 
+			String strBookingClass, String bundle, String strNationality, String strDocumentType,	String strDocumentNum,String strNaSmile, 
 			String strMobile, String strEmail, String strSelectSeat, String strPaymentType,String bookingtype,
 			String strNewDate, String charity,String Currency, String description)throws Throwable{
 				try{									
@@ -44,7 +44,10 @@ public class TC03_a_oneWayDomesticChangeDate extends BookingPageFlow {
 					
 					inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2, departure2,retrndate,
 							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
-					selectClass(strBookingClass, strTripType);
+					System.out.println(bundle);
+					selectClass(strBookingClass, bundle);
+					clickContinueBtn(); 
+					
 					
 					//Clicking continue button on Passenger details page
 					continueOnPassengerDetails();
@@ -60,12 +63,13 @@ public class TC03_a_oneWayDomesticChangeDate extends BookingPageFlow {
 					//Capturing PNR number
 					String strpnr = getReferenceNumber();
 					String strPNR = strpnr.trim();
+					System.out.println(strPNR);
 					validate_ticketStatus(strPNR);
 					
 					//Verifying PNR numbers
-					String	newdate = pickDate(strNewDate);
-					String strPNRChangeDate = changeDate(strPNR, strEmail, strMobile, lastname, newdate, strSelectSeat,strTotalPessenger,strBookingClass,0);
-					
+					String	newdate = nextDateof(deptdate);
+					String strPNRChangeDate = changeDate(strPNR, strEmail, strMobile,lastname , newdate, strSelectSeat,strTotalPessenger,strBookingClass,0);
+					System.out.println(strPNRChangeDate);
 					//Reporting the test case status
 					if(strPNRChangeDate.trim().equalsIgnoreCase(strPNR)){
 						Reporter.SuccessReport("Change Flight Date", "Flight Date has changed successfully");
@@ -74,13 +78,13 @@ public class TC03_a_oneWayDomesticChangeDate extends BookingPageFlow {
 					}
 					
 					updateStatus("IBE_UAT_Reg","TC03_a_oneWayDomesticChangeDate","Pass");
-					Reporter.SuccessReport("TC_03_oneWayDomesticChangeDate", "Pass");
+					Reporter.SuccessReport("TC03_a_oneWayDomesticChangeDate", "Pass");
 					driver.close();
 			
 					}catch(Exception e){
 						e.printStackTrace();
 						updateStatus("IBE_UAT_Reg","TC03_a_oneWayDomesticChangeDate","Fail");
-						Reporter.failureReport("TC_03_oneWayDomesticChangeDate", "Fail");
+						Reporter.failureReport("TC03_a_oneWayDomesticChangeDate", "Fail");
 						driver.close();
 					}
 	}
@@ -102,6 +106,7 @@ public class TC03_a_oneWayDomesticChangeDate extends BookingPageFlow {
 		    	xls.getCellValue("Infant Count", "Value"),
 		    	xls.getCellValue("Promo", "Value"),
 		    	xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value3"),
 		    	xls.getCellValue("Nationality", "Value"),
 		    	xls.getCellValue("Document Type", "Value"),
 		    	xls.getCellValue("Doc Number", "Value"),

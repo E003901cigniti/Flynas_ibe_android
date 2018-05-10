@@ -19,7 +19,7 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC_01_oneWayDomesticEcoSADAD");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_34_BaggageValidation( String bookingClass,String mobilenum,String paymentType,
+	public  void TC_34_BaggageValidation( String BookingClass, String bundle,String mobilenum,String paymentType,
 			String newDate,String departureDate,String rtnDate,String origin,String dest,String triptype,String adult,String child,
 			String infant,String seatSelect,String Description) throws Throwable {
 		try {
@@ -35,7 +35,9 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(BookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			validating_BaggageWeights();
 				
@@ -56,6 +58,7 @@ public class TC34_BaggageValidation extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),

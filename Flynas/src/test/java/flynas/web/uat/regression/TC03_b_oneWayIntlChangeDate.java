@@ -1,4 +1,4 @@
-package flynas.web.uat.regression;
+	package flynas.web.uat.regression;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.DataProvider;
@@ -24,7 +24,7 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 	public void TC03b_oneWayIntlChangeDate(String strTripType, String strFlightType, String strOrigin,
 			String strDestination, String strDepatureDate, String origin2,String departure2,String strReturnDate,
 			String strTotalPessenger,String strAdultCount, String strChildCount, String strInfantCount, String strPromo, 
-			String strBookingClass, String strNationality, String strDocumentType,	String strDocumentNum,
+			String strBookingClass, String bundle, String strNationality, String strDocumentType,	String strDocumentNum,
 			String strNaSmile,  String strMobile, String strSelectSeat, String strPaymentType,String bookingtype,
 			String strNewDate, String charity,String Currency,String description)throws Throwable{
 				try{					
@@ -44,7 +44,9 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 					
 					inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2, departure2,retrndate,
 							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
-					selectClass(strBookingClass, strTripType);
+					selectClass(strBookingClass, bundle);
+					clickContinueBtn();
+					upSellPopUpAction("Continue");
 					
 					//Clicking continue button on Passenger details page
 					continueOnPassengerDetails();
@@ -63,7 +65,7 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 					validate_ticketStatus(strPNR);
 					
 					//Verifying PNR numbers
-					String	newdate = pickDate(strNewDate);
+					String	newdate = nextDateof(deptdate);
 					String strPNRChangeDate = changeDate(strPNR, username, strMobile, Lastname, newdate, strSelectSeat,strTotalPessenger,strBookingClass,0);
 					
 					//Reporting the test case status
@@ -92,16 +94,17 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
 		    	xls.getCellValue("Flight Type", "Value2"),
 		    	xls.getCellValue("Origin", "Value"),
 		    	xls.getCellValue("Destination", "Value"),
-		    	xls.getCellValue("Departure Date", "Value"),
+		    	xls.getCellValue("Departure Date", "Value2"),
 		    	"",
 		    	"",
-		    	xls.getCellValue("Return Date", "Value"),
+		    	xls.getCellValue("Return Date", "Value2"),
 		    	xls.getCellValue("Total Passenger", "Value"),
 		    	xls.getCellValue("Adults Count", "Value"),
 		    	xls.getCellValue("Child Count", "Value"),
 		    	xls.getCellValue("Infant Count", "Value"),
 		    	xls.getCellValue("Promo", "Value"),
 		    	xls.getCellValue("Booking Class", "Value"),
+		    	xls.getCellValue("Bundle", "Value2"),
 		    	xls.getCellValue("Nationality", "Value"),
 		    	xls.getCellValue("Document Type", "Value"),
 		    	xls.getCellValue("Doc Number", "Value"),
@@ -110,7 +113,7 @@ public class TC03_b_oneWayIntlChangeDate extends BookingPageFlow {
     			xls.getCellValue("Select Seat", "Value"),
     			xls.getCellValue("Payment Type", "Value"),
     			"",
-    			xls.getCellValue("New Date", "Value"),
+    			xls.getCellValue("New Date", "Value2"),
     			xls.getCellValue("Charity Donation", "Value"),
     			"",
     			"Validate One Way International ChangeDate"

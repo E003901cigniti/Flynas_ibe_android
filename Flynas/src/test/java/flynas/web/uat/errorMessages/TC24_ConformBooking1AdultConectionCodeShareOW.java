@@ -12,26 +12,25 @@ import flynas.web.testObjects.BookingPageLocators;
 import flynas.web.workflows.BookingPageFlow;
 
 public class TC24_ConformBooking1AdultConectionCodeShareOW extends BookingPageFlow{
-ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"ErrorMessage_7");
+ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"ErrorMessage_7");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public void TC_24_ConformBooking1AdultConectionCodeShareOW(String strTripType,String strFlightType,String strOrigin,String strDestination,
-			String strDepatureDate,String origin2,String departure2, String strReturnDate, String strTotalPessenger,String strAdultCount,
-			String strChildCount,String strInfantCount,String strPromo,String strBookingClass,String strNationality,String strDocumentType,
-			String strDocumentNum,String strNaSmile,String strMobile,String strEmail,String strSelectSeat,String strPaymentType,String bookingtype,
-			String strNewDate, String charity,String Currency,String description)throws Throwable{
+	public void TC_24_ConformBooking1AdultConectionCodeShareOW( String tripType,String origin, String destination,
+			String deptDate, String retDate,String adult,String child,String infant,String promo, String bookingClass,
+			String flightType,String totalpsngrs,String nationality,String docType,String docNumber,String naSmiles,String mobile,
+			String email ,String selectSeat,String paymentType,String bookingType,String charity,String currency, String payment2 ,
+			String ErrorMessage, String Description)throws Throwable{
 			try{
 					
 					
-					TestEngine.testDescription.put(HtmlReportSupport.tc_name, description);
-					String depdate = pickDate(strDepatureDate);
+					TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
+					String depdate = pickDate(deptDate);
 													
-					String trip = strTripType.split("/")[2];
-					inputBookingDetails(trip, strOrigin, strDestination, depdate,origin2,departure2,strReturnDate,
-							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
-					selectCodeshareConectflight(strBookingClass, bookingtype);
-					inputPassengerDetails(strFlightType, strTotalPessenger, strNationality, strDocumentType, 
-							strDocumentNum, strNaSmile, strMobile, strEmail,"","","");
+					inputBookingDetails(tripType, origin, destination, depdate,"","",retDate,
+							adult, child, infant, promo,currency,paymentType);
+					selectCodeshareConectflight(bookingClass);
+					inputPassengerDetails(flightType, totalpsngrs, nationality, docType, 
+							docNumber, naSmiles, mobile, email,"","","");
 					waitforElement(BookingPageLocators.baggagetittle);
 					waitUtilElementhasAttribute(BookingPageLocators.body);
 					if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
@@ -39,7 +38,7 @@ ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"ErrorMess
 					}else{
 							System.out.println("No Baggage Page");
 					}
-					waitForElementPresent(BookingPageLocators.selectseattittle, "SelectSeatTittle");
+					waitForElementPresent(BookingPageLocators.selectseattittle, "selectseattittle");
 					waitUtilElementhasAttribute(BookingPageLocators.body);
 					if(isElementDisplayedTemp(BookingPageLocators.selectseattittle)){
 						clickContinueBtn();
@@ -50,9 +49,9 @@ ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"ErrorMess
 					}else{
 								System.out.println("No Seat Page");
 					}
-					payment(strPaymentType,"");
-					String strPNR = getReferenceNumber();
-					searchFlightCheckin(strPNR, strEmail, "", "");					
+					payment(paymentType,"");
+					String PNR = getReferenceNumber();
+					searchFlightCheckin(PNR, email, "", "");					
 					if(isElementDisplayedTemp(BookingPageLocators.ErrorMsg1)){
 						String ErrorMsg = getText(BookingPageLocators.ErrorMsg1, "Error Message");
 						if(ErrorMsg.contains("This flight is not eligible for online check-in. Please check-in at the airport.")){
@@ -77,24 +76,24 @@ ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"ErrorMess
 		@DataProvider(name="testData")
 		public Object[][] createdata1() {
 		    return (Object[][]) new Object[][] {{
-		    	xls.getCellValue("Trip Type", "Value"),
+		    	xls.getCellValue("Trip Type", "Value3"),
 		    	xls.getCellValue("Flight Type", "Value2"),
-		    	xls.getCellValue("Origin", "Value3"),
-		    	xls.getCellValue("Destination", "Value3"),
+		    	xls.getCellValue("origin", "Value3"),
+		    	xls.getCellValue("destination", "Value3"),
 		    	xls.getCellValue("Departure Date", "Value2"),"","",
 		    	xls.getCellValue("Return Date", "Value"),
 		    	xls.getCellValue("total pass", "Value"),
 		    	xls.getCellValue("Adults Count", "Value"),
 		    	xls.getCellValue("Child Count", "Value"),
 		    	xls.getCellValue("Infant Count", "Value"),
-		    	xls.getCellValue("Promo", "Value"),
+		    	xls.getCellValue("promo", "Value"),
 		    	xls.getCellValue("Booking class", "Value"),
-		    	xls.getCellValue("Nationality", "Value"),
+		    	xls.getCellValue("nationality", "Value"),
 		    	xls.getCellValue("Document Type", "Value2"),
 		    	xls.getCellValue("Doc Number", "Value"),
 		    	"1234567890",
-    			xls.getCellValue("Mobile", "Value"),
-    			xls.getCellValue("Email Address", "Value"),
+    			xls.getCellValue("mobile", "Value"),
+    			xls.getCellValue("email Address", "Value"),
     			xls.getCellValue("Select Seat", "Value"),
     			"Credit Card",
     			xls.getCellValue("Booking type", "Value"),

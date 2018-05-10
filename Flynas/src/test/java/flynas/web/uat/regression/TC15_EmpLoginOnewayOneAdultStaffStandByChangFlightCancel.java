@@ -24,7 +24,7 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_15");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel(String bookingClass,String mobilenum,
+	public  void TC_15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel(String BookingClass,String mobilenum,
 			String paymentType,String newDate,String departureDate,String origin,String dest,String triptype,String adult,String child,
 			String infant,String Description) throws Throwable {
 		try {
@@ -42,20 +42,22 @@ public class TC15_EmpLoginOnewayOneAdultStaffStandByChangFlightCancel extends Bo
 			switchtoChildWindow();
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, depdat, "", "", "",adult, child, infant,"","",paymentType);
-			selectClassForStaff(bookingClass);
+			selectClassForStaff(BookingClass);
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
 			
 			//Clicking continue button on Baggage details page
 			coninueOnBaggage();
+			//Clicking continue button on Seat selection page
+			continueOnSeatSelection();
 			
 			payment(paymentType, "");
 			String strpnr = getReferenceNumber();
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			
-			String	newdate  = pickDate(newDate);
-			String strPNRChangeDate = changeDate(strPNR, username, mobilenum, lastname, newdate, "","",bookingClass,0);
+			String	newdate  = nextDateof(depdat);
+			String strPNRChangeDate = changeDate(strPNR, username, mobilenum, lastname, newdate, "","",BookingClass,0);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			System.out.println(strPNRChangeDate);
 			

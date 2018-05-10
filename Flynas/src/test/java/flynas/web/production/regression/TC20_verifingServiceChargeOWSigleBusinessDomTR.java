@@ -15,7 +15,7 @@ public class TC20_verifingServiceChargeOWSigleBusinessDomTR extends BookingPageF
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEProdReg"),"TC20");
 
 	@Test(dataProvider = "testData",groups={"Production"})
-	public  void TC_20_verifingServiceChargeOWSigleBusinessDomTR( String username,String password,String bookingClass,String mobilenum,
+	public  void TC_20_verifingServiceChargeOWSigleBusinessDomTR( String bookingClass, String bundle,String mobilenum,
 			String paymentType,String newDate,String departuredate,String rtnDate,String origin,String dest,String triptype,
 			String adult,String child,String totalpass,String infant,String seatSelect,String nationality,String docNum,String flightType,String Doctype,String BookingClassSr,String Description) throws Throwable {
 		try {
@@ -23,10 +23,16 @@ public class TC20_verifingServiceChargeOWSigleBusinessDomTR extends BookingPageF
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			String deptDate = pickDate(departuredate);					
 			click(BookingPageLocators.Arabic_pdctn_AR("Türkçe"), "Tarkish Language");
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails_Tarkish(triptype,origin, dest, deptDate , "", "", rtnDate,adult, child, infant,"","");
-			selectClass(bookingClass,triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -48,9 +54,9 @@ public class TC20_verifingServiceChargeOWSigleBusinessDomTR extends BookingPageF
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("User Name", "Value"),
-		    		xls.getCellValue("Password", "Value"),
+
 		    		xls.getCellValue("Booking Class", "Value"),
+	    			xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		"",

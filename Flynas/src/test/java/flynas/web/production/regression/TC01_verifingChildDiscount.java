@@ -21,7 +21,7 @@ public class TC01_verifingChildDiscount extends BookingPageFlow {
 	
 
 	@Test(dataProvider = "testData",groups={"Production"})
-	public  void TC_01_verifingChildDiscount(String username,String password,String bookingClass,
+	public  void TC_01_verifingChildDiscount(String bookingClass, String bundle,
 			String mobilenum,String paymentType,String newDate,	String Departuredate,String rtnDate,
 			String origin,String dest,String triptype,String adult,String child,String totalpass,
 			String infant,String seatSelect,String nationality,String docNum,String flightType,
@@ -33,10 +33,16 @@ public class TC01_verifingChildDiscount extends BookingPageFlow {
 			String deptDate = pickDate(Departuredate);
 			String retrnDate = pickDate(rtnDate);
 			
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, "");
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			inputPassengerDetails(flightType, totalpass, nationality, Doctype,docNum,"", mobilenum, username, "", "", "");
 			coninueOnBaggage();
 			waitforElement(BookingPageLocators.selectseattittle);
@@ -68,9 +74,8 @@ public class TC01_verifingChildDiscount extends BookingPageFlow {
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("User Name", "Value"),
-	    		xls.getCellValue("Password", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		"",

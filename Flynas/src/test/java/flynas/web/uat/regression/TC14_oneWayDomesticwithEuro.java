@@ -16,7 +16,7 @@ public class TC14_oneWayDomesticwithEuro extends BookingPageFlow{
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_14_oneWayDomesticwithEuro(String tripType, String origin, String dest, 
-			String deptDate,String origin2,String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass,
+			String deptDate,String origin2,String departure2, String retdate,String Adult,String Child,String infant, String promo, String strBookingClass, String bundle,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
 			String naSmiles,String Mobile,String email ,String SelectSeat,String paymenttype,String bookingtype,
 			String charity,String Currency,String Description
@@ -27,7 +27,9 @@ public class TC14_oneWayDomesticwithEuro extends BookingPageFlow{
 			String	deptdate = pickDate(deptDate);
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2,departure2,retdate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			String lastname[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
 			System.out.println(lastname);
 			coninueOnBaggage();
@@ -63,6 +65,7 @@ public class TC14_oneWayDomesticwithEuro extends BookingPageFlow{
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		xls.getCellValue("Promo", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
 	    		xls.getCellValue("Nationality", "Value"),

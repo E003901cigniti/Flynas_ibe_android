@@ -21,7 +21,7 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"FL_WEB_17");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_17_RTChangeflightCheckIN( String bookingClass,
+	public  void TC_17_RTChangeflightCheckIN( String BookingClass, String bundle,
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -44,7 +44,9 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			click(BookingPageLocators.login_lnk, "Login");
 			login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptdate , "", "", rtrndate,adult, child, infant,"","","");
-			selectClass(bookingClass, "");
+			selectClass(BookingClass, bundle); 
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			selectSeat(seatSelect, "");	
@@ -54,8 +56,8 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			String strPNR = strpnr.trim();
 			System.out.println(strPNR);
 			
-			String newdate = pickDate(newDate);
-			String strPNRChangedate = changeDate(strPNR, username, mobilenum,lastname, newdate, "","",bookingClass,0);
+			String newdate = nextDateof(deptdate);
+			String strPNRChangedate = changeDate(strPNR, username, mobilenum,lastname, newdate, "","",BookingClass,0);
 			String strPNRChangeDate = strPNRChangedate.trim();
 			
 			System.out.println(strPNRChangeDate);
@@ -65,7 +67,8 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 			}else{
 				Reporter.SuccessReport("Change Flight Date", "Flight Date has NOT changed successfully");
 			}
-			searchFlightCheckin(strPNRChangeDate, username, "", "");
+
+			searchFlightCheckin(strPNRChangeDate, "", "",lastname );
 			performCheckin(seatSelect,paymentType,"");
 			validateCheckin();
 			
@@ -86,6 +89,7 @@ public class TC17_RTChangeflightCheckIN extends BookingPageFlow {
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    			xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Bundle", "Value2"),
 		    		xls.getCellValue("Mobile", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		xls.getCellValue("NewDate", "Value"),

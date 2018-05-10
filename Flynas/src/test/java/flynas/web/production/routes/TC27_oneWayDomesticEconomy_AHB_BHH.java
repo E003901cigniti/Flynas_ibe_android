@@ -19,7 +19,7 @@ public class TC27_oneWayDomesticEconomy_AHB_BHH extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataProdRoutes"),"Chrome_TestData");
 
 	@Test(dataProvider = "testData",groups={"Economy"})
-	public  void TC_27_oneWayDomesticEconomy_AHB_BHH( String bookingClass,
+	public  void TC_27_oneWayDomesticEconomy_AHB_BHH( String bookingClass, String bundle, 
 			String mobilenum,
 			String paymentType,
 			String newDate,
@@ -38,7 +38,9 @@ public class TC27_oneWayDomesticEconomy_AHB_BHH extends BookingPageFlow{
 				click(BookingPageLocators.login_lnk, "Login");				
 				login(username,password);
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			selectSeat(seatSelect, "");
@@ -65,8 +67,9 @@ public class TC27_oneWayDomesticEconomy_AHB_BHH extends BookingPageFlow{
 	    		{
 	    		
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
@@ -76,8 +79,8 @@ public class TC27_oneWayDomesticEconomy_AHB_BHH extends BookingPageFlow{
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		"Extra Leg Room",
-	    		"01-April 2017",
+	    		xls.getCellValue("Select Seat", "Value"),
+	    		xls.getCellValue("newDate", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
 	    		"Validate oneWay Domestic Economy_ABH_BMM"}};
 	}

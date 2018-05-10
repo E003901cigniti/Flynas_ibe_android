@@ -21,7 +21,7 @@ public class TC08_RTInt1adult1Child1infantBus extends BookingPageFlow {
 			String strTripType,String strFlightType,
 			String strOrigin,String strDestination, String strDepatureDate,String origin2,
 			String departure2, String strReturnDate, String strTotalPessenger,String strAdultCount,
-			String strChildCount,String strInfantCount,String strPromo,String strBookingClass, 
+			String strChildCount,String strInfantCount,String strPromo,String strBookingClass, String bundle, 
 			String strNationality,String strDocumentType, String strDocumentNum,String strNaSmile,
 			String strMobile,String strEmail,String strSelectSeat,String strPaymentType,String bookingtype,
 			String strNewDate, String charity,String Currency)throws Throwable{
@@ -48,8 +48,9 @@ public class TC08_RTInt1adult1Child1infantBus extends BookingPageFlow {
 							strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
 					
 					//Selecting traveling class
-					selectClass(strBookingClass, strTripType);
-					
+					selectClass(strBookingClass, bundle);
+					clickContinueBtn();
+								
 					//Entering passenger details
 					inputPassengerDetails(strFlightType,strTotalPessenger,strNationality,strDocumentType,strDocumentNum, strNaSmile,strMobile,strEmail,"","","");
 					
@@ -98,6 +99,8 @@ public class TC08_RTInt1adult1Child1infantBus extends BookingPageFlow {
 		    	xls.getCellValue("Infant Count", "Value"),
 		    	xls.getCellValue("Promo", "Value"),
 		    	xls.getCellValue("Booking Class", "Value"),
+		    	xls.getCellValue("Bundle", "Value"),
+
 		    	xls.getCellValue("Nationality", "Value"),
 		    	xls.getCellValue("Document Type", "Value"),
 		    	xls.getCellValue("Doc Number", "Value"),

@@ -15,17 +15,22 @@ public class TC19_verifingSerCharChildDisOWMultiEcoIntlTR extends BookingPageFlo
 	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEProdReg"),"TC19");
 
 	@Test(dataProvider = "testData",groups={"Production"})
-	public  void TC_19_verifingSerCharChildDisOWMultiEcoIntlTR( String username,String password,String bookingClass,String mobilenum,
+	public  void TC_19_verifingSerCharChildDisOWMultiEcoIntlTR( String bookingClass, String bundle,String mobilenum,
 			String paymentType,String newDate,String departuredate,String rtnDate,String origin,String dest,String triptype,
 			String adult,String child,String totalpass,String infant,String seatSelect,String nationality,String docNum,
 			String flightType,String Doctype,String BookingClassSr,String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			String deptDate = pickDate(departuredate);				
+			String deptDate = pickDate(departuredate);		
+			String[] Credentials = pickCredentials("UserCredentials");
+			String username =Credentials[0];
+			
 			click(BookingPageLocators.Arabic_pdctn_AR("Türkçe"), "Arabic Language");
 			inputBookingDetails_Tarkish(triptype,origin, dest, deptDate , "", "", rtnDate,adult, child, infant,"","");
-			selectClass(bookingClass,triptype);
+			selectClass(bookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			inputPassengerDetails_Tarkish(flightType, totalpass, nationality, Doctype,docNum,"", mobilenum, username, "", "", "");
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -49,9 +54,9 @@ public class TC19_verifingSerCharChildDisOWMultiEcoIntlTR extends BookingPageFlo
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    			xls.getCellValue("User Name", "Value"),
-		    		xls.getCellValue("Password", "Value"),
+
 		    		xls.getCellValue("Booking Class", "Value"),
+	    			xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Mobile", "Value"),
 		    		xls.getCellValue("Payment Type", "Value"),
 		    		"",

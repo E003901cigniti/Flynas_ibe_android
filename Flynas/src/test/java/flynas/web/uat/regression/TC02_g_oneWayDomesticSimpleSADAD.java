@@ -19,7 +19,7 @@ public class TC02_g_oneWayDomesticSimpleSADAD extends BookingPageFlow{
 	public  void TC_02_g_oneWayDomesticSimpleSADAD(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
-			String strBookingClass,String FlightType,String totalpass, String nationality,
+			String strBookingClass, String bundle,String FlightType,String totalpass, String nationality,
 			String Doctypr,String docNumber,String naSmiles,String Mobile,
 			String email ,String SelectSeat,String paymenttype,String bookingtype, 
 			String charity,String Currency, String Description
@@ -33,13 +33,16 @@ public class TC02_g_oneWayDomesticSimpleSADAD extends BookingPageFlow{
 
 			String[] Credentials = pickCredentials("UserCredentials");
 			String username =Credentials[0];
+			System.out.println("Username :"+username);
 			String password =Credentials[1];
 			click(BookingPageLocators.login_lnk, "Login");
-			switchtoChildWindow();
+			//switchtoChildWindow();
 			login(username,password);
 					
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
@@ -49,7 +52,7 @@ public class TC02_g_oneWayDomesticSimpleSADAD extends BookingPageFlow{
 			
 			selectSeat(SelectSeat, bookingtype);
 			payment(paymenttype,"");
-			verifyAlertPopup();
+			
 			
 			updateStatus("IBE_UAT_Reg","TC02_g_oneWayDomesticSimpleSADAD","Pass");
 			Reporter.SuccessReport("TC02_g_oneWayDomesticSimpleSADAD", "Pass");
@@ -79,6 +82,8 @@ public class TC02_g_oneWayDomesticSimpleSADAD extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
+
+		    		xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

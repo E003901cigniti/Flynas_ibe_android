@@ -21,11 +21,11 @@ import flynas.web.workflows.projectUtilities;
 public class TC20_a_memberRegistration extends BookingPageFlow{
 	ExcelReader xls = new ExcelReader(configProps.getProperty("Credentialsdata"),"RegistrationData");
 	@SuppressWarnings("rawtypes")
-	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_20_memberRegistration(String Description) throws Throwable {
+	@Test(groups={"Chrome"})
+	public  void TC_20_memberRegistration() throws Throwable {
 		try {
 			
-			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
+			TestEngine.testDescription.put(HtmlReportSupport.tc_name, "Bulk registration");
 			//instantiating page objects
 			projectUtilities util = new projectUtilities();
 			LoginPage LoginPg = new LoginPage();
@@ -33,36 +33,31 @@ public class TC20_a_memberRegistration extends BookingPageFlow{
 			
 			int row = xls.getRowCount("RegistrationData");
 		
+			util.clickLogin();
+			
 			for(int i=1;i<=row;i++){
 			String username = xls.getCellValue("credentials"+i, "userid");
 			String password = xls.getCellValue("credentials"+i, "password");
 			String firstName = xls.getCellValue("credentials"+i, "firstname");
 			String lastName = xls.getCellValue("credentials"+i, "lastname");
-			util.clickLogin();
 			LoginPg.ClickJoinNow();
 			memberRegisterPg.memberRegistration(username,password,firstName,lastName,"Adult"); // Registering a new Adult member
 			if(isElementDisplayedTemp(BookingPageLocators.ok)==true){
 				util.clickok();
+				navigateToLoginPage();
 			}else{
 			memberRegisterPg.verifingMemberRegistration();			
 			util.logout();
 			util.clickok();	
 			}
-			}
-			Reporter.SuccessReport("TC20_memberRegistration", "Pass");
-			
-			}
+		}
+			Reporter.SuccessReport("TC20_memberRegistration", "Pass");				
+	}
 		
 	catch (Exception e) {
 			e.printStackTrace();
 			Reporter.SuccessReport("TC20_memberRegistration", "Failed");
 		}
-	}
+	}	
 	
-	@DataProvider(name="testData")
-	public Object[][] createdata1() {
-	    return (Object[][]) new Object[][] { 
-	    		{"Validate Member Login"}};
-	}
-
 }

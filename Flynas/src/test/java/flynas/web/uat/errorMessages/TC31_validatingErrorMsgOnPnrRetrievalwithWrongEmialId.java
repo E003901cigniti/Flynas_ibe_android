@@ -15,26 +15,24 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC31_validatingErrorMsgOnPnrRetrievalwithWrongEmialId extends BookingPageFlow{
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"Errors_On_PnrRetrieval");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"Errors_On_PnrRetrieval");
 
 	@DataProvider(name="bookingdata")
 	public Object[][] createdata1() {
 	    return (Object[][]) new Object[][] { 	
 	    		{	    		
-	    		xls.getCellValue("Departure Date", "Value1"),
 	    		xls.getCellValue("username", "Value1"),
     			xls.getCellValue("password", "Value1"),
 	    		xls.getCellValue("Trip Type", "Value1"),
-		    	xls.getCellValue("Origin", "Value1"),
-		    	xls.getCellValue("Destination", "Value1"),		    	
-		    	"",
-		    	"",
+		    	xls.getCellValue("origin", "Value1"),
+		    	xls.getCellValue("destination", "Value1"),	
+		    	xls.getCellValue("Departure Date", "Value1"),
 		    	xls.getCellValue("Return Date", "Value1"),
 		    	xls.getCellValue("Booking Class", "Value1"),
 		    	xls.getCellValue("Adults Count", "Value1"),
 		    	xls.getCellValue("Child Count", "Value1"),
 		    	xls.getCellValue("Infant Count", "Value1"),
-		    	xls.getCellValue("Promo", "Value1"),
+		    	xls.getCellValue("promo", "Value1"),
 		    	"",
 		    	xls.getCellValue("Payment Type", "Value1"),
 		    	xls.getCellValue("Select Seat", "Value1"),    					
@@ -43,52 +41,49 @@ public class TC31_validatingErrorMsgOnPnrRetrievalwithWrongEmialId extends Booki
 	    	};
 	}
 	
-	//Generating PNR For TC31,TC32,TC33,TC34,TC36
+	//GeneratString PNR For TC31,TC32,TC33,TC34,TC36
 	@Test (priority = 1,dataProvider = "bookingdata",groups={"Chrome"})
-	public  void GeneratePNR(String strDepatureDate, String Username, String Password,
-			String strTripType,String strOrigin,String strDestination,String origin2,String departure2,String strReturnDate, String strBookingClass,
-			String strAdultCount,String strChildCount,String strInfantCount,String strPromo,String Currency,String strPaymentType, String strSelectSeat,
-			String bookingtype ) throws Throwable {
+	public  void GeneratePNR( String username, String password, String tripType,String origin, String destination,
+			String deptDate, String retDate,String adult,String child,String infant,String promo, String bookingClass,
+			String flightType,String totalpsngrs,String nationality,String docType,String docNumber,String naSmiles,String mobile,
+			String email ,String selectSeat,String paymentType,String bookingType,String charity,String currency, String payment2 ,
+			String ErrorMessage) throws Throwable {
 		try {
 			
-			String Description = "Generating Pnr For PNR Retrieval Negetive scenarios";			
+			String Description = "GeneratString PNR For PNR Retrieval Negetive scenarios";			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);		
 							
 			click(BookingPageLocators.login_lnk, "Login");
-			switchtoChildWindow();
-			login(Username,Password);
+					
+			login(username,password);
 			
-			String	deptdate = pickDate(strDepatureDate);
-			String	ReturnDate = pickDate(strReturnDate);
+			deptDate = pickDate(deptDate);
+			retDate = pickDate(retDate);
 			
-			inputBookingDetails(strTripType, strOrigin, strDestination, deptdate,origin2, departure2, ReturnDate,
-					strAdultCount, strChildCount, strInfantCount, strPromo,Currency,strPaymentType);
+			inputBookingDetails(tripType, origin, destination, deptDate,"", "", retDate,
+					adult, child, infant, promo,currency,paymentType);
 			
-			selectClass(strBookingClass, strTripType);
+			selectClass(bookingClass, tripType);
+			clickContinueBtn();
 			
 			//Clicking continue button on Passenger details page
-			waitforElement(BookingPageLocators.passengerDetailsTittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			continueOnPassengerDetails();
 			
 			//Clicking continue button on Baggage details page
-			waitforElement(BookingPageLocators.baggagetittle);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			clickContinueBtn();
+			coninueOnBaggage();
 			
 			//Selecting seat
-			selectSeat(strSelectSeat, bookingtype);
+			selectSeat(selectSeat, bookingType);
 			//Payment
-			payment(strPaymentType,"");
+			payment(paymentType,"");
 			
-			//Capturing PNR number
-			String strpnr = getReferenceNumber();
-			String strPNR = strpnr.trim();
-			validate_ticketStatus(strPNR);
+			//CapturString PNR number
+			String PNR = getReferenceNumber().trim();
+			validate_ticketStatus(PNR);
 			
-			xls.setCellData("Errors_On_PnrRetrieval", "Value1", 22, strPNR);
+			xls.setCellData("Errors_On_PnrRetrieval", "Value1", 22, PNR);
 			
-			if(strPNR!=null)
+			if(PNR!=null)
 			{
 				Reporter.SuccessReport("PNR Generation", "PNR Generated successfully");
 				driver.close();
@@ -118,10 +113,10 @@ public class TC31_validatingErrorMsgOnPnrRetrievalwithWrongEmialId extends Booki
 	}
 		
 	@Test(priority = 2,dataProvider = "testData",groups={"Chrome"})
-	public  void validatingErrorMsgOnPnrRetrievalwithWrongEmialId (String PNR, String Email,String ErrorMessage ) throws Throwable {
+	public  void validatingErrorMsgOnPnrRetrievalwithWrongEmialId (String PNR, String email,String ErrorMessage ) throws Throwable {
 		try {
 				
-			String Description = "validating ErrorMsg On PnrRetrieval with Wrong Emial Id";			
+			String Description = "validatString ErrorMsg On PnrRetrieval with Wrong Emial Id";			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			
 			navigateToMMB();
@@ -132,7 +127,7 @@ public class TC31_validatingErrorMsgOnPnrRetrievalwithWrongEmialId extends Booki
 			
 			waitforElement(BookingPageLocators.pnrinput);
 			type(BookingPageLocators.pnrinput, PNR, "PNR");
-			type(BookingPageLocators.emailinput, Email, "Email");
+			type(BookingPageLocators.emailinput, email, "email");
 			click(BookingPageLocators.btnFindBooking, "Find Booking");		
 			
 			

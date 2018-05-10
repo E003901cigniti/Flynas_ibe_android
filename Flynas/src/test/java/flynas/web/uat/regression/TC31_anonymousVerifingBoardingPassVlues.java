@@ -20,18 +20,18 @@ public class TC31_anonymousVerifingBoardingPassVlues extends BookingPageFlow{
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_31_anonymousVerifingBoardingPassVlues (String tripType, String origin, String dest,String deptDate,String origin2,
 			String departure2,String retdate, String strTolPass, String Adult,String Child,String infant, String promo, 
-			String strBookingClass,String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
+			String strBookingClass, String bundle,String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,
 			String naSmiles,String Mobile,String email ,String SelectSeat,String paymenttype, String bookingtype,String Charity, 
 			String Currency,String browser,String Description
 			) throws Throwable {
-		try {
-			
+		try {			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			
 			String deptdate = pickDate(deptDate);
 			
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2,departure2,retdate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+			upSellPopUpAction("Continue");
 			String lastname[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
 			System.out.println(lastname);
 			Baggage_Extra(tripType);
@@ -45,29 +45,12 @@ public class TC31_anonymousVerifingBoardingPassVlues extends BookingPageFlow{
 			searchFlightCheckin(PNR, "", "", lastname[1]);
 			performCheckin(SelectSeat,paymenttype,strTolPass);
 			validateCheckin();
-			waitforElement(BookingPageLocators.downloadAllBoardingPasses);
-			waitUtilElementhasAttribute(BookingPageLocators.body);
-			click(BookingPageLocators.downloadAllBoardingPasses, "Download All Boarding Passes");
-			
-			if(browser.equalsIgnoreCase("ie"))
-			{
-				Robot robot = new Robot();
-				Thread.sleep(2000);
-				robot.keyPress(KeyEvent.VK_TAB);
-				Thread.sleep(2000);
-				robot.keyRelease(KeyEvent.VK_TAB);
-				Thread.sleep(2000);
-				robot.keyPress(KeyEvent.VK_ENTER);
-				Thread.sleep(2000);
-				robot.keyRelease(KeyEvent.VK_ENTER);			
-						
-			}
-			verifingFile();
+			clickDownloadBoardingpasses();		
+			isFileDownloaded("bp.pdf");
 			
 			updateStatus("IBE_UAT_Reg","TC31_anonymousVerifingBoardingPassVlues","Pass");
 			Reporter.SuccessReport("TC31_anonymousVerifingBoardingPassVlues", "Passed");
-			
-			}
+		}
 		
 	catch (Exception e) {
 			e.printStackTrace();
@@ -93,6 +76,7 @@ public class TC31_anonymousVerifingBoardingPassVlues extends BookingPageFlow{
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value"),
+		    		xls.getCellValue("Bundle", "Value"),
 		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

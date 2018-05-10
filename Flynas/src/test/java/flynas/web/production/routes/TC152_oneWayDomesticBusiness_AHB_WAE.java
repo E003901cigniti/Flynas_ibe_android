@@ -42,7 +42,8 @@ public class TC152_oneWayDomesticBusiness_AHB_WAE extends BookingPageFlow{
 			
 			
 			inputBookingDetails(triptype,origin, dest, deptDate , "", "", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, "");
+			clickContinueBtn();
 			continueOnPassengerDetails();
 			coninueOnBaggage();
 			continueOnSeatSelection();
@@ -67,9 +68,9 @@ public class TC152_oneWayDomesticBusiness_AHB_WAE extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
@@ -80,7 +81,7 @@ public class TC152_oneWayDomesticBusiness_AHB_WAE extends BookingPageFlow{
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		xls.getCellValue("Select Seat", "Value3"),
-	    		"01-April 2017",
+	    		xls.getCellValue("newDate", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value2"),
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		"Validate oneWay Domestic Business_ABH_WAE"}};

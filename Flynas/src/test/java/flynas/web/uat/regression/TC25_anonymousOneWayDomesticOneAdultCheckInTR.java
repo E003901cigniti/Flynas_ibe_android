@@ -16,7 +16,7 @@ public class TC25_anonymousOneWayDomesticOneAdultCheckInTR extends BookingPageFl
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
 	public  void TC_25_anonymousOneWayDomesticOneAdultCheckInTR(String tripType, String origin, String dest,String deptDate,String origin2,
-			String departure2,String retdate,String strTolPass, String Adult,String Child,String infant, String promo, String strBookingClass,
+			String departure2,String retdate,String strTolPass, String Adult,String Child,String infant, String promo, String strBookingClass, String bundle,
 			String FlightType,String totalpass,String nationality,String Doctypr,String docNumber,String naSmiles,String Mobile,String email ,String SelectSeat,String paymenttype, String bookingtype,String Charity, 
 			String Currency,String Description)  throws Throwable {
 		try {
@@ -27,18 +27,19 @@ public class TC25_anonymousOneWayDomesticOneAdultCheckInTR extends BookingPageFl
 			
 			click(BookingPageLocators.Arabic_pdctn_AR("Türkçe"), "Tarkish Language");
 			inputBookingDetails_Tarkish(tripType,origin, dest, deptDate , origin2, departure2, rtrndate,Adult, Child, infant,"","");
-			selectClass(strBookingClass,tripType);
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+		
 			String lastname[]=inputPassengerDetails_Tarkish(FlightType, totalpass, nationality, Doctypr,docNumber,"", Mobile, email, "", "", "");
 			Baggage_Extra(tripType);
 			clickContinueBtn();
 			selectSeat(SelectSeat, bookingtype);
 			payment(paymenttype, "");
 			waitforElement(BookingPageLocators.summaryRefNumber_TR_uat);
-			String strpnr = getText(BookingPageLocators.summaryRefNumber_TR_uat,"PNR");
-			String strPNR = strpnr.trim();
-			System.out.println(strPNR);
-			validate_ticketStatus_TR(strPNR);
-			searchFlightCheckin(strPNR, "", "", lastname[1]);
+			String strpnr = getReferenceNumber().trim();
+			System.out.println(strpnr);
+			validate_ticketStatus_TR(strpnr);
+			searchFlightCheckin(strpnr, "", "", lastname[1]);
 			performCheckin(SelectSeat,paymenttype,strTolPass);
 			validateCheckin();
 			
@@ -71,6 +72,7 @@ public class TC25_anonymousOneWayDomesticOneAdultCheckInTR extends BookingPageFl
 	    		xls.getCellValue("Infant Count", "Value"),
 	    		xls.getCellValue("Promo", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
+	    		xls.getCellValue("Bundle", "Value3"),
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
 	    		xls.getCellValue("Nationality", "Value"),

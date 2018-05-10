@@ -19,7 +19,7 @@ public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 	public  void TC_53_oneWayDomMMBChangeDateCheckIn(String tripType, 
 			String origin, String dest,String deptDate, String origin2,String departure2,
 			String retdate,String Adult,String Child,String infant, String promo, 
-			String strBookingClass,String FlightType,String totalpass, String nationality,
+			String strBookingClass, String bundle,String FlightType,String totalpass, String nationality,
 			String Doctypr,String docNumber,String naSmiles,String Mobile,
 			String email ,String SelectSeat,String paymenttype,String bookingtype, 
 			String charity,String Currency, String newDate,String Description
@@ -41,8 +41,9 @@ public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 			login(username,password);
 					
 			inputBookingDetails(tripType, origin, dest, deptdate, origin2, departure2, retrndate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
-			
+			selectClass(strBookingClass, bundle);
+			clickContinueBtn();
+					
 			//Clicking continue button on Passenger details page
 			continueOnPassengerDetails();
 			
@@ -67,7 +68,7 @@ public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 				Reporter.failureReport("Change Flight Date", "Flight Date has NOT changed successfully");
 			}
 			
-			searchFlightCheckin(strPNR, username, "", lastname);
+			searchFlightCheckin(strPNR, "", "", lastname);
 			performCheckin(SelectSeat,paymenttype,totalpass);
 			validateCheckin();
 			
@@ -90,15 +91,16 @@ public class TC53_oneWayDomMMBChangeDateCheckIn extends BookingPageFlow{
 		    		xls.getCellValue("Trip Type", "Value"),
 		    		xls.getCellValue("Origin", "Value"),
 		    		xls.getCellValue("Destination", "Value"),
-		    		xls.getCellValue("Departure Date", "Value"),
+		    		xls.getCellValue("Departure Date", "Value9"),
 		    		"",
 		    		"",
-		    		xls.getCellValue("Return Date", "Value"),
+		    		xls.getCellValue("Return Date", "Value9"),
 		    		xls.getCellValue("Adults Count", "Value"),
 		    		xls.getCellValue("Child Count", "Value"),
 		    		xls.getCellValue("Infant Count", "Value"),
 		    		xls.getCellValue("Promo", "Value"),
 		    		xls.getCellValue("Booking Class", "Value3"),
+		    		xls.getCellValue("Bundle", "Value2"),
 		    		xls.getCellValue("Flight Type", "Value"),
 		    		xls.getCellValue("Total Passenger", "Value"),
 		    		xls.getCellValue("Nationality", "Value"),

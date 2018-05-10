@@ -37,7 +37,8 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 			String username =Credentials[0];
 						
 			inputBookingDetails(triptype,origin, dest, deptDate , "RUH", "AMM", retrnDate,adult, child, infant,"","","");
-			selectClass(bookingClass, triptype);
+			selectClass(bookingClass, "");
+			clickContinueBtn();
 			inputPassengerDetails("Domestic", "2", "Afghanistan", "National ID Card", 
 					"F123456", "1234567890", mobilenum, username,"","","");
 			Baggage_Extra(triptype);
@@ -68,9 +69,9 @@ public class TC186_roundTripDomesticBusinessAddExtra_RUH_AHB extends BookingPage
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		
-	    		xls.getCellValue("Booking Class", "Value3"),
+	    		xls.getCellValue("Booking Class", "Value2"),
 	    		xls.getCellValue("Mobile", "Value"),
-	    		"SADAD",
+	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),

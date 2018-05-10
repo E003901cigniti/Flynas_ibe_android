@@ -15,29 +15,36 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC10_Err_4_OneAdultStaffStandByOW extends BookingPageFlow{
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"ErrorMessage_4");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"ErrorMessage_4");
 	
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_10_Err_4_OneAdultStaffStandByOW(String username,String password,String bookingClass,
-			String mobilenum,String paymentType,String newDate,String pickDate,String origin,String dest,
-			String rtndate,String triptype,String adult,String child,String infant,
-			String Description) throws Throwable {
+	public  void TC_10_Err_4_OneAdultStaffStandByOW( String tripType,String origin, String destination,
+			String deptDate, String retDate,String adult,String child,String infant,String promo, String bookingClass,
+			String flightType,String totalpsngrs,String nationality,String docType,String docNumber,String naSmiles,String mobile,
+			String email ,String selectSeat,String paymentType,String bookingType,String charity,String currency, String payment2 ,
+			String ErrorMessage, String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
-			 String depdat = pickDate(pickDate);
-			 String trip = triptype.split("/")[2];
+			String depdat = pickDate(deptDate);
+			String rtndate = pickDate(retDate);
+			
+			String[] Credentials = pickCredentials("EmployeeCreds");
+			String username =Credentials[0];
+			String password =Credentials[1];
+			String lastname=Credentials[3];
+			
 			driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 			click(emplogin_lnk, "Employe Login");
 			switchtoChildWindow();
 			login(username,password);
-			inputBookingDetails(trip,origin, dest, depdat, "", "", rtndate,adult, child, infant,"","",paymentType);
+			inputBookingDetails(tripType,origin, destination, depdat, "", "", rtndate,adult, child, infant,"","",paymentType);
 			selectClassForStaff(bookingClass);
 			waitforElement(BookingPageLocators.mobileNum);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
-			if(getText(BookingPageLocators.mobileNum,"MobileNumber").length() == 0)
+			if(getText(BookingPageLocators.mobileNum,"mobileNumber").length() == 0)
 			{
-				type(BookingPageLocators.mobileNum, mobilenum, "MobileNumber");
+				type(BookingPageLocators.mobileNum, mobile, "mobileNumber");
 				waitUtilElementhasAttribute(BookingPageLocators.body);
 				clickContinueBtn();
 			}
@@ -46,8 +53,8 @@ public class TC10_Err_4_OneAdultStaffStandByOW extends BookingPageFlow{
 				clickContinueBtn();
 			}
 			payment(paymentType, "");
-			String strpnr = getReferenceNumber().trim();
-			searchFlightCheckin(strpnr, username, "", "");
+			String PNR = getReferenceNumber().trim();
+			searchFlightCheckin(PNR, "", "", lastname);
 			if(isElementDisplayedTemp(BookingPageLocators.ErrorMsg1)){
 				String ErrorMsg = getText(BookingPageLocators.ErrorMsg1, "Error Message");
 				if(ErrorMsg.contains("Your fare class is not eligible for online check-in. Please check-in at the airport.")){
@@ -73,17 +80,16 @@ public class TC10_Err_4_OneAdultStaffStandByOW extends BookingPageFlow{
 	public Object[][] createdata1() {	
 	    return (Object[][]) new Object[][] { 
 	    		{
-	    		xls.getCellValue("EmployeEmail", "Value"),
-	    		xls.getCellValue("Password", "Value"),
+	    	
 	    		xls.getCellValue("Booking Class", "Value"),
-	    		xls.getCellValue("Mobile", "Value"),
+	    		xls.getCellValue("mobile", "Value"),
 	    		xls.getCellValue("Payment Type", "Value"),
 	    		xls.getCellValue("NewDate", "Value"),
 	    		xls.getCellValue("Departure date", "Value"),
-	    		xls.getCellValue("Origin", "Value"),
-	    		xls.getCellValue("Destination", "Value"),
+	    		xls.getCellValue("origin", "Value"),
+	    		xls.getCellValue("destination", "Value"),
 	    		xls.getCellValue("Return Date", "Value"),
-	    		xls.getCellValue("Trip Type", "Value"),
+	    		xls.getCellValue("Trip Type", "Value2"),
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),

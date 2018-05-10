@@ -2880,6 +2880,7 @@ public class ActionEngine extends TestEngine {
 	
 	public void switchtoChildWindow()
 	{
+		
 		String parentWindow = driver.getWindowHandle();
 		Set<String> handles =  driver.getWindowHandles();
 		for(String windowHandle  : handles)
@@ -2971,7 +2972,7 @@ public class ActionEngine extends TestEngine {
 	public static void waitforElement(By locator) throws Throwable 
 	{
 		try{WebDriverWait wait = new WebDriverWait(driver,20);
-			Thread.sleep(3000);
+			Thread.sleep(10000);
 			try{
 				wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 				if(isElementPresent(locator)==true)

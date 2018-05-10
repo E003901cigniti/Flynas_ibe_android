@@ -339,7 +339,7 @@ public class GoogleDriveAPI {
 		  // Prints the names and majors of students in a sample spreadsheet:
 		  String spreadsheetId = "1D9uJLD7IJANH7ADapvBU9t7yOmivdZpqTPCGTKcfzCE";
 		 // String range = RowStart+":"+RowEnd;
-		  String range = RowStart+":"+RowStart;
+		  String range = SheetName+"!"+RowStart+":"+RowStart;
 		  List<List<Object>> arrData = getData(strData);
 
 		  ValueRange oRange = new ValueRange();
@@ -518,7 +518,7 @@ public class GoogleDriveAPI {
 			// Build a new authorized API client service.
 			Sheets service = getSheetsService();
 			String spreadsheetId = "1D9uJLD7IJANH7ADapvBU9t7yOmivdZpqTPCGTKcfzCE";
-			String range = strSheetname+"!A2:A70";
+			String range = strSheetname+"!A2:A300";
 			System.out.println(range);
 			ValueRange response = service.spreadsheets().values().get(spreadsheetId, range).execute();
 			List<List<Object>> values = response.getValues();

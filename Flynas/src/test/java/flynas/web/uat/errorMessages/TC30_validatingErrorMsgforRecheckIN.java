@@ -13,34 +13,34 @@ import flynas.web.workflows.BookingPageFlow;
 
 public class TC30_validatingErrorMsgforRecheckIN extends BookingPageFlow{
 	
-	ExcelReader xls = new ExcelReader(configProps.getProperty("TestData"),"TC04_oneWayDomAdultCheckin");
+	ExcelReader xls = new ExcelReader(configProps.getProperty("TestDataIBEUAT"),"TC04_oneWayDomAdultCheckin");
 
 	@Test(dataProvider = "testData",groups={"Chrome"})
-	public  void TC_30_validatingErrorMsgforRecheckIN(String tripType, String origin, String dest,String deptDate,
-			String origin2,String departure2,String retdate, String strTolPass, String Adult,String Child,String infant,
-			String promo, String strBookingClass,String FlightType,String totalpass,String nationality,String Doctypr,
-			String docNumber,String naSmiles,String Mobile,String email ,String SelectSeat,String paymenttype, 
-			String bookingtype,String Charity,String Currency,String Description) throws Throwable {
+	public  void TC_30_validatingErrorMsgforRecheckIN( String tripType,String origin, String destination,
+			String deptDate, String retDate,String adult,String child,String infant,String promo, String bookingClass,
+			String flightType,String totalpsngrs,String nationality,String docType,String docNumber,String naSmiles,String mobile,
+			String email ,String selectSeat,String paymentType,String bookingType,String charity,String currency, String payment2 ,
+			String ErrorMessage, String Description) throws Throwable {
 		try {
 			
 			TestEngine.testDescription.put(HtmlReportSupport.tc_name, Description);
 			
-			String depDate = pickDate(deptDate);
+			String depdate = pickDate(deptDate);
 			
-			inputBookingDetails(tripType, origin, dest, depDate, origin2,departure2,retdate,Adult, Child, infant,promo,Currency,paymenttype);
-			selectClass(strBookingClass, tripType);
-			String lastname[]=inputPassengerDetails(FlightType,totalpass,nationality,Doctypr,docNumber, naSmiles,Mobile,email,"","","");
+			inputBookingDetails(tripType, origin, destination, depdate, "","",retDate,adult, child, infant,promo,currency,paymentType);
+			selectClass(bookingClass, tripType);
+			clickContinueBtn();
+			String lastname[]=inputPassengerDetails(flightType,totalpsngrs,nationality,docType,docNumber, naSmiles,mobile,email,"","","");
 			System.out.println(lastname);
 			Baggage_Extra(tripType);
 			clickContinueBtn();
-			selectSeat(SelectSeat,bookingtype);
-			payment(paymenttype,"");
-			String strpnr = getReferenceNumber();
-			String PNR = strpnr.trim();
+			selectSeat(selectSeat,bookingType);
+			payment(paymentType,"");
+			String PNR = getReferenceNumber().trim();
 			System.out.println("PNR**********"+PNR);
 			validate_ticketStatus(PNR);
 			searchFlightCheckin(PNR, email, "", "");
-			performCheckin(SelectSeat,paymenttype,strTolPass);
+			performCheckin(selectSeat,paymentType,totalpsngrs);
 			validateCheckin();
 			searchFlightCheckin(PNR, email, "", "");
 			if(isElementDisplayedTemp(BookingPageLocators.ErrorMsg1)){
@@ -68,8 +68,8 @@ public class TC30_validatingErrorMsgforRecheckIN extends BookingPageFlow{
 	    return (Object[][]) new Object[][] { 
 	    		{
 	    		xls.getCellValue("Trip Type", "Value"),
-	    		xls.getCellValue("Origin", "Value"),
-	    		xls.getCellValue("Destination", "Value"),
+	    		xls.getCellValue("origin", "Value"),
+	    		xls.getCellValue("destination", "Value"),
 	    		xls.getCellValue("Departure Date", "Value"),
 	    		"",
 	    		"",
@@ -78,16 +78,16 @@ public class TC30_validatingErrorMsgforRecheckIN extends BookingPageFlow{
 	    		xls.getCellValue("Adults Count", "Value"),
 	    		xls.getCellValue("Child Count", "Value"),
 	    		xls.getCellValue("Infant Count", "Value"),
-	    		xls.getCellValue("Promo", "Value"),
+	    		xls.getCellValue("promo", "Value"),
 	    		xls.getCellValue("Booking Class", "Value"),
 	    		xls.getCellValue("Flight Type", "Value"),
 	    		xls.getCellValue("Total Passenger", "Value"),
-	    		xls.getCellValue("Nationality", "Value"),
+	    		xls.getCellValue("nationality", "Value"),
 	    		xls.getCellValue("Document Type", "Value"),
 	    		xls.getCellValue("Doc Number", "Value"),
 	    		"1234567890",
-	    		xls.getCellValue("Mobile", "Value"),
-	    		xls.getCellValue("Email Address", "Value"),
+	    		xls.getCellValue("mobile", "Value"),
+	    		xls.getCellValue("email Address", "Value"),
 	    		xls.getCellValue("Select Seat", "Value"),
 	    		"Credit Card",
 	    		"",
