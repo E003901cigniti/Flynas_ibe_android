@@ -65,7 +65,13 @@ public class MemberRegistrationPage<RenderedWebElement> extends BookingPageLocat
 		click(By.xpath(BookingPageLocators.ppSelectDD+randomNumber(4,9)+"]"), "Expiry Year");
 		type(BookingPageLocators.mobileNum, "534786324", "MobileNumber");
 		type(BookingPageLocators.emailAdd, email, "Email Address");
-		click(BookingPageLocators.register, "Register");		
+		click(BookingPageLocators.register, "Register");
+		if(isElementPresent(BookingPageLocators.ok)==true){
+			Thread.sleep(1000);
+			click(BookingPageLocators.ok, "Register");
+			Thread.sleep(1000);
+			click(BookingPageLocators.register, "Register");
+		}
 		return email;
 	}
 	
@@ -108,6 +114,12 @@ public class MemberRegistrationPage<RenderedWebElement> extends BookingPageLocat
 		type(BookingPageLocators.mobileNum, randomNumericString(10), "MobileNumber");
 		type(BookingPageLocators.emailAdd,userID , "Email Address");
 		click(BookingPageLocators.register, "Register");
+		if(isElementPresent(BookingPageLocators.ok)==true){
+			Thread.sleep(1000);
+			click(BookingPageLocators.ok, "Register");
+			Thread.sleep(1000);
+			click(BookingPageLocators.register, "Register");
+		}
 		Thread.sleep(1000);
 		
 	}

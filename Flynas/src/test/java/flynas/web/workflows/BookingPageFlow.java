@@ -502,8 +502,12 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				else
 				{
 				//Entering random first name, last name in passenger details
-					firstname = randomString(8);
-					lastname = randomString(5);
+					String[] Fnames = {"Zenia","Brielle","Alec","Grady","Mikayla","Kalia","Jared","Mallory","Moana","Clinton","Renee","Griffin","Merritt","Jenna","Zoe","Carla","Amber","Ayanna","Elvis","Camilla","Scarlet","Andrew","Joel","Timon","Thor","Shad","Simone","Dexter","Tana","Helen","Robert","Veda","Kirby","Molly"};
+				    String[] Lnames = {"Jones","Williams","Bond","Dawney","Stathom","Stevens","Mccall","Bernard","Sanford","Matthews","Collier","Hooper","Clemons","Graham","Richmond","Richard","Morton","Watts","Bryan","Woods"};
+				    int Fnameindex = (int) (Math.random() * Fnames.length);      
+				    firstname =  Fnames[Fnameindex];
+				    int index = (int) (Math.random() * Lnames.length);
+				    lastname = Lnames[index];
 					type(By.xpath(BookingPageLocators.fName.replace("#", String.valueOf(count))), firstname, "First Name");
 					Thread.sleep(1000);
 					type(By.xpath(BookingPageLocators.lName.replace("#", String.valueOf(count))), lastname, "Last Name");
@@ -521,22 +525,8 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 						DOB = getyakeenDOB("Adult","NidDOB");
 					else if (travelDoc.equalsIgnoreCase("Passport"))
 						DOB = getyakeenDOB("Adult","PsprtDOB");
-					else if (travelDoc.equalsIgnoreCase("Iqama"))
+					else if (travelDoc.contains("Iqama"))
 						DOB = getyakeenDOB("Adult","IqamaDOB");
-				
-					Thread.sleep(1000);
-					//Entering passeneger's Date of birth
-					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
-					Thread.sleep(1000);
-					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
-					
-					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
-					Thread.sleep(1000);
-					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
-				
-					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
-					Thread.sleep(1000);
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
 				}
 				
 				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Child"))
@@ -546,21 +536,8 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 						DOB = getyakeenDOB("Child","NidDOB");
 					else if (travelDoc.equalsIgnoreCase("Passport"))
 						DOB = getyakeenDOB("Child","PsprtDOB");
-					else if (travelDoc.equalsIgnoreCase("Iqama"))
+					else if (travelDoc.contains("Iqama"))
 						DOB = getyakeenDOB("Child","IqamaDOB");
-					Thread.sleep(1000);
-					//Entering passeneger's Date of birth					
-					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
-					Thread.sleep(1000);
-					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
-					
-					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
-					Thread.sleep(1000);
-					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
-					
-					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
-					Thread.sleep(1000);
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
 				}
 				
 				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant"))
@@ -570,24 +547,25 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 						DOB = getyakeenDOB("infant","NidDOB");
 					else if (travelDoc.equalsIgnoreCase("Passport"))
 						DOB = getyakeenDOB("infant","PsprtDOB");
-					else if (travelDoc.equalsIgnoreCase("Iqama"))
+					else if (travelDoc.contains("Iqama"))
 						DOB = getyakeenDOB("infant","IqamaDOB");
+				}	
 					
-					Thread.sleep(1000);
-					//Entering infant's Date of birth					
-					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
-					Thread.sleep(1000);
-					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
-					Thread.sleep(1000);
-					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
-					Thread.sleep(1000);
-					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
-					Thread.sleep(1000);
-					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
-					Thread.sleep(1000);				
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
+				Thread.sleep(1000);
+				//Entering  Date of birth					
+				click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
+				Thread.sleep(1000);
+				click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
+				Thread.sleep(1000);
+				click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
+				Thread.sleep(1000);
+				click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
+				Thread.sleep(1000);
+				click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
+				Thread.sleep(1000);				
+				executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
 									
-				}
+				
 				
 				//Selecting nationality
 				click(By.xpath(BookingPageLocators.nation.replace("#", String.valueOf(count))), "Nationality");
@@ -662,11 +640,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	public String[] getyakeenDOB(String psngrType, String travelDocType){
 		ExcelReader xls = new ExcelReader(configProps.getProperty("Miscellaneous"),"Yakeendata");
 		String[] DOB = xls.getCellValue(psngrType, travelDocType).split("-");
+		//Changing date to index
+		DOB[0] = String.valueOf(Integer.parseInt(DOB[0])-1);
+		//Changing year to index
 		int year = Integer.parseInt(DOB[2]);
-		System.out.println(year);
 		String thisyear = Year.now().toString();
-		int yy = Integer.parseInt(thisyear)-year;
-		System.out.println(yy);
 		DOB [2] = String.valueOf(Integer.parseInt(thisyear)-year);
 		return DOB;		
 	}
@@ -1622,9 +1600,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 		}
 		waitforElement(BookingPageLocators.continueBtn);
 		clickContinueBtn();
-		waitforElement(BookingPageLocators.baggagetittle);
-		waitUtilElementhasAttribute(BookingPageLocators.body);
-		clickContinueBtn();
+		coninueOnBaggage();
 		waitforElement(BookingPageLocators.selectseattittle);
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		if(isElementDisplayedTemp(BookingPageLocators.selectseattittle))
@@ -1691,11 +1667,9 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 
 					
 				}
+			}	
 		}
-
-				
-		}
-		clickContinueBtn();
+		coninueOnBaggage();
 	}	
 	
 	public void validateCheckin() throws Throwable
@@ -2867,7 +2841,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	
 	
 	
-	public String[] inputPassengerDetails_Arabic(String domOrInt, String totalPass, String nationality,
+	public String[] inputPassengerDetails_Arabic(String flightType, String totalPass, String nationality,
 			String travelDoc, String docNum, String naSmiles, String mobileNum, String emailId,String fname,
 				String lname,String payment2) throws Throwable
 	{
@@ -2916,81 +2890,50 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				
 				String[] DOB = new String[3];
 				
-				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("بالغ"))
-				{
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("بالغ")){
 					//fetching adult passenger's DOB from Yakeen data sheet based on the document type
 					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
 						DOB = getyakeenDOB("Adult","NidDOB");
-					else if (travelDoc.equalsIgnoreCase(" جواز سفر "))
+					else if (travelDoc.equalsIgnoreCase("جواز سفر"))
 						DOB = getyakeenDOB("Adult","PsprtDOB");
 					else if (travelDoc.equalsIgnoreCase("Iqama"))
 						DOB = getyakeenDOB("Adult","IqamaDOB");
-				
-					//Entering passeneger's Date of birth
-					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
-					//Thread.sleep(3000);
-					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
-					
-					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
-					//Thread.sleep(3000);
-					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
-					
-					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
-					//Thread.sleep(3000);
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
-				}
-				
-				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("طفل"))
-				{
+					}
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("طفل")){
 					//fetching Child passenger's DOB from Yakeen data sheet based on the document type
 					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
 						DOB = getyakeenDOB("Child","NidDOB");
-					else if (travelDoc.equalsIgnoreCase(" جواز سفر "))
+					else if (travelDoc.equalsIgnoreCase("جواز سفر"))
 						DOB = getyakeenDOB("Child","PsprtDOB");
 					else if (travelDoc.equalsIgnoreCase("Iqama"))
 						DOB = getyakeenDOB("Child","IqamaDOB");
-					
-					//Entering passeneger's Date of birth					
-					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
-					//Thread.sleep(3000);
-					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
-					
-					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
-					//Thread.sleep(3000);
-					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
-					
-					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
-					//Thread.sleep(3000);
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
-				}
-				
-				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("رضيع"))
-				{
+					}
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("رضيع")){
 					//fetching infant's  DOB from Yakeen data sheet based on the document type
 					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
 						DOB = getyakeenDOB("infant","NidDOB");
-					else if (travelDoc.equalsIgnoreCase(" جواز سفر "))
+					else if (travelDoc.equalsIgnoreCase("جواز سفر"))
 						DOB = getyakeenDOB("infant","PsprtDOB");
 					else if (travelDoc.equalsIgnoreCase("Iqama"))
 						DOB = getyakeenDOB("infant","IqamaDOB");
-					
-					//Entering infant's Date of birth
-					
-					click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
-					//Thread.sleep(3000);
-					click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
-					
-					click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
-					//Thread.sleep(3000);
-					click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
-					
-					click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
-					//Thread.sleep(3000);				
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
+				}	
+				
+				System.out.println(DOB[0]+"-"+DOB[1]+"-"+DOB[2]);
+				
+				//Entering Date of birth
+				click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
+				//Thread.sleep(3000);
+				click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
+				
+				click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
+				//Thread.sleep(3000);
+				click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
+				
+				click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
+				//Thread.sleep(3000);				
+				executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
 									
-				}
-				
-				
+							
 				//Selecting nationality
 				click(By.xpath(BookingPageLocators.nation.replace("#", String.valueOf(count))), "Nationality");
 				//Thread.sleep(3000);
@@ -3002,15 +2945,34 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				WebElement psngrDtlsRow = driver.findElement(By.xpath(BookingPageLocators.inputDoc.replace("#", String.valueOf(count))));
 				WebElement Documentnmbr = psngrDtlsRow.findElement(By.name("idnumber"));
 				Documentnmbr.clear();
-				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("بالغ"))
-					Documentnmbr.sendKeys( getyakeenDOC("Adult",travelDoc));
-				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("طفل"))
-					Documentnmbr.sendKeys(getyakeenDOC("Child",travelDoc));
-				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("رضيع"))
-					Documentnmbr.sendKeys(getyakeenDOC("Child",travelDoc));				
-		
+				
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("بالغ")){
+					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
+						Documentnmbr.sendKeys( getyakeenDOC("Adult","National ID card"));
+					else if (travelDoc.equalsIgnoreCase("جواز سفر"))
+						Documentnmbr.sendKeys( getyakeenDOC("Adult","Passport"));
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						Documentnmbr.sendKeys( getyakeenDOC("Adult","Iqama"));
+				}
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("طفل")){
+					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
+						Documentnmbr.sendKeys( getyakeenDOC("Child","National ID card"));
+					else if (travelDoc.equalsIgnoreCase("جواز سفر"))
+						Documentnmbr.sendKeys( getyakeenDOC("Child","Passport"));
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						Documentnmbr.sendKeys( getyakeenDOC("Child","Iqama"));
+				}
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("رضيع")){					
+					if (travelDoc.equalsIgnoreCase(" الهوية الوطنية "))
+						Documentnmbr.sendKeys( getyakeenDOC("infant","National ID card"));
+					else if (travelDoc.equalsIgnoreCase("جواز سفر"))
+						Documentnmbr.sendKeys( getyakeenDOC("infant","Passport"));
+					else if (travelDoc.equalsIgnoreCase("Iqama"))
+						Documentnmbr.sendKeys( getyakeenDOC("infant","Iqama"));			
+				}
+				
 				//Entering Expire date  if travel document is a passport
-				if (travelDoc.equalsIgnoreCase("Passport"))
+				if (travelDoc.equalsIgnoreCase("جواز سفر")||(travelDoc.equalsIgnoreCase(" الهوية الوطنية ") && flightType.contains("International")))
 				{	
 			
 					click(By.xpath(BookingPageLocators.ppExpDD.replace("#", String.valueOf(count))), "DD");
@@ -3043,6 +3005,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			type(BookingPageLocators.mobileNum, mobileNum, "Mobile Number");
 			type(BookingPageLocators.emailAdd, emailId, "Email Address");
 			clickContinueBtn();
+			
 			 FirstLastName = new String[2];
 			 FirstLastName[0] =firstname;
 			 FirstLastName[1] =lastname;
@@ -3363,7 +3326,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 	}
 	
 	
-	public String[] inputPassengerDetails_Tarkish(String domOrInt, String totalPass, String nationality, 
+	public String[] inputPassengerDetails_Tarkish(String flightType, String totalPass, String nationality, 
 			String travelDoc, String docNum, String naSmiles, String mobileNum, String emailId,String fname,String lname,String payment2) 
 					throws Throwable{
 		waitforElement(By.xpath(BookingPageLocators.title.replace("#", String.valueOf(1))));
@@ -3378,7 +3341,7 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 					min = 14; max = 19;
 				} else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Çocuk")){
 					min = 5; max = 9;
-				} else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant")){
+				} else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Bebek")){
 					min = 1; max = 2;
 				}
 				click(By.xpath(BookingPageLocators.title.replace("#", String.valueOf(count))),"Title");
@@ -3410,86 +3373,112 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 				JavascriptExecutor jse = (JavascriptExecutor)driver;
 				jse.executeScript("window.scrollBy(0,200)", "");
 				
+				String[] DOB = new String[3];
+				
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Yetişkin"))
+				{
+					//fetching adult passenger's DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase("Kimlik Kartı"))
+						DOB = getyakeenDOB("Adult","NidDOB");
+					else if (travelDoc.equalsIgnoreCase("Pasaport"))
+						DOB = getyakeenDOB("Adult","PsprtDOB");
+					else if (travelDoc.contains("Oturum Belgesi"))
+						DOB = getyakeenDOB("Adult","");
+				}
+				
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Çocuk"))
+				{
+					//fetching Child passenger's DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase("Kimlik Kartı"))
+						DOB = getyakeenDOB("Child","NidDOB");
+					else if (travelDoc.equalsIgnoreCase("Pasaport"))
+						DOB = getyakeenDOB("Child","PsprtDOB");
+					else if (travelDoc.contains("Oturum Belgesi"))
+						DOB = getyakeenDOB("Child","");
+				}
+				
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Bebek"))
+				{
+					//fetching infant's  DOB from Yakeen data sheet based on the document type
+					if (travelDoc.equalsIgnoreCase("Kimlik Kartı"))
+						DOB = getyakeenDOB("infant","NidDOB");
+					else if (travelDoc.equalsIgnoreCase("Pasaport"))
+						DOB = getyakeenDOB("infant","PsprtDOB");
+					else if (travelDoc.contains("Oturum Belgesi"))
+						DOB = getyakeenDOB("infant","");
+				}	
+				
+				System.out.println(DOB[0]+"-"+DOB[1]+"-"+DOB[2]);
+				
 				click(By.xpath(BookingPageLocators.dd.replace("#", String.valueOf(count))), "DD");
 				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "DD");
+				click(By.xpath(BookingPageLocators.selectDD.replace("#", String.valueOf(count))+DOB[0]+"]"), "DD");
 				
 				click(By.xpath(BookingPageLocators.mm.replace("#", String.valueOf(count))), "MM");
 				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+randomNumericString()+"]"), "MM");
+				click(By.xpath(BookingPageLocators.selectMM.replace("#", String.valueOf(count))+DOB[1]+"]"), "MM");
 				
 				click(By.xpath(BookingPageLocators.yyyy.replace("#", String.valueOf(count))), "YYYY");
 				//Thread.sleep(3000);
-				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Infant"))
-				{
-					List<WebElement> year =driver.findElements(By.xpath(BookingPageLocators.selectyyinfant.replace("#", String.valueOf(count))));
-					year.get(1).click();
-				}
-				else
-				{
-					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+randomNumber(min,max)+"]")));
-					//click(By.xpath(BookingPageLocators.selectYYYY.replace("#", String.valueOf(count))+randomNumber(min,max)+"]"), "YYYY");
-				}
+				executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[@class='pass_tab']/div["+count+"]//descendant::div[@class='dob_conyear']/div/ul/li//descendant::div[@class='ui-select-choices-row']["+DOB[2]+"]")));
+					
 				
+				//Selecting nationality
 				click(By.xpath(BookingPageLocators.nation.replace("#", String.valueOf(count))), "Nationality");
 				//Thread.sleep(3000);
-				click(By.xpath("//div[text()='"+nationality.trim()+"']"), "Nationality");
-				//selectValueFromDropDown(By.xpath(BookingPageLocators.selectNation.replace("#", String.valueOf(count))), "Nationality", nationality);
+				executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//div[text()='"+nationality+"']")));
 				
+				//Selecting travel document Type and entering document number				
+				click(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))),"Travel Document");
+				click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
+				WebElement psngrDtlsRow = driver.findElement(By.xpath(BookingPageLocators.inputDoc.replace("#", String.valueOf(count))));
+				WebElement Documentnmbr = psngrDtlsRow.findElement(By.name("idnumber"));
+				Documentnmbr.clear();
 				
-				if(domOrInt.equalsIgnoreCase("Domestic")){
-					assertText(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))), "Kimlik Kartı");
+				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Yetişkin")){
+					if (travelDoc.equalsIgnoreCase("Kimlik Kartı"))
+						Documentnmbr.sendKeys( getyakeenDOC("Adult","National ID card"));
+					else if (travelDoc.equalsIgnoreCase("Pasaport"))
+						Documentnmbr.sendKeys( getyakeenDOC("Adult","Passport"));
+					else if (travelDoc.equalsIgnoreCase("Oturum Belgesi"))
+						Documentnmbr.sendKeys( getyakeenDOC("Adult",""));
 				}
-				else{
-					assertText(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))), " Pasaport ");
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Çocuk")){
+					if (travelDoc.equalsIgnoreCase("Kimlik Kartı"))
+						Documentnmbr.sendKeys( getyakeenDOC("Child","National ID card"));
+					else if (travelDoc.equalsIgnoreCase("Pasaport"))
+						Documentnmbr.sendKeys( getyakeenDOC("Child","Passport"));
+					else if (travelDoc.equalsIgnoreCase("Oturum Belgesi"))
+						Documentnmbr.sendKeys( getyakeenDOC("Child","Oturum Belgesi"));
 				}
-				//click(BookingPageLocators.travelDoc,"Travel Document");
-				//click(By.xpath("//div[text()='"+travelDoc+"']"), "Travel Document");
-				// - no need selectValueFromDropDown(BookingPageLocators.selecttravelDoc, "Travel Document", travelDoc);
-				//type(BookingPageLocators.inputDoc, docNum, "Document Number");
-				
-				if(travelDoc.trim().equalsIgnoreCase("Kimlik Kartı"))
-				{
-					click(By.xpath(BookingPageLocators.travelDoc.replace("#", String.valueOf(count))),"Travel Document");
-					click(By.xpath("//div[text()='"+travelDoc.trim()+"']"), "Travel Document");
-					type(By.xpath(BookingPageLocators.inputDoc.replace("#", String.valueOf(count))), docNum, "Document Number");
+				else if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").contains("Bebek")){					
+					if (travelDoc.equalsIgnoreCase("Kimlik Kartı"))
+						Documentnmbr.sendKeys( getyakeenDOC("infant","National ID card"));
+					else if (travelDoc.equalsIgnoreCase("Pasaport"))
+						Documentnmbr.sendKeys( getyakeenDOC("infant","Passport"));
+					else if (travelDoc.equalsIgnoreCase("Oturum Belgesi"))
+						Documentnmbr.sendKeys( getyakeenDOC("infant",""));			
 				}
-				else if (travelDoc.equalsIgnoreCase("Passport"))
 				
+				//Entering Expire date  if travel document is a passport
+				if (travelDoc.equalsIgnoreCase("Pasaport")||(travelDoc.equalsIgnoreCase("Kimlik Kartı") && flightType.contains("International")))
 				{	
-					
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.ppNumber.replace("#", String.valueOf(count))), "Passport text box");
-				type(By.xpath(BookingPageLocators.ppNumber.replace("#", String.valueOf(count))), randomString(10), "Passport Number");
-				
-				click(By.xpath(BookingPageLocators.ppExpDD.replace("#", String.valueOf(count))), "DD");
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "DD");	
-				
-				click(By.xpath(BookingPageLocators.ppExpMM.replace("#", String.valueOf(count))), "MM");
-				//Thread.sleep(3000);
-				click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "MM");
-				
-				click(By.xpath(BookingPageLocators.ppExpYY.replace("#", String.valueOf(count))), "YYYY");
-			//	Thread.sleep(3000);
-			//	click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumber(min,max)+"]"), "YYYY");
-			//	click(By.xpath(BookingPageLocators.ppSelectDD+randomNumber(min,max)+"]"), "YYYY");
-				
-				executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//ul/li/descendant::div[@class='ui-select-choices-row']["+randomNumber(min,max)+"]")));
-				}
 			
-				if(getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title").equalsIgnoreCase("Infant 1"))
-				{
-					System.out.println("No Smily for  "+ getText(By.xpath(BookingPageLocators.passType.replace("#", String.valueOf(count))), "Passenger Title"));
+					click(By.xpath(BookingPageLocators.ppExpDD.replace("#", String.valueOf(count))), "DD");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "DD");	
 					
+					click(By.xpath(BookingPageLocators.ppExpMM.replace("#", String.valueOf(count))), "MM");
+					//Thread.sleep(3000);
+					click(By.xpath(BookingPageLocators.ppSelectDD.replace("#", String.valueOf(count))+randomNumericString()+"]"), "MM");
+					
+					click(By.xpath(BookingPageLocators.ppExpYY.replace("#", String.valueOf(count))), "YYYY");
+					//	Thread.sleep(3000);
+					executor.executeScript("arguments[0].click();",driver.findElement(By.xpath("//ul/li/descendant::div[@class='ui-select-choices-row']["+randomNumber(min,max)+"]")));
 				}
-				else
-				{
-						if(!naSmiles.equalsIgnoreCase("") && !naSmiles.equalsIgnoreCase("Value"))
-						type(By.xpath(BookingPageLocators.naSmiles.replace("#", String.valueOf(count))), naSmiles, "na Smiles");
-				}
-			
 			}
+			
+			
 			type(BookingPageLocators.mobileNum, mobileNum, "Mobile Number");
 			type(BookingPageLocators.emailAdd, emailId, "Email Address");
 			clickContinueBtn();
@@ -3950,6 +3939,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			waitforElement(BookingPageLocators.passengerDetailsTittle);
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			clickContinueBtn();
+			if(isElementDisplayedTemp(BookingPageLocators.ok)==true)
+			{
+				click(BookingPageLocators.ok, "OK");
+				clickContinueBtn();
+			}
 		}
 		
 		public void coninueOnBaggage() throws Throwable{
@@ -3957,6 +3951,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			waitUtilElementhasAttribute(BookingPageLocators.body);
 			if(isElementDisplayedTemp(BookingPageLocators.baggagetittle)){
 				clickContinueBtn();
+				if(isElementDisplayedTemp(BookingPageLocators.Yes)==true)
+				{
+					click(BookingPageLocators.Yes, "Travel insurance selected");
+					clickContinueBtn();
+				}
 			}else{
 				System.out.println("No Baggage page Available");
 			}

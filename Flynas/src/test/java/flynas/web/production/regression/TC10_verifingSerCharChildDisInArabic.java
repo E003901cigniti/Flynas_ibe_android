@@ -39,7 +39,6 @@ public class TC10_verifingSerCharChildDisInArabic extends BookingPageFlow {
 			verifingServiceCharge(triptype, BookingClassSr.trim(), totalpass);
 			verifingChildDiscount_Arabic(BookingClassSr.trim());
 			Reporter.SuccessReport("TC10_verifingSerCharChildDisInArabic", "Pass");
-			
 			}
 		
 	catch (Exception e) {

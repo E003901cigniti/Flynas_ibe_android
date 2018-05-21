@@ -305,6 +305,8 @@ public class BookingPageLocators extends ActionEngine{
 	public static By Baggage_weight = By.xpath("//div[@class='baggage_box']");
 	public static By important = By.xpath("//h3[contains(text(),'Important')]");
 	public static By ok=By.xpath("//button[text()='OK' or ./text()='موافق' or ./text()='Tamam']");
+	public static By Yes=By.xpath("//button[text()='Yes' or ./text()='' or ./text()='']");
+	public static By No=By.xpath("//button[text()='NO' or ./text()='' or ./text()='']");
 	
 	public static By sportsEqpmntLink = By.xpath("//a[@class='link']");
 	public static By sportsEqpmtDrop = By.xpath("//div[@name='sporteq']");

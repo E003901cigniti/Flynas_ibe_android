@@ -12,6 +12,7 @@ public class MemberDashboard<RenderedWebElement> extends BookingPageLocators {
 		waitUtilElementhasAttribute(BookingPageLocators.body);
 		waitforElement(BookingPageLocators.myProfile);
 		click(BookingPageLocators.myProfile, "My Profile");
+		waitUtilElementhasAttribute(BookingPageLocators.body);
 	}
 
 }
