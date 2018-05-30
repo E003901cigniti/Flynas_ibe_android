@@ -18,10 +18,7 @@
 				<class name="flynas.web.production.regression.TC04_verifingserviceChargeForRTEconyDomestic"/> 	 
 		 		<class name="flynas.web.production.regression.TC05_verifingSerCharChildDisRTFlexDom"/> 	
 				<class name="flynas.web.production.regression.TC06_verifingServiceChargeRTBusinessDomestic"/> 	
-			 	<class name="flynas.web.production.regression.TC07_verifingServiceChargewithMTEco"/> 	
-				<class name="flynas.web.production.regression.TC08_verifingServiceChragewithMTSingleFlex"/> 	
-				<class name="flynas.web.production.regression.TC09_verifingServiceChargewithMTBussiness"/> 
-				<class name="flynas.web.production.regression.TC10_verifingSerCharChildDisInArabic"/> 	
+			 	<class name="flynas.web.production.regression.TC10_verifingSerCharChildDisInArabic"/> 	
 				<class name="flynas.web.production.regression.TC11_verifingServiceChargeOWSingleBusAR"/> 	 
 				<class name="flynas.web.production.regression.TC12_verifingServiceChargeRTSingleFlexIntAR"/>  	
 				<class name="flynas.web.production.regression.TC13_verifingServiceChargeRTSingleECoDOMAR"/> 	
@@ -47,7 +44,11 @@
 				
 												<!--   MultiCity   -->
 				
-			<!-- <class name="flynas.web.production.regression.TC16_verifingServiceChargeMTSingleEco"/> 	
+			<!-- 
+						 	<class name="flynas.web.production.regression.TC07_verifingServiceChargewithMTEco"/> 	
+				<class name="flynas.web.production.regression.TC08_verifingServiceChragewithMTSingleFlex"/> 	
+				<class name="flynas.web.production.regression.TC09_verifingServiceChargewithMTBussiness"/> 
+				<class name="flynas.web.production.regression.TC16_verifingServiceChargeMTSingleEco"/> 	
 				<class name="flynas.web.production.regression.TC17_verifingServiceChargeMTSingleFlexDom"/> 	
 				<class name="flynas.web.production.regression.TC18_verifingServiceChargeMTSingleBusinessIntl"/> -->
 				

@@ -625,6 +625,11 @@ public class BookingPageFlow<RenderedWebElement> extends BookingPageLocators{
 			//Clicking on contninue button 
 			clickContinueBtn();
 			
+			if(isElementPresent(BookingPageLocators.okBtn)==true){
+				click(BookingPageLocators.okBtn,"Ok button");
+				clickContinueBtn();
+			}
+			
 			//returning passenger first name and last name 
 			Passengername = new String[2];
 			Passengername[0] =firstname;
